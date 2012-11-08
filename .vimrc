@@ -65,3 +65,9 @@ let g:miniBufExplModSelTarget=1
 
 set wildignore=*.py[co]
 set clipboard=unnamed
+
+au FileType python set omnifunc=pythoncomplete#Complete
+set completeopt=menuone,longest,preview
+
+map <Leader>g :RopeGotoDefinition<CR>
+map <Leader>r :RopeRename<CR>
