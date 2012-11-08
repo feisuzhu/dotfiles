@@ -5,6 +5,13 @@ set ai
 set hlsearch
 set nu
 set expandtab
+set cursorline
+set softtabstop=4
+set copyindent
+set shiftround
+set showmatch
+set ignorecase
+set incsearch
 
 set nocompatible
 filetype off
@@ -35,7 +42,8 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 " HTML Shortcuts
 Bundle 'mattn/zencoding-vim'
-
+" MiniBufferExplorer
+" Bundle 'youngking/minibufexpl.vim'
 
 filetype plugin indent on
 
@@ -49,3 +57,11 @@ autocmd FileType python setlocal foldmethod=indent
 set foldlevel=99
 
 nmap <S-Tab> :NERDTreeToggle<CR>
+
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplMapWindowNavVim=1 
+let g:miniBufExplMapWindowNavArrows=1 
+let g:miniBufExplModSelTarget=1
+
+set wildignore=*.py[co]
+set clipboard=unnamed
