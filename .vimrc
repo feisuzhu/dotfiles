@@ -28,7 +28,7 @@ Bundle 'scrooloose/syntastic'
 " enhanced python syntax
 Bundle 'ervandew/python.vim--Vasiliev'
 " python code navigating
-Bundle 'klen/rope-vim'
+Bundle 'klen/python-mode'
 " Git integration
 Bundle 'tpope/vim-fugitive'
 " Markdown
