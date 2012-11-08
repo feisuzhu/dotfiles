@@ -44,6 +44,8 @@ Bundle 'tpope/vim-markdown'
 Bundle 'mattn/zencoding-vim'
 " MiniBufferExplorer
 " Bundle 'youngking/minibufexpl.vim'
+" Close buffer without closing window
+Bundle 'rbgrouleff/bclose.vim'
 
 filetype plugin indent on
 
@@ -69,5 +71,9 @@ set clipboard=unnamed
 au FileType python set omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 
+let NERDTreeIgnore = ['\.py[co]$']
+
 map <Leader>g :RopeGotoDefinition<CR>
 map <Leader>r :RopeRename<CR>
+
+cmap bd Bclose
