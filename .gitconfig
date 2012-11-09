@@ -1,0 +1,25 @@
+[user]
+	name = Proton
+	email = proton@zhihu.com
+[branch]
+    autosetuprebase = always
+[merge]
+	conflictstyle = diff3
+[rerere]
+	enabled = true
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+	interactive = auto
+	grep = auto
+[alias]
+  abbr = "!sh -c 'git rev-list --all | grep ^$1 | while read commit; do git --no-pager log -n1 --pretty=format:5784acef31ec68226b79a9858161558597a1aac9quot;%H %ci %an %s%n5784acef31ec68226b79a9858161558597a1aac9quot; $commit; done' -"
+  aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+  ci = commit
+  co = checkout
+  st = status -sb
+  lc = log ORIG_HEAD.. --stat --no-merges
+  lg = log --graph --pretty=oneline --abbrev-commit
+  lgg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  diffstat = diff-tree --stat
