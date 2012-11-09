@@ -35,7 +35,7 @@ Bundle 'scrooloose/syntastic'
 " enhanced python syntax
 Bundle 'ervandew/python.vim--Vasiliev'
 " python code navigating
-Bundle 'klen/python-mode'
+" Bundle 'klen/python-mode'
 " Git integration
 Bundle 'tpope/vim-fugitive'
 " Markdown
@@ -76,4 +76,16 @@ let NERDTreeIgnore = ['\.py[co]$']
 map <Leader>g :RopeGotoDefinition<CR>
 map <Leader>r :RopeRename<CR>
 
-cmap bd Bclose
+cnoreabbrev bd Bclose
+
+nmap <Space><Up> :wincmd k<CR>
+nmap <Space><Down> :wincmd j<CR>
+nmap <Space><Left> :wincmd h<CR>
+nmap <Space><Right> :wincmd l<CR>
+
+autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+nmap - :lprev<CR>
+nmap = :lnext<CR>
+
+set mouse=a
