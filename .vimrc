@@ -83,7 +83,7 @@ nmap <Space><Down> :wincmd j<CR>
 nmap <Space><Left> :wincmd h<CR>
 nmap <Space><Right> :wincmd l<CR>
 
-autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 nmap - :lprev<CR>
 nmap = :lnext<CR>
