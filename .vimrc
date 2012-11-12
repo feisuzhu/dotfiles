@@ -58,7 +58,7 @@ let g:Powerline_symbols = 'fancy'
 autocmd FileType python setlocal foldmethod=indent
 set foldlevel=99
 
-nmap <S-Tab> :NERDTreeToggle<CR>
+nmap <Tab> :NERDTreeToggle<CR>
 
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplMapWindowNavVim=1 
@@ -73,8 +73,8 @@ set completeopt=menuone,longest,preview
 
 let NERDTreeIgnore = ['\.py[co]$']
 
-map <Leader>g :RopeGotoDefinition<CR>
-map <Leader>r :RopeRename<CR>
+" map <Leader>g :RopeGotoDefinition<CR>
+" map <Leader>r :RopeRename<CR>
 
 cnoreabbrev bd Bclose
 
@@ -87,5 +87,8 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 nmap - :lprev<CR>
 nmap = :lnext<CR>
+
+nmap \w :cprev<CR>
+nmap \s :cnext<CR>
 
 set mouse=a
