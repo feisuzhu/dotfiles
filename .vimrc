@@ -5,6 +5,7 @@ set ai
 set hlsearch
 set nu
 set expandtab
+set cursorcolumn
 set cursorline
 set softtabstop=4
 set copyindent
@@ -92,3 +93,5 @@ nmap \w :cprev<CR>
 nmap \s :cnext<CR>
 
 set mouse=a
+
+imap <C-\><C-\> <C-y>,
