@@ -8,7 +8,6 @@ set expandtab
 set cursorcolumn
 set cursorline
 set softtabstop=4
-set copyindent
 set shiftround
 set showmatch
 set ignorecase
@@ -47,6 +46,10 @@ Bundle 'mattn/zencoding-vim'
 " Bundle 'youngking/minibufexpl.vim'
 " Close buffer without closing window
 Bundle 'rbgrouleff/bclose.vim'
+" TagBar
+Bundle 'majutsushi/tagbar'
+" Command-T
+Bundle 'wincent/Command-T'
 
 filetype plugin indent on
 
@@ -60,6 +63,7 @@ autocmd FileType python setlocal foldmethod=indent
 set foldlevel=99
 
 nmap <Tab> :NERDTreeToggle<CR>
+nmap <S-Tab> :TagbarToggle<CR>
 
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplMapWindowNavVim=1 
