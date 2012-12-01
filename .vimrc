@@ -9,7 +9,6 @@ set cursorline
 set softtabstop=4
 set shiftround
 set showmatch
-set ignorecase
 set incsearch
 
 set nocompatible
