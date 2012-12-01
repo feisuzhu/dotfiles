@@ -5,7 +5,6 @@ set ai
 set hlsearch
 set nu
 set expandtab
-set cursorcolumn
 set cursorline
 set softtabstop=4
 set shiftround
@@ -97,5 +96,9 @@ nmap \w :cprev<CR>
 nmap \s :cnext<CR>
 
 set mouse=a
+set tags=tags;
+set autochdir
+
+cnoreabbrev tags !ctags -R
 
 imap <C-\><C-\> <C-y>,
