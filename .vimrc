@@ -6,6 +6,7 @@ set hlsearch
 set nu
 set expandtab
 set cursorline
+set cursorcolumn
 set softtabstop=4
 set shiftround
 set showmatch
@@ -86,6 +87,11 @@ nmap <Space><Down> :wincmd j<CR>
 nmap <Space><Left> :wincmd h<CR>
 nmap <Space><Right> :wincmd l<CR>
 
+nmap <Space>k :wincmd k<CR>
+nmap <Space>j :wincmd j<CR>
+nmap <Space>h :wincmd h<CR>
+nmap <Space>l :wincmd l<CR>
+
 autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 nmap - :lprev<CR>
@@ -94,9 +100,10 @@ nmap = :lnext<CR>
 nmap \w :cprev<CR>
 nmap \s :cnext<CR>
 
+nmap \] :tn<CR>
+
 set mouse=a
 set tags=tags;
-set autochdir
 
 cnoreabbrev tags !ctags -R
 
