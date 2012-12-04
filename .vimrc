@@ -1,17 +1,3 @@
-syntax on
-set ts=4
-set sw=4
-set ai
-set hlsearch
-set nu
-set expandtab
-set cursorline
-set cursorcolumn
-set softtabstop=4
-set shiftround
-set showmatch
-set incsearch
-
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
@@ -108,3 +94,18 @@ set tags=tags;
 cnoreabbrev tags !ctags -R
 
 imap <C-\><C-\> <C-y>,
+
+syntax on
+set ts=4
+set sw=4
+set ai
+set hlsearch
+set nu
+set expandtab
+set cursorline
+set cursorcolumn
+set softtabstop=4
+set shiftround
+set showmatch
+set incsearch
+
