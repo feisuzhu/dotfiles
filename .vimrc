@@ -42,6 +42,7 @@ set laststatus=2
 set encoding=utf-8
 set t_Co=256
 
+let g:CommandTMaxFiles = 50000
 let g:Powerline_symbols = 'fancy'
 
 autocmd FileType python setlocal foldmethod=indent
@@ -91,7 +92,7 @@ nmap \] :tn<CR>
 set mouse=a
 set tags=tags;
 
-cnoreabbrev tags !ctags -R
+cnoreabbrev tags !ctags -R --python-kinds=-i
 
 imap <C-\><C-\> <C-y>,
 
@@ -108,4 +109,5 @@ set softtabstop=4
 set shiftround
 set showmatch
 set incsearch
+set backspace=2
 
