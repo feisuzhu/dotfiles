@@ -89,6 +89,8 @@ nmap \s :cnext<CR>
 
 nmap \] :tn<CR>
 
+nmap \T :CommandTTag<CR>
+
 set mouse=a
 set tags=tags;
 
