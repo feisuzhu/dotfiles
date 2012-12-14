@@ -94,7 +94,7 @@ nmap \T :CommandTTag<CR>
 set mouse=a
 set tags=tags;
 
-cnoreabbrev tags !ctags -R --python-kinds=-i
+cnoreabbrev tags !ctags -R --python-kinds=-i --languages=python,c
 
 imap <C-\><C-\> <C-y>,
 
