@@ -36,6 +36,8 @@ Bundle 'majutsushi/tagbar'
 " Command-T
 Bundle 'wincent/Command-T'
 
+Bundle 'vim-scripts/OmniCppComplete'
+
 filetype plugin indent on
 
 set laststatus=2
@@ -94,7 +96,7 @@ nmap \T :CommandTTag<CR>
 set mouse=a
 set tags=tags;
 
-cnoreabbrev tags !ctags -R --python-kinds=-i --languages=python,c
+cnoreabbrev tags !ctags -V -R --python-kinds=-i --fields=+aS --languages=python,c,c++
 
 imap <C-\><C-\> <C-y>,
 
