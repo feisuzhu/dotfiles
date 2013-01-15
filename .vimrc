@@ -37,6 +37,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'wincent/Command-T'
 
 Bundle 'vim-scripts/OmniCppComplete'
+Bundle 'groenewege/vim-less'
 
 filetype plugin indent on
 

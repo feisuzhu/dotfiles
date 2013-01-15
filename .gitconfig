@@ -5,8 +5,6 @@
     autosetuprebase = always
 [merge]
 	conflictstyle = diff3
-[rerere]
-	enabled = true
 [color]
     ;status = auto
 	diff = auto
