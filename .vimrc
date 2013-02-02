@@ -95,7 +95,6 @@ nmap \s :cnext<CR>
 nmap \] :tn<CR>
 
 nmap \T :CommandTTag<CR>
-
 nmap \\ :nohl<CR>:set nopaste<CR>
 
 set mouse=a
