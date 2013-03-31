@@ -63,6 +63,7 @@ set wildignore=*.py[co]
 set clipboard=unnamed
 
 au FileType python set omnifunc=pythoncomplete#Complete
+au FileType c,cpp set omnifunc=OmniCppComplete
 set completeopt=menuone,longest,preview
 
 let NERDTreeIgnore = ['\.py[co]$']
@@ -83,6 +84,7 @@ nmap <Space>h :wincmd h<CR>
 nmap <Space>l :wincmd l<CR>
 
 autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\+$//e
+" cnoreabbrev clean %s/\s\+$//e
 
 nmap - :lprev<CR>
 nmap = :lnext<CR>
@@ -93,6 +95,8 @@ nmap \s :cnext<CR>
 nmap \] :tn<CR>
 
 nmap \T :CommandTTag<CR>
+
+nmap \\ :nohl<CR>:set nopaste<CR>
 
 set mouse=a
 set tags=tags;
