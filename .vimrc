@@ -39,7 +39,7 @@ Bundle 'wincent/Command-T'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'groenewege/vim-less'
 
-filetype plugin indent on
+" filetype plugin indent on
 
 set laststatus=2
 set encoding=utf-8
