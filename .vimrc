@@ -38,6 +38,7 @@ Bundle 'wincent/Command-T'
 
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'groenewege/vim-less'
+Bundle 'Lokaltog/vim-easymotion'
 
 " filetype plugin indent on
 
@@ -89,13 +90,10 @@ autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\
 nmap - :lprev<CR>
 nmap = :lnext<CR>
 
-nmap \w :cprev<CR>
-nmap \s :cnext<CR>
-
 nmap \] :tn<CR>
 
 nmap \T :CommandTTag<CR>
-nmap \\ :nohl<CR>:set nopaste<CR>
+nmap \\\ :nohl<CR>:set nopaste<CR>
 
 set mouse=a
 set tags=tags;
