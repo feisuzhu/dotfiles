@@ -13,8 +13,6 @@ Bundle 'ervandew/supertab'
 Bundle 'mileszs/ack.vim' 
 " :NERDTree
 Bundle 'scrooloose/nerdtree' 
-" code snippets
-Bundle 'msanders/snipmate.vim' 
 " syntax checking using flake8
 Bundle 'scrooloose/syntastic' 
 " enhanced python syntax
