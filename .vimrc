@@ -40,6 +40,9 @@ Bundle 'Lokaltog/vim-easymotion'
 
 " filetype plugin indent on
 
+set exrc
+set secure
+
 set laststatus=2
 set encoding=utf-8
 set t_Co=256
@@ -93,11 +96,12 @@ nmap \] :tn<CR>
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
 nmap \\\ :nohl<CR>:set nopaste<CR>
+nmap \\] :tj "%:t:r"<CR>
 
 set mouse=a
 set tags=tags;
 
-cnoreabbrev tags !ctags -V -R --python-kinds=-i --fields=+aS --languages=python,c,c++
+cnoreabbrev tags !ctags
 
 imap <C-\><C-\> <C-y>,
 
