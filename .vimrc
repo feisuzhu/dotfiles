@@ -37,6 +37,7 @@ Bundle 'wincent/Command-T'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'groenewege/vim-less'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'kien/rainbow_parentheses.vim'
 
 " filetype plugin indent on
 
@@ -91,12 +92,9 @@ autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\
 nmap - :lprev<CR>
 nmap = :lnext<CR>
 
-nmap \] :tn<CR>
-
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
 nmap \\\ :nohl<CR>:set nopaste<CR>
-nmap \\] :tj "%:t:r"<CR>
 
 set mouse=a
 set tags=tags;
@@ -106,6 +104,36 @@ cnoreabbrev tags !ctags
 imap <C-\><C-\> <C-y>,
 
 syntax on
+
+" rainbow paren
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+
+autocmd VimEnter * RainbowParenthesesActivate
+autocmd Syntax * RainbowParenthesesLoadRound
+
+" ----------------------
+
+
 set ts=4
 set sw=4
 set ai
