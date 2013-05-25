@@ -38,6 +38,8 @@ Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'groenewege/vim-less'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'guns/vim-clojure-static'
+Bundle 'tpope/vim-fireplace'
 
 " filetype plugin indent on
 
