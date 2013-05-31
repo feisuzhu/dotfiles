@@ -96,8 +96,8 @@ autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\
 nmap - :lprev<CR>
 nmap = :lnext<CR>
 
-nmap _ :cprev<CR>
-nmap + :cnext<CR>
+nnoremap _ :cprev<CR>
+nnoremap + :cnext<CR>
 
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
