@@ -40,6 +40,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'guns/vim-clojure-static'
 Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-classpath'
 
 " filetype plugin indent on
 
@@ -94,6 +95,9 @@ autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\
 nmap - :lprev<CR>
 nmap = :lnext<CR>
 
+nmap _ :cprev<CR>
+nmap + :cnext<CR>
+
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
 nmap \\\ :nohl<CR>:set nopaste<CR>
@@ -135,7 +139,6 @@ autocmd Syntax * RainbowParenthesesLoadRound
 
 " ----------------------
 
-
 set ts=4
 set sw=4
 set ai
@@ -150,3 +153,4 @@ set showmatch
 set incsearch
 set backspace=2
 
+autocmd FileType clojure set sw=2 | set ts=2 | set sts=2
