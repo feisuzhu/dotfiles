@@ -37,10 +37,11 @@ Bundle 'wincent/Command-T'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'groenewege/vim-less'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'guns/vim-clojure-static'
 Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-classpath'
+Bundle 'feisuzhu/rainbow_parentheses.vim'
+Bundle 'uarun/vim-protobuf'
 
 " filetype plugin indent on
 
@@ -136,6 +137,7 @@ let g:rbpt_loadcmd_toggle = 0
 
 autocmd VimEnter * RainbowParenthesesActivate
 autocmd Syntax * RainbowParenthesesLoadRound
+autocmd Syntax html,htmldjango RainbowParenthesesLoadTornado
 
 " ----------------------
 
