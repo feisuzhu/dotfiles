@@ -99,6 +99,8 @@ nmap = :lnext<CR>
 nnoremap _ :cprev<CR>
 nnoremap + :cnext<CR>
 
+nnoremap \] :exec('tj ' . expand('%:t:r'))<CR>
+
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
 nmap \\\ :nohl<CR>:set nopaste<CR>
@@ -121,12 +123,12 @@ let g:rbpt_colorpairs = [
     \ ['darkcyan',    'RoyalBlue3'],
     \ ['darkred',     'SeaGreen3'],
     \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
     \ ['brown',       'firebrick3'],
     \ ['gray',        'RoyalBlue3'],
     \ ['darkcyan',    'SeaGreen3'],
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['darkred',     'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
     \ ['darkgreen',   'RoyalBlue3'],
     \ ['darkcyan',    'SeaGreen3'],
     \ ['red',         'firebrick3'],
