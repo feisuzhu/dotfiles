@@ -42,6 +42,7 @@ Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-classpath'
 Bundle 'feisuzhu/rainbow_parentheses.vim'
 Bundle 'uarun/vim-protobuf'
+Bundle 'terryma/vim-multiple-cursors'
 
 " filetype plugin indent on
 
