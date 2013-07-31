@@ -25,8 +25,6 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 " HTML Shortcuts
 Bundle 'mattn/zencoding-vim'
-" MiniBufferExplorer
-" Bundle 'youngking/minibufexpl.vim'
 " Close buffer without closing window
 Bundle 'rbgrouleff/bclose.vim'
 " TagBar
@@ -62,11 +60,6 @@ set foldlevel=99
 nmap <Tab> :NERDTreeToggle<CR>
 nmap <S-Tab> :TagbarToggle<CR>
 
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplMapWindowNavVim=1 
-let g:miniBufExplMapWindowNavArrows=1 
-let g:miniBufExplModSelTarget=1
-
 set wildignore=*.py[co]
 set clipboard=unnamed
 
@@ -81,6 +74,8 @@ let NERDTreeIgnore = ['\.py[co]$']
 
 cnoreabbrev bd Bclose
 
+let g:EasyMotion_leader_key = '\O'
+
 nmap <Space><Up> :wincmd k<CR>
 nmap <Space><Down> :wincmd j<CR>
 nmap <Space><Left> :wincmd h<CR>
@@ -90,6 +85,11 @@ nmap <Space>k :wincmd k<CR>
 nmap <Space>j :wincmd j<CR>
 nmap <Space>h :wincmd h<CR>
 nmap <Space>l :wincmd l<CR>
+
+nmap <Space>f \Of
+nmap <Space>F \OF
+nmap <Space>w \Ow
+nmap <Space>b \Ob
 
 autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\+$//e
 " cnoreabbrev clean %s/\s\+$//e
@@ -104,7 +104,7 @@ nnoremap \] :exec('tj ' . expand('%:t:r'))<CR>
 
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
-nmap \\\ :nohl<CR>:set nopaste<CR>
+nmap \\ :nohl<CR>:set nopaste<CR>
 
 set mouse=a
 set tags=tags;
