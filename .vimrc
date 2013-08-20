@@ -28,7 +28,7 @@ Bundle 'mattn/zencoding-vim'
 " Close buffer without closing window
 Bundle 'rbgrouleff/bclose.vim'
 " TagBar
-Bundle 'majutsushi/tagbar'
+" Bundle 'majutsushi/tagbar'
 " Command-T
 Bundle 'wincent/Command-T'
 
