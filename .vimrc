@@ -161,3 +161,4 @@ set incsearch
 set backspace=2
 
 autocmd FileType clojure set sw=2 | set ts=2 | set sts=2
+autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
