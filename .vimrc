@@ -43,6 +43,7 @@ Bundle 'uarun/vim-protobuf'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'puppetlabs/puppet-syntax-vim'
+Bundle 'Yggdroot/indentLine'
 
 " filetype plugin indent on
 
