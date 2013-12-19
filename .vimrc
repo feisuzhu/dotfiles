@@ -44,6 +44,8 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'puppetlabs/puppet-syntax-vim'
 Bundle 'Yggdroot/indentLine'
+Bundle 'triglav/vim-visual-increment'
+Bundle 'stephpy/vim-yaml'
 
 " filetype plugin indent on
 
@@ -64,13 +66,13 @@ nmap <Tab> :NERDTreeToggle<CR>
 nmap <S-Tab> :TagbarToggle<CR>
 
 set wildignore=*.py[co]
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 au FileType python set omnifunc=pythoncomplete#Complete
 au FileType c,cpp set omnifunc=OmniCppComplete
 set completeopt=menuone,longest,preview
 
-let NERDTreeIgnore = ['\.py[co]$']
+let NERDTreeIgnore = ['\.py[co]$', '\.o', 'a\.out']
 
 " map <Leader>g :RopeGotoDefinition<CR>
 " map <Leader>r :RopeRename<CR>
@@ -163,3 +165,12 @@ set backspace=2
 
 autocmd FileType clojure set sw=2 | set ts=2 | set sts=2
 autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
+
+set kp=man23
+
+" Syntax coloring lines that are too long just slows down the world
+" set synmaxcol=128
+
+set ttyfast
+set ttyscroll=3
+set lazyredraw
