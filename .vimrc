@@ -68,7 +68,14 @@ nmap <Tab> :NERDTreeToggle<CR>
 nmap <S-Tab> :TagbarToggle<CR>
 
 set wildignore=*.py[co]
-set clipboard=unnamedplus
+
+let os=substitute(system('uname'), '\n', '', '')
+
+if os == 'Darwin' || os == 'Mac'
+    set clipboard=unnamed
+else
+    set clipboard=unnamedplus
+endif
 
 au FileType python set omnifunc=pythoncomplete#Complete
 au FileType c,cpp set omnifunc=OmniCppComplete
