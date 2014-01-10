@@ -46,7 +46,6 @@ Bundle 'puppetlabs/puppet-syntax-vim'
 Bundle 'Yggdroot/indentLine'
 Bundle 'triglav/vim-visual-increment'
 Bundle 'stephpy/vim-yaml'
-Bundle 'wakatime/vim-wakatime'
 Bundle 'chase/nginx.vim'
 
 " filetype plugin indent on
