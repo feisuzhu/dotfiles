@@ -23,3 +23,5 @@
   lg = log --graph --pretty=oneline --abbrev-commit
   lgg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   diffstat = diff-tree --stat
+[push]
+	default = matching
