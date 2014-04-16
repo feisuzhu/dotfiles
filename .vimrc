@@ -16,7 +16,8 @@ Bundle 'scrooloose/nerdtree'
 " syntax checking using flake8
 Bundle 'scrooloose/syntastic' 
 " enhanced python syntax
-Bundle 'ervandew/python.vim--Vasiliev'
+" Bundle 'ervandew/python.vim--Vasiliev'
+Bundle 'python.vim'
 " python code navigating
 " Bundle 'klen/python-mode'
 " Git integration
@@ -60,7 +61,7 @@ set t_Co=256
 let g:CommandTMaxFiles = 50000
 let g:Powerline_symbols = 'fancy'
 
-autocmd FileType python setlocal foldmethod=indent
+" autocmd FileType python setlocal foldmethod=indent
 set foldlevel=99
 
 nmap <Tab> :NERDTreeToggle<CR>
