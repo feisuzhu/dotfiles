@@ -1,4 +1,4 @@
-colors torte
+colorscheme ingretu
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=l  "remove left-hand scroll bar

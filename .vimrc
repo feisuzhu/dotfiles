@@ -3,6 +3,8 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+" Color scheme
+Bundle 'gmarik/ingretu'
 " plugin manager
 Bundle 'gmarik/vundle' 
 " status line
@@ -17,7 +19,8 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic' 
 " enhanced python syntax
 " Bundle 'ervandew/python.vim--Vasiliev'
-Bundle 'python.vim'
+" Python folding
+Bundle 'feisuzhu/python-folding.vim'
 " python code navigating
 " Bundle 'klen/python-mode'
 " Git integration
@@ -171,6 +174,8 @@ set shiftround
 set showmatch
 set incsearch
 set backspace=2
+
+colorscheme ingretu
 
 autocmd FileType clojure set sw=2 | set ts=2 | set sts=2
 autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
