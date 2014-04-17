@@ -3,20 +3,20 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" Color scheme
-Bundle 'gmarik/ingretu'
 " plugin manager
-Bundle 'gmarik/vundle' 
+Bundle 'gmarik/vundle'
+" Color scheme
+Bundle 'feisuzhu/ingretu'
 " status line
 Bundle 'Lokaltog/vim-powerline'
 " tab completion
-Bundle 'ervandew/supertab' 
+Bundle 'ervandew/supertab'
 " better than grep
-Bundle 'mileszs/ack.vim' 
+Bundle 'mileszs/ack.vim'
 " :NERDTree
-Bundle 'scrooloose/nerdtree' 
+Bundle 'scrooloose/nerdtree'
 " syntax checking using flake8
-Bundle 'scrooloose/syntastic' 
+Bundle 'scrooloose/syntastic'
 " enhanced python syntax
 " Bundle 'ervandew/python.vim--Vasiliev'
 " Python folding
@@ -51,6 +51,7 @@ Bundle 'Yggdroot/indentLine'
 Bundle 'triglav/vim-visual-increment'
 Bundle 'stephpy/vim-yaml'
 Bundle 'chase/nginx.vim'
+Bundle 'ntpeters/vim-better-whitespace'
 
 " filetype plugin indent on
 
