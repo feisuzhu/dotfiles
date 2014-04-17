@@ -181,6 +181,12 @@ colorscheme ingretu
 autocmd FileType clojure set sw=2 | set ts=2 | set sts=2
 autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
 
+" Don't screw up folds when inserting text that might affect them, until
+" leaving insert mode. Foldmethod is local to the window. Protect against
+" screwing up folding when switching between windows.
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
 set kp=man23
 
 " Syntax coloring lines that are too long just slows down the world
