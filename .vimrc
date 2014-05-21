@@ -4,54 +4,55 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " plugin manager
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 " Color scheme
-Bundle 'feisuzhu/ingretu'
+Plugin 'feisuzhu/ingretu'
 " status line
-Bundle 'Lokaltog/vim-powerline'
+Plugin 'Lokaltog/vim-powerline'
 " tab completion
-Bundle 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 " better than grep
-Bundle 'mileszs/ack.vim'
+Plugin 'mileszs/ack.vim'
 " :NERDTree
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 " syntax checking using flake8
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 " enhanced python syntax
-" Bundle 'ervandew/python.vim--Vasiliev'
+" Plugin 'ervandew/python.vim--Vasiliev'
 " Python folding
-Bundle 'feisuzhu/python-folding.vim'
+Plugin 'feisuzhu/python-folding.vim'
 " python code navigating
-" Bundle 'klen/python-mode'
+" Plugin 'klen/python-mode'
 " Git integration
-Bundle 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 " Markdown
-Bundle 'tpope/vim-markdown'
+Plugin 'tpope/vim-markdown'
 " HTML Shortcuts
-Bundle 'mattn/zencoding-vim'
+Plugin 'mattn/emmet-vim'
 " Close buffer without closing window
-Bundle 'rbgrouleff/bclose.vim'
+Plugin 'rbgrouleff/bclose.vim'
 " TagBar
-" Bundle 'majutsushi/tagbar'
+" Plugin 'majutsushi/tagbar'
 " Command-T
-Bundle 'wincent/Command-T'
+Plugin 'wincent/Command-T'
 
-Bundle 'vim-scripts/OmniCppComplete'
-Bundle 'groenewege/vim-less'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'guns/vim-clojure-static'
-Bundle 'tpope/vim-fireplace'
-Bundle 'tpope/vim-classpath'
-Bundle 'feisuzhu/rainbow_parentheses.vim'
-Bundle 'uarun/vim-protobuf'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'puppetlabs/puppet-syntax-vim'
-Bundle 'Yggdroot/indentLine'
-Bundle 'triglav/vim-visual-increment'
-Bundle 'stephpy/vim-yaml'
-Bundle 'chase/nginx.vim'
-Bundle 'ntpeters/vim-better-whitespace'
+Plugin 'vim-scripts/OmniCppComplete'
+Plugin 'groenewege/vim-less'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'guns/vim-clojure-static'
+Plugin 'tpope/vim-fireplace'
+Plugin 'tpope/vim-classpath'
+Plugin 'feisuzhu/rainbow_parentheses.vim'
+Plugin 'uarun/vim-protobuf'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'puppetlabs/puppet-syntax-vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'triglav/vim-visual-increment'
+Plugin 'stephpy/vim-yaml'
+Plugin 'chase/nginx.vim'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'digitaltoad/vim-jade.git'
 
 " filetype plugin indent on
 
@@ -122,7 +123,7 @@ nnoremap \] :exec('tj ' . expand('%:t:r'))<CR>
 
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
-nmap \\ :nohl<CR>:set nopaste<CR>
+nmap \\ :nohl<CR>:set nopaste<CR>:setlocal fdm=syntax<CR>:setlocal fdm=manual<CR>
 
 set mouse=a
 set tags=tags;
@@ -156,6 +157,8 @@ let g:rbpt_colorpairs = [
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 autocmd VimEnter * RainbowParenthesesActivate
 autocmd Syntax * RainbowParenthesesLoadRound
 autocmd Syntax html,htmldjango RainbowParenthesesLoadTornado
@@ -176,6 +179,8 @@ set showmatch
 set incsearch
 set backspace=2
 
+set fdm=manual
+
 colorscheme ingretu
 
 autocmd FileType clojure set sw=2 | set ts=2 | set sts=2
@@ -184,8 +189,8 @@ autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
 " screwing up folding when switching between windows.
-autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+" autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+" autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
 set kp=man23
 
