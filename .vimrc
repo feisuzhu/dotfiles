@@ -53,6 +53,10 @@ Plugin 'stephpy/vim-yaml'
 Plugin 'chase/nginx.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'digitaltoad/vim-jade.git'
+Plugin 'godlygeek/tabular'
+Plugin 'milkypostman/vim-togglelist'
+
+
 
 " filetype plugin indent on
 
@@ -110,6 +114,10 @@ nmap <Space>F \OF
 nmap <Space>w \Ow
 nmap <Space>b \Ob
 
+let g:toggle_list_no_mappings = 1
+let g:syntastic_always_populate_loc_list = 1
+nmap <Space><Space> :call ToggleLocationList()<CR>
+
 autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\+$//e
 " cnoreabbrev clean %s/\s\+$//e
 
@@ -119,11 +127,16 @@ nmap = :lnext<CR>
 nnoremap _ :cprev<CR>
 nnoremap + :cnext<CR>
 
-nnoremap \] :exec('tj ' . expand('%:t:r'))<CR>
-
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
 nmap \\ :nohl<CR>:set nopaste<CR>:setlocal fdm=syntax<CR>:setlocal fdm=manual<CR>
+vmap \= :Tabularize /^[^=]*\zs<CR>
+vmap \: :Tabularize /:\zs<CR>
+vmap \, :Tabularize /,\zs<CR>
+vmap \# :Tabularize /#/l2r1<CR>
+vmap \p :!autopep8 -<CR>
+
+vmap <Space><Space> :!LC_ALL=C sort -u<CR>
 
 set mouse=a
 set tags=tags;
