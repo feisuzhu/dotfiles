@@ -130,9 +130,9 @@ nnoremap + :cnext<CR>
 nmap \T :CommandTTag<CR>
 nmap \l :NERDTreeFind<CR>
 nmap \\ :nohl<CR>:set nopaste<CR>:setlocal fdm=syntax<CR>:setlocal fdm=manual<CR>
-vmap \= :Tabularize /^[^=]*\zs<CR>
-vmap \: :Tabularize /:\zs<CR>
-vmap \, :Tabularize /,\zs<CR>
+vmap \= :Tabularize /^[^=]*\zs/l0r1<CR>
+vmap \: :Tabularize /:\zs/l0r1<CR>
+vmap \, :Tabularize /,\zs/l0r1<CR>
 vmap \# :Tabularize /#/l2r1<CR>
 vmap \p :!autopep8 -<CR>
 
