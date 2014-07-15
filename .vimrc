@@ -141,7 +141,7 @@ vmap <Space><Space> :!LC_ALL=C sort -u<CR>
 set mouse=a
 set tags=tags;
 
-cnoreabbrev tags !ctags
+nmap <Space>t :!ctags<CR><CR>
 
 imap <C-\><C-\> <C-y>,
 
