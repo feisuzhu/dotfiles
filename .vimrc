@@ -35,7 +35,6 @@ Plugin 'rbgrouleff/bclose.vim'
 " Plugin 'majutsushi/tagbar'
 " Command-T
 Plugin 'wincent/Command-T'
-
 Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'groenewege/vim-less'
 Plugin 'Lokaltog/vim-easymotion'
@@ -55,10 +54,12 @@ Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'digitaltoad/vim-jade.git'
 Plugin 'godlygeek/tabular'
 Plugin 'milkypostman/vim-togglelist'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'kana/vim-textobj-user'
+Plugin 'bps/vim-textobj-python'
+Plugin 'kana/vim-smartinput'
 
-
-
-" filetype plugin indent on
+filetype plugin indent on
 
 set exrc
 set secure
