@@ -3,7 +3,7 @@ PWD=`pwd`
 ln -svfb $PWD/.ackrc ~/
 ln -svfb $PWD/.agignore ~/
 ln -svfb $PWD/.ctags ~/
-ln -svfb $PWD/.gitignore ~/
+ln -svfb $PWD/.gitconfig ~/
 ln -svfb $PWD/.vimrc ~/
 ln -svfb $PWD/.zshrc ~/
 ln -svfb $PWD/flake8 ~/.config/

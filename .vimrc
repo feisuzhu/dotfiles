@@ -57,7 +57,6 @@ Plugin 'milkypostman/vim-togglelist'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'bps/vim-textobj-python'
-Plugin 'kana/vim-smartinput'
 
 filetype plugin indent on
 
@@ -197,8 +196,9 @@ set fdm=manual
 
 colorscheme ingretu
 
-autocmd FileType clojure set sw=2 | set ts=2 | set sts=2
+autocmd FileType clojure    set sw=2 | set ts=2 | set sts=2
 autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
+autocmd FileType python     set sw=4 | set ts=4 | set sts=4
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
