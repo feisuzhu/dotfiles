@@ -3,3 +3,4 @@
 --fields=+aS
 --languages=python,c,c++
 --regex-python=/return "(v2_[a-z0-9_]+)\.html"/\1/v/
+--regex-python=/# ANCHOR\((.+?)\)/anchor:\1/v/

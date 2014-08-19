@@ -58,7 +58,8 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'bps/vim-textobj-python'
 
-filetype plugin indent on
+filetype plugin on
+filetype indent off
 
 set exrc
 set secure
