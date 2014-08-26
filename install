@@ -5,5 +5,6 @@ ln -svfb $PWD/.agignore ~/
 ln -svfb $PWD/.ctags ~/
 ln -svfb $PWD/.gitconfig ~/
 ln -svfb $PWD/.vimrc ~/
+ln -svfb $PWD/.gvimrc ~/
 ln -svfb $PWD/.zshrc ~/
 ln -svfb $PWD/flake8 ~/.config/
