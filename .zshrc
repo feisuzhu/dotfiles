@@ -133,9 +133,9 @@ function cpthb {
     cd /dev/shm
     cp -r ~/my_projects/thbattle .
     cd thbattle
+    rm -rf src
+    cp -r ~/thbupdate src
     buildout -vv
-    cd src
-    ../bin/python emergency_update.py
 }
 
 function kpyc {
@@ -157,3 +157,5 @@ function exhausted {
     sudo cryptsetup luksClose vault
     sudo losetup -d /dev/loop6
 }
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib

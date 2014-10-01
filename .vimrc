@@ -137,7 +137,8 @@ vmap \, :Tabularize /,\zs/l0r1<CR>
 vmap \# :Tabularize /#/l2r1<CR>
 vmap \p :!autopep8 -<CR>
 
-vmap <Space><Space> :!LC_ALL=C sort -u<CR>
+" vmap <Space><Space> :!LC_ALL=C sort -u<CR>
+vmap <Space><Space> :!python ~/.vim/vimscripts/py_filter_imports.py<CR>
 
 set mouse=a
 set tags=tags;
