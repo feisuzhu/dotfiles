@@ -12,46 +12,116 @@ MAX_LINE_WIDTH = 100
 STDLIBS = (
     'BaseHTTPServer', 'Bastion', 'CGIHTTPServer', 'ConfigParser', 'Cookie', 'DocXMLRPCServer',
     'HTMLParser', 'MimeWriter', 'Queue', 'SimpleHTTPServer', 'SimpleXMLRPCServer', 'SocketServer',
-    'StringIO', 'UserDict', 'UserList', 'UserString', 'abc', 'aifc', 'antigravity', 'anydbm',
-    'argparse', 'ast', 'asynchat', 'asyncore', 'atexit', 'audiodev', 'base64', 'bdb', 'binhex',
-    'bisect', 'bsddb', 'cProfile', 'calendar', 'cgi', 'cgitb', 'chunk', 'cmd', 'code', 'codecs',
-    'codeop', 'collections', 'colorsys', 'commands', 'compileall', 'compiler', 'contextlib',
-    'cookielib', 'copy', 'copy_reg', 'csv', 'ctypes', 'curses', 'dbhash', 'decimal', 'difflib',
-    'dircache', 'dis', 'dist-packages', 'distutils', 'doctest', 'dumbdbm', 'dummy_thread',
-    'dummy_threading', 'email', 'encodings', 'filecmp', 'fileinput', 'fnmatch', 'formatter',
-    'fpformat', 'fractions', 'ftplib', 'functools', 'genericpath', 'getopt', 'getpass', 'gettext',
-    'glob', 'gzip', 'hashlib', 'heapq', 'hmac', 'hotshot', 'htmlentitydefs', 'htmllib', 'httplib',
-    'ihooks', 'imaplib', 'imghdr', 'importlib', 'imputil', 'inspect', 'io', 'json', 'keyword',
+    'StringIO', 'UserDict', 'UserList', 'UserString', 'abc', 'aifc', 'antigravity', 'anydbm', 'argparse',
+    'ast', 'asynchat', 'asyncore', 'atexit', 'audiodev', 'base64', 'bdb', 'binascii', 'binhex', 'bisect',
+    'bsddb', 'cPickle', 'cProfile', 'cStringIO', 'calendar', 'cgi', 'cgitb', 'chunk', 'cmd', 'code',
+    'codecs', 'codeop', 'collections', 'colorsys', 'commands', 'compileall', 'compiler', 'contextlib',
+    'cookielib', 'copy', 'copy_reg', 'csv', 'ctypes', 'curses', 'dbhash', 'decimal', 'difflib', 'dircache',
+    'dis', 'dist-packages', 'distutils', 'doctest', 'dumbdbm', 'dummy_thread', 'dummy_threading', 'email',
+    'encodings', 'errno', 'exceptions', 'fcntl', 'filecmp', 'fileinput', 'fnmatch', 'formatter', 'fpformat',
+    'fractions', 'ftplib', 'functools', 'gc', 'genericpath', 'getopt', 'getpass', 'gettext', 'glob', 'grp',
+    'gzip', 'hashlib', 'heapq', 'hmac', 'hotshot', 'htmlentitydefs', 'htmllib', 'httplib', 'ihooks',
+    'imaplib', 'imghdr', 'imp', 'importlib', 'imputil', 'inspect', 'io', 'itertools', 'json', 'keyword',
     'lib-dynload', 'lib-tk', 'lib2to3', 'linecache', 'locale', 'logging', 'macpath', 'macurl2path',
-    'mailbox', 'mailcap', 'markupbase', 'md5', 'mhlib', 'mimetools', 'mimetypes', 'mimify',
-    'modulefinder', 'multifile', 'multiprocessing', 'mutex', 'netrc', 'new', 'nntplib', 'ntpath',
-    'nturl2path', 'numbers', 'opcode', 'optparse', 'os', 'os2emxpath', 'pdb', 'pickle', 'pickletools',
-    'pipes', 'pkgutil', 'platform', 'plistlib', 'popen2', 'poplib', 'posixfile', 'posixpath', 'pprint',
-    'profile', 'pstats', 'pty', 'py_compile', 'pyclbr', 'pydoc', 'pydoc_data', 'quopri', 'random',
-    're', 'repr', 'rexec', 'rfc822', 'rlcompleter', 'robotparser', 'runpy', 'sched', 'sets', 'sgmllib',
-    'sha', 'shelve', 'shlex', 'shutil', 'site', 'sitecustomize', 'smtpd', 'smtplib', 'sndhdr',
-    'socket', 'sqlite3', 'sre', 'sre_compile', 'sre_constants', 'sre_parse', 'ssl', 'stat', 'statvfs',
-    'string', 'stringold', 'stringprep', 'struct', 'subprocess', 'sunau', 'sunaudio', 'symbol',
-    'symtable', 'sysconfig', 'tabnanny', 'tarfile', 'telnetlib', 'tempfile', 'test', 'textwrap',
-    'this', 'threading', 'timeit', 'toaiff', 'token', 'tokenize', 'trace', 'traceback', 'tty', 'types',
-    'unittest', 'urllib', 'urllib2', 'urlparse', 'user', 'uu', 'uuid', 'warnings', 'wave', 'weakref',
-    'webbrowser', 'whichdb', 'wsgiref', 'xdrlib', 'xml', 'xmllib', 'xmlrpclib', 'zipfile',
+    'mailbox', 'mailcap', 'markupbase', 'marshal', 'math', 'math', 'md5', 'mhlib', 'mimetools', 'mimetypes',
+    'mimify', 'modulefinder', 'mpl_toolkits', 'multifile', 'multiprocessing', 'mutex', 'netrc', 'new',
+    'nntplib', 'ntpath', 'nturl2path', 'numbers', 'opcode', 'operator', 'optparse', 'os', 'os2emxpath',
+    'pdb', 'pickle', 'pickletools', 'pipes', 'pkgutil', 'platform', 'plistlib', 'popen2', 'poplib',
+    'posix', 'posixfile', 'posixpath', 'pprint', 'profile', 'pstats', 'pty', 'pwd', 'py_compile', 'pyclbr',
+    'pydoc', 'pydoc_data', 'quopri', 'random', 're', 'repr', 'rexec', 'rfc822', 'rlcompleter', 'robotparser',
+    'runpy', 'sched', 'select', 'sets', 'sgmllib', 'sha', 'shelve', 'shlex', 'shutil', 'signal', 'site',
+    'sitecustomize', 'smtpd', 'smtplib', 'sndhdr', 'socket', 'sqlite3', 'sre', 'sre_compile', 'sre_constants',
+    'sre_parse', 'ssl', 'stat', 'statvfs', 'string', 'stringold', 'stringprep', 'strop', 'struct',
+    'subprocess', 'sunau', 'sunaudio', 'symbol', 'symtable', 'sys', 'sysconfig', 'tabnanny', 'tarfile',
+    'telnetlib', 'tempfile', 'test', 'textwrap', 'this', 'thread', 'threading', 'time', 'time', 'timeit',
+    'toaiff', 'token', 'tokenize', 'trace', 'traceback', 'tty', 'types', 'unittest', 'urllib', 'urllib2',
+    'urlparse', 'user', 'uu', 'uuid', 'warnings', 'wave', 'weakref', 'webbrowser', 'whichdb', 'wsgiref',
+    'xdrlib', 'xml', 'xmllib', 'xmlrpclib', 'zipfile', 'zipimport', 'zlib',
+    'datetime',
 )
 
 THIRD_PARTIES = (
+    'kafka',
+    'Crypto',
+    'IPython',
     'M2Crypto',
     'PIL',
+    'alembic',
+    'amqp',
+    'anyjson',
+    'arrow',
+    'babel',
+    'bcrypt',
+    'beanstalkc',
+    'bidict',
+    'billiard',
+    'bitcoinrpc',
     'bottle',
+    'buildout',
+    'captchaimage',
+    'cdecimal',
+    'celery',
+    'collective',
     'colorlog',
+    'coverage',
+    'dateutil',
+    'docutils',
+    'easy_install',
+    'ecdsa',
+    'flask',
+    'flask_admin',
+    'flask_babel',
+    'flask_migrate',
+    'flask_redis',
+    'flask_script',
+    'flask_sqlalchemy',
+    'flask_wtf',
+    'flower',
+    'funtests',
     'gevent',
+    'greenlet',
+    'greenlet.so',
+    'itsdangerous',
+    'jinja2',
+    'jquery_unparam',
+    'kombu',
+    'magic',
+    'mako',
+    'markupsafe',
+    'moment',
     'msgpack',
+    'nose',
+    'passlib',
+    'plone',
+    'progressbar',
+    'psycopg2',
     'pygit2',
     'pyglet',
+    'pygments',
+    'pytz',
+    'recipe',
     'redis',
     'requests',
+    'setuptools',
+    'sh',
+    'simpleflake',
     'simplejson',
+    'speaklater',
+    'sphinx',
     'sqlalchemy',
+    'termcolor',
+    'tests',
+    'times',
+    'tornado',
+    'ujson',
+    'underscore',
     'unidecode',
+    'websocket',
+    'werkzeug',
+    'wtforms',
+    'xml4h',
+    'yaml',
+    'zc',
 )
 
 
@@ -86,7 +156,9 @@ for stmt in module.body:
     if isinstance(stmt, ast.Import):
         imports.extend(stmt.names)
     elif isinstance(stmt, ast.ImportFrom):
-        froms[stmt.module].extend(stmt.names)
+        lvl = '.' * stmt.level
+        mod = stmt.module or ''
+        froms[lvl + mod].extend(stmt.names)
 
 imports.sort(key=lambda v: v.name)
 froms = froms.items()
@@ -116,12 +188,19 @@ for name, aliases in froms:
     header = 'from %s import ' % name
     rest = list(aliases)
     commit = []
+
+    def do_commit():
+        dst.append(header + ', '.join([fmtalias(i) for i in commit]))
+        commit[:] = []
+
     while rest:
-        commit.append(rest.pop(0))
-        s = ', '.join([fmtalias(i) for i in commit])
-        if len(header) + len(s) > MAX_LINE_WIDTH or not rest:
-            dst.append(header + s)
-            commit[:] = []
+        s = ', '.join([fmtalias(i) for i in commit + [rest[0]]])
+        if len(header) + len(s) > MAX_LINE_WIDTH:
+            do_commit()
+        else:
+            commit.append(rest.pop(0))
+
+    commit and do_commit()
 
     assert not rest
     assert not commit
