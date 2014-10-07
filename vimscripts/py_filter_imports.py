@@ -154,17 +154,17 @@ imports = []
 
 for stmt in module.body:
     if isinstance(stmt, ast.Import):
-        imports.extend(stmt.names)
+        imports.extend([fmtalias(i) for i in stmt.names])
     elif isinstance(stmt, ast.ImportFrom):
         lvl = '.' * stmt.level
         mod = stmt.module or ''
-        froms[lvl + mod].extend(stmt.names)
+        froms[lvl + mod].extend([fmtalias(i) for i in stmt.names])
 
-imports.sort(key=lambda v: v.name)
+imports = list(sorted(set(imports)))
 froms = froms.items()
 froms.sort(key=lambda (k, v): k)
 for k, v in froms:
-    v.sort(key=lambda v: v.name)
+    v[:] = list(sorted(set(v)))
 
 # ----------------------
 
@@ -190,11 +190,11 @@ for name, aliases in froms:
     commit = []
 
     def do_commit():
-        dst.append(header + ', '.join([fmtalias(i) for i in commit]))
+        dst.append(header + ', '.join(commit))
         commit[:] = []
 
     while rest:
-        s = ', '.join([fmtalias(i) for i in commit + [rest[0]]])
+        s = ', '.join(commit + [rest[0]])
         if len(header) + len(s) > MAX_LINE_WIDTH:
             do_commit()
         else:
@@ -208,9 +208,9 @@ for name, aliases in froms:
 # --------------------------
 
 for a in imports:
-    dst = where(a.name)
+    dst = where(a)
     # print dst
-    dst.append('import ' + fmtalias(a))
+    dst.append('import ' + a)
 
 print '# -- stdlib --'
 if stdlibs:
