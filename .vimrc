@@ -32,7 +32,7 @@ Plugin 'mattn/emmet-vim'
 " Close buffer without closing window
 Plugin 'rbgrouleff/bclose.vim'
 " TagBar
-" Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 " Command-T
 Plugin 'wincent/Command-T'
 Plugin 'vim-scripts/OmniCppComplete'

@@ -41,7 +41,6 @@ STDLIBS = (
 )
 
 THIRD_PARTIES = (
-    'kafka',
     'Crypto',
     'IPython',
     'M2Crypto',
@@ -84,6 +83,7 @@ THIRD_PARTIES = (
     'itsdangerous',
     'jinja2',
     'jquery_unparam',
+    'kafka',
     'kombu',
     'magic',
     'mako',
@@ -102,12 +102,14 @@ THIRD_PARTIES = (
     'recipe',
     'redis',
     'requests',
+    'selenium',
     'setuptools',
     'sh',
     'simpleflake',
     'simplejson',
     'speaklater',
     'sphinx',
+    'spidermonkey',
     'sqlalchemy',
     'termcolor',
     'tests',
@@ -212,6 +214,8 @@ for a in imports:
     # print dst
     dst.append('import ' + a)
 
+print '# -*- coding: utf-8 -*-'
+print
 print '# -- stdlib --'
 if stdlibs:
     print '\n'.join(stdlibs)
@@ -227,4 +231,4 @@ if own:
     print '\n'.join(own)
     print
 
-print '# -- code --'
+print '\n# -- code --'
