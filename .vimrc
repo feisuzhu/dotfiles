@@ -57,6 +57,7 @@ Plugin 'milkypostman/vim-togglelist'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'bps/vim-textobj-python'
+Plugin 'jeroenbourgois/vim-actionscript'
 
 filetype plugin on
 filetype indent off
