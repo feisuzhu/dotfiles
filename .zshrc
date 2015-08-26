@@ -167,5 +167,8 @@ function testup {
     ssh -v thbcn sudo bash -x ~root/test_restart
 }
 
+alias l='ssh -A lcrelay'
+
+
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules

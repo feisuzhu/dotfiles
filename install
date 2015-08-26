@@ -1,10 +1,10 @@
 PWD=`pwd`
 
-ln -svfb $PWD/.ackrc ~/
-ln -svfb $PWD/.agignore ~/
-ln -svfb $PWD/.ctags ~/
-ln -svfb $PWD/.gitconfig ~/
-ln -svfb $PWD/.vimrc ~/
-ln -svfb $PWD/.gvimrc ~/
-ln -svfb $PWD/.zshrc ~/
-ln -svfb $PWD/flake8 ~/.config/
+ln -svf $PWD/.ackrc ~/
+ln -svf $PWD/.agignore ~/
+ln -svf $PWD/.ctags ~/
+ln -svf $PWD/.gitconfig ~/
+ln -svf $PWD/.vimrc ~/
+ln -svf $PWD/.gvimrc ~/
+ln -svf $PWD/.zshrc ~/
+ln -svf $PWD/flake8 ~/.config/
