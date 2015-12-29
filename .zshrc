@@ -180,10 +180,10 @@ function rep {
     fi
 }
 
+alias l='ssh -A lcrelay'
+
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
-
-alias l='ssh relay.avoscloud.com'
 
 if [ "$(uname)" = "Linux" ]; then
     alias vim='gvim'
