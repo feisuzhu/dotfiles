@@ -7,7 +7,7 @@ set guioptions-=L  "remove left-hand scroll bar
 set guioptions-=R  "remove right-hand scroll bar
 set guioptions-=b  "remove right-hand scroll bar
 
-set guifont=Monaco\ for\ Powerline\ 11
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Semibold\ 11
 
 map <silent> <F11>
 \    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>

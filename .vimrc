@@ -8,7 +8,7 @@ Plugin 'gmarik/vundle'
 " Color scheme
 Plugin 'feisuzhu/ingretu'
 " status line
-Plugin 'Lokaltog/vim-powerline'
+Plugin 'powerline/powerline'
 " tab completion
 Plugin 'ervandew/supertab'
 " better than grep
@@ -58,6 +58,12 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'bps/vim-textobj-python'
 Plugin 'jeroenbourgois/vim-actionscript'
+Plugin 'rust-lang/rust.vim'
+Plugin 'phildawes/racer'
+Plugin 'vim-scripts/fcitx.vim'
+Plugin 'davidhalter/jedi'
+
+set rtp+=$HOME/.vim/bundle/powerline/powerline/bindings/vim/
 
 filetype plugin on
 filetype indent off
@@ -78,6 +84,8 @@ set foldlevel=99
 nmap <Tab> :NERDTreeToggle<CR>
 nmap <S-Tab> :TagbarToggle<CR>
 
+set diffopt+=vertical
+
 set wildignore=*.py[co]
 
 let os=substitute(system('uname'), '\n', '', '')
@@ -94,9 +102,6 @@ set completeopt=menuone,longest,preview
 
 let NERDTreeIgnore = ['\.py[co]$', '\.o', 'a\.out']
 
-" map <Leader>g :RopeGotoDefinition<CR>
-" map <Leader>r :RopeRename<CR>
-
 cnoreabbrev bd Bclose
 
 let g:EasyMotion_leader_key = '\O'
@@ -105,6 +110,9 @@ nmap <Space><Up> :wincmd k<CR>
 nmap <Space><Down> :wincmd j<CR>
 nmap <Space><Left> :wincmd h<CR>
 nmap <Space><Right> :wincmd l<CR>
+
+nmap <C-Up> :wincmd +<CR>
+nmap <C-Down> :wincmd -<CR>
 
 nmap <Space>k :wincmd k<CR>
 nmap <Space>j :wincmd j<CR>
@@ -174,6 +182,8 @@ let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" let g:SuperTabDefaultCompletionType = "context"
 
 autocmd VimEnter * RainbowParenthesesActivate
 autocmd Syntax * RainbowParenthesesLoadRound

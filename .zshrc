@@ -99,6 +99,11 @@ function proxy {
     export HTTPS_PROXY="http://localhost:8123"
 }
 
+function proxy2 {
+    export HTTP_PROXY="http://localhost:8124"
+    export HTTPS_PROXY="http://localhost:8124"
+}
+
 function noproxy {
     export HTTP_PROXY=
     export HTTPS_PROXY=
@@ -167,5 +172,19 @@ function testup {
     ssh -v thbcn sudo bash -x ~root/test_restart
 }
 
+function rep {
+    if [ "$1" = "hakurei" ]; then
+        scp "thbcn:/data/data/thb/archives_test/hakurei-$2.gz" .
+    else
+        scp "thbcn:/data/data/thb/archives/${1}-$2.gz" .
+    fi
+}
+
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+
+alias l='ssh relay.avoscloud.com'
+
+if [ "$(uname)" = "Linux" ]; then
+    alias vim='gvim'
+fi
