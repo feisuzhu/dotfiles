@@ -179,7 +179,6 @@ function rep {
         scp "thbcn:/data/data/thb/archives/${1}-$2.gz" .
     fi
 }
-
 alias l='ssh -A lcrelay'
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
@@ -188,3 +187,6 @@ export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
 if [ "$(uname)" = "Linux" ]; then
     alias vim='gvim'
 fi
+
+export NVM_DIR="/Users/Proton/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

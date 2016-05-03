@@ -1,73 +1,76 @@
 set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
 
-" plugin manager
-Plugin 'gmarik/vundle'
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
 " Color scheme
-Plugin 'feisuzhu/ingretu'
+Plug 'feisuzhu/ingretu'
 " status line
-Plugin 'powerline/powerline'
+Plug 'powerline/powerline'
 " tab completion
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 " better than grep
-Plugin 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 " :NERDTree
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 " syntax checking using flake8
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 " enhanced python syntax
-" Plugin 'ervandew/python.vim--Vasiliev'
+" Plug 'ervandew/python.vim--Vasiliev'
 " Python folding
-Plugin 'feisuzhu/python-folding.vim'
+Plug 'feisuzhu/python-folding.vim'
 " python code navigating
-" Plugin 'klen/python-mode'
+" Plug 'klen/python-mode'
 " Git integration
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " Markdown
-Plugin 'tpope/vim-markdown'
+Plug 'tpope/vim-markdown'
 " HTML Shortcuts
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 " Close buffer without closing window
-Plugin 'rbgrouleff/bclose.vim'
+Plug 'rbgrouleff/bclose.vim'
 " TagBar
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 " Command-T
-Plugin 'wincent/Command-T'
-Plugin 'vim-scripts/OmniCppComplete'
-Plugin 'groenewege/vim-less'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'guns/vim-clojure-static'
-" Plugin 'tpope/vim-fireplace'
-" Plugin 'tpope/vim-classpath'
-Plugin 'feisuzhu/rainbow_parentheses.vim'
-Plugin 'uarun/vim-protobuf'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'puppetlabs/puppet-syntax-vim'
-Plugin 'Yggdroot/indentLine'
-Plugin 'triglav/vim-visual-increment'
-Plugin 'stephpy/vim-yaml'
-Plugin 'chase/nginx.vim'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'digitaltoad/vim-jade.git'
-Plugin 'godlygeek/tabular'
-Plugin 'milkypostman/vim-togglelist'
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'kana/vim-textobj-user'
-Plugin 'bps/vim-textobj-python'
-Plugin 'jeroenbourgois/vim-actionscript'
-Plugin 'rust-lang/rust.vim'
-Plugin 'phildawes/racer'
-Plugin 'vim-scripts/fcitx.vim'
-Plugin 'davidhalter/jedi'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'EvanDotPro/nerdtree-chmod'
-Plugin 'robbles/logstash.vim'
-Plugin 'tpope/vim-surround'
+Plug 'wincent/Command-T'
+Plug 'vim-scripts/OmniCppComplete'
+Plug 'groenewege/vim-less'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'guns/vim-clojure-static'
+" Plug 'tpope/vim-fireplace'
+" Plug 'tpope/vim-classpath'
+Plug 'feisuzhu/rainbow_parentheses.vim'
+Plug 'uarun/vim-protobuf'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'kchmck/vim-coffee-script'
+Plug 'puppetlabs/puppet-syntax-vim'
+Plug 'Yggdroot/indentLine'
+Plug 'triglav/vim-visual-increment'
+Plug 'stephpy/vim-yaml'
+Plug 'chase/nginx.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'digitaltoad/vim-jade'
+Plug 'godlygeek/tabular'
+Plug 'milkypostman/vim-togglelist'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'kana/vim-textobj-user'
+Plug 'bps/vim-textobj-python'
+Plug 'jeroenbourgois/vim-actionscript'
+Plug 'rust-lang/rust.vim'
+Plug 'phildawes/racer'
+Plug 'vim-scripts/fcitx.vim'
+Plug 'davidhalter/jedi'
+Plug 'derekwyatt/vim-scala'
+Plug 'EvanDotPro/nerdtree-chmod'
+Plug 'robbles/logstash.vim'
+Plug 'tpope/vim-surround'
+call plug#end()
 
-set rtp+=$HOME/.vim/bundle/powerline/powerline/bindings/vim/
+set rtp+=$HOME/.vim/plugged/powerline/powerline/bindings/vim/
 
 filetype plugin on
 filetype indent off

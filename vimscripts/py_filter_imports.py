@@ -123,6 +123,7 @@ THIRD_PARTIES = (
     'wtforms',
     'xml4h',
     'yaml',
+    'raven',
     'zc',
 )
 
