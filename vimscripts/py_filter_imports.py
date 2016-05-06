@@ -64,6 +64,7 @@ THIRD_PARTIES = (
     'colorlog',
     'coverage',
     'dateutil',
+    'raven',
     'docutils',
     'easy_install',
     'ecdsa',
@@ -85,6 +86,7 @@ THIRD_PARTIES = (
     'jquery_unparam',
     'kafka',
     'kombu',
+    'leancloud',
     'magic',
     'mako',
     'markupsafe',
@@ -163,6 +165,12 @@ for stmt in module.body:
         mod = stmt.module or ''
         froms[lvl + mod].extend([fmtalias(i) for i in stmt.names])
 
+
+# ----- Good habit! -----
+if 'absolute_import' not in froms['__future__']:
+    froms['__future__'].append('absolute_import')
+# -----------------------
+
 imports = list(sorted(set(imports)))
 froms = froms.items()
 froms.sort(key=lambda (k, v): k)
@@ -171,6 +179,7 @@ for k, v in froms:
 
 # ----------------------
 
+future = []
 stdlibs = []
 third_parties = []
 own = []
@@ -178,6 +187,8 @@ own = []
 
 def where(name):
     name = name.split('.')[0]
+    if name == '__future__':
+        return future
     if name in STDLIBS:
         return stdlibs
     elif name in THIRD_PARTIES:
@@ -216,7 +227,10 @@ for a in imports:
     dst.append('import ' + a)
 
 print '# -*- coding: utf-8 -*-'
+if future:
+    print '\n'.join(future)
 print
+
 print '# -- stdlib --'
 if stdlibs:
     print '\n'.join(stdlibs)
