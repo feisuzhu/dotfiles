@@ -10,7 +10,14 @@ call plug#begin('~/.vim/plugged')
 " Color scheme
 Plug 'feisuzhu/ingretu'
 " status line
-Plug 'powerline/powerline'
+if has('nvim')
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    let g:airline_powerline_fonts=1
+else
+    Plug 'powerline/powerline'
+    set rtp+=$HOME/.vim/plugged/powerline/powerline/bindings/vim/
+endif
 " tab completion
 Plug 'ervandew/supertab'
 " better than grep
@@ -62,15 +69,13 @@ Plug 'bps/vim-textobj-python'
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'rust-lang/rust.vim'
 Plug 'phildawes/racer'
-Plug 'vim-scripts/fcitx.vim'
+" Plug 'vim-scripts/fcitx.vim'
 Plug 'davidhalter/jedi'
 Plug 'derekwyatt/vim-scala'
 Plug 'EvanDotPro/nerdtree-chmod'
 Plug 'robbles/logstash.vim'
 Plug 'tpope/vim-surround'
 call plug#end()
-
-set rtp+=$HOME/.vim/plugged/powerline/powerline/bindings/vim/
 
 filetype plugin on
 filetype indent off
@@ -232,6 +237,9 @@ set kp=man23
 " Syntax coloring lines that are too long just slows down the world
 " set synmaxcol=128
 
-set ttyfast
-set ttyscroll=3
+if !has('nvim')
+    set ttyfast
+    set ttyscroll=3
+endif
+
 set lazyredraw
