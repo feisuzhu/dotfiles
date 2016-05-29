@@ -42,8 +42,6 @@ Plug 'mattn/emmet-vim'
 Plug 'rbgrouleff/bclose.vim'
 " TagBar
 Plug 'majutsushi/tagbar'
-" Command-T
-Plug 'wincent/Command-T'
 Plug 'vim-scripts/OmniCppComplete'
 Plug 'groenewege/vim-less'
 Plug 'Lokaltog/vim-easymotion'
@@ -69,12 +67,13 @@ Plug 'bps/vim-textobj-python'
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'rust-lang/rust.vim'
 Plug 'phildawes/racer'
-" Plug 'vim-scripts/fcitx.vim'
 Plug 'davidhalter/jedi'
 Plug 'derekwyatt/vim-scala'
 Plug 'EvanDotPro/nerdtree-chmod'
 Plug 'robbles/logstash.vim'
 Plug 'tpope/vim-surround'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 filetype plugin on
@@ -87,7 +86,6 @@ set laststatus=2
 set encoding=utf-8
 set t_Co=256
 
-let g:CommandTMaxFiles = 50000
 let g:Powerline_symbols = 'fancy'
 
 " autocmd FileType python setlocal foldmethod=indent
@@ -149,7 +147,8 @@ nmap = :lnext<CR>
 nnoremap _ :cprev<CR>
 nnoremap + :cnext<CR>
 
-nmap \T :CommandTTag<CR>
+nmap \t :Files<CR>
+nmap \T :Tags<CR>
 nmap \l :NERDTreeFind<CR>
 nmap \\ :nohl<CR>:set nopaste<CR>:setlocal fdm=syntax<CR>:setlocal fdm=manual<CR>
 vmap \= :Tabularize /^[^=]*\zs/l0r1<CR>
