@@ -1,10 +1,15 @@
-PWD=`pwd`
-
-ln -svf $PWD/.ackrc ~/
-ln -svf $PWD/.agignore ~/
-ln -svf $PWD/.ctags ~/
-ln -svf $PWD/.gitconfig ~/
-ln -svf $PWD/.vimrc ~/
-ln -svf $PWD/.gvimrc ~/
-ln -svf $PWD/.zshrc ~/
-ln -svf $PWD/flake8 ~/.config/
+git clone https://github.com/feisuzhu/dotfiles.git
+cd dotfiles
+DIR=`pwd`
+cd ~
+mkdir -p .vim .config
+ln -svf $DIR/.ackrc ~/
+ln -svf $DIR/.agignore ~/
+ln -svf $DIR/.ctags ~/
+ln -svf $DIR/.gitconfig ~/
+ln -svf $DIR/.vimrc ~/
+ln -svf $DIR/.gvimrc ~/
+ln -svf $DIR/.zshrc ~/
+ln -svf $DIR/flake8 ~/.config/
+ln -svf $DIR/vimscripts .vim/vimscripts
+vim -c q
