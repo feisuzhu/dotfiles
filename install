@@ -12,4 +12,4 @@ ln -svf $DIR/.gvimrc ~/
 ln -svf $DIR/.zshrc ~/
 ln -svf $DIR/flake8 ~/.config/
 ln -svf $DIR/vimscripts .vim/vimscripts
-vim -c q
+vim
