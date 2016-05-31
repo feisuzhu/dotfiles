@@ -151,7 +151,7 @@ nnoremap + :cnext<CR>
 nmap \t :Files<CR>
 nmap \T :Tags<CR>
 nmap \l :NERDTreeFind<CR>
-nmap \\ :nohl<CR>:set nopaste<CR>:setlocal fdm=syntax<CR>:setlocal fdm=manual<CR>
+nmap \\ :nohl<CR>:set nopaste<CR>
 vmap \= :Tabularize /^[^=]*\zs/l0r1<CR>
 vmap \: :Tabularize /:\zs/l0r1<CR>
 vmap \, :Tabularize /,\zs/l0r1<CR>
