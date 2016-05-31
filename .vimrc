@@ -29,7 +29,8 @@ Plug 'scrooloose/syntastic'
 " enhanced python syntax
 " Plug 'ervandew/python.vim--Vasiliev'
 " Python folding
-Plug 'feisuzhu/python-folding.vim'
+" Plug 'feisuzhu/python-folding.vim'
+Plug 'tmhedberg/SimpylFold'
 " python code navigating
 " Plug 'klen/python-mode'
 " Git integration
