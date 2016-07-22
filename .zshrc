@@ -181,10 +181,4 @@ function rep {
 }
 alias l='ssh -A lcrelay'
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
-
-export NVM_DIR="/Users/Proton/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc

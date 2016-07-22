@@ -29,7 +29,8 @@ Plug 'scrooloose/syntastic'
 " enhanced python syntax
 " Plug 'ervandew/python.vim--Vasiliev'
 " Python folding
-Plug 'feisuzhu/python-folding.vim'
+" Plug 'feisuzhu/python-folding.vim'
+Plug 'tmhedberg/SimpylFold'
 " python code navigating
 " Plug 'klen/python-mode'
 " Git integration
@@ -74,6 +75,7 @@ Plug 'robbles/logstash.vim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'fatih/vim-go'
 call plug#end()
 
 filetype plugin on
