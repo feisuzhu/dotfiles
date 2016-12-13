@@ -95,18 +95,17 @@ done
 
 
 function proxy {
-    export HTTP_PROXY="http://localhost:8123"
-    export HTTPS_PROXY="http://localhost:8123"
-}
-
-function proxy2 {
-    export HTTP_PROXY="http://localhost:8124"
-    export HTTPS_PROXY="http://localhost:8124"
+    export HTTP_PROXY="http://localhost:8118"
+    export HTTPS_PROXY="http://localhost:8118"
+    export http_proxy="http://localhost:8118"
+    export https_proxy="http://localhost:8118"
 }
 
 function noproxy {
     export HTTP_PROXY=
     export HTTPS_PROXY=
+    export http_proxy=
+    export https_proxy=
 }
 
 function crtcat {
@@ -182,3 +181,5 @@ function rep {
 alias l='ssh -A lcrelay'
 
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

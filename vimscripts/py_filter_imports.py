@@ -67,6 +67,7 @@ THIRD_PARTIES = (
     'raven',
     'docutils',
     'easy_install',
+    'pymysql',
     'ecdsa',
     'flask',
     'flask_admin',
