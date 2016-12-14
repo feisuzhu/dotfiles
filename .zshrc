@@ -168,8 +168,8 @@ function exhausted {
 }
 
 function testup {
-    ssh -v linode bash -x update_testing
-    ssh -v thbcn sudo bash -x ~root/test_restart
+    ssh -A thbcn ssh -A proton@thbattle.net bash -x update_testing
+    ssh thbcn sudo bash -x ~root/test_restart
 }
 
 function rep {

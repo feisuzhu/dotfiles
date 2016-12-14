@@ -75,6 +75,8 @@ Plug 'robbles/logstash.vim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'nickhutchinson/vim-systemtap'
+Plug 'maksimr/vim-jsbeautify'
 call plug#end()
 
 filetype plugin on

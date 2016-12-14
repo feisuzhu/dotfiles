@@ -64,7 +64,6 @@ THIRD_PARTIES = (
     'colorlog',
     'coverage',
     'dateutil',
-    'raven',
     'docutils',
     'easy_install',
     'ecdsa',
@@ -101,9 +100,11 @@ THIRD_PARTIES = (
     'pyglet',
     'pygments',
     'pytz',
+    'raven',
     'recipe',
     'redis',
     'requests',
+    'scrapy',
     'selenium',
     'setuptools',
     'sh',
@@ -125,7 +126,6 @@ THIRD_PARTIES = (
     'wtforms',
     'xml4h',
     'yaml',
-    'raven',
     'zc',
 )
 
