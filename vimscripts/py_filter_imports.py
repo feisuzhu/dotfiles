@@ -66,6 +66,7 @@ THIRD_PARTIES = (
     'dateutil',
     'docutils',
     'easy_install',
+    'pymysql',
     'ecdsa',
     'flask',
     'flask_admin',

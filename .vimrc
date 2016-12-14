@@ -47,8 +47,11 @@ Plug 'vim-scripts/OmniCppComplete'
 Plug 'groenewege/vim-less'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'guns/vim-clojure-static'
+
 " Plug 'tpope/vim-fireplace'
 " Plug 'tpope/vim-classpath'
+" Plug 'venantius/vim-eastwood'
+
 Plug 'feisuzhu/rainbow_parentheses.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'terryma/vim-multiple-cursors'
@@ -77,6 +80,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'fatih/vim-go'
 call plug#end()
 
 filetype plugin on
@@ -115,17 +119,7 @@ set completeopt=menuone,longest,preview
 
 let NERDTreeIgnore = ['\.py[co]$', '\.o', 'a\.out']
 
-cnoreabbrev bd Bclose
-
 let g:EasyMotion_leader_key = '\O'
-
-nmap <Space><Up> :wincmd k<CR>
-nmap <Space><Down> :wincmd j<CR>
-nmap <Space><Left> :wincmd h<CR>
-nmap <Space><Right> :wincmd l<CR>
-
-nmap <C-Up> :wincmd +<CR>
-nmap <C-Down> :wincmd -<CR>
 
 nmap <Space>k :wincmd k<CR>
 nmap <Space>j :wincmd j<CR>
@@ -139,10 +133,12 @@ nmap <Space>b \Ob
 
 let g:toggle_list_no_mappings = 1
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:syntastic_disabled_filetypes=['html']
 nmap <Space><Space> :call ToggleLocationList()<CR>
 
 autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\+$//e
-" cnoreabbrev clean %s/\s\+$//e
 
 nmap - :lprev<CR>
 nmap = :lnext<CR>
@@ -198,6 +194,7 @@ let g:rbpt_loadcmd_toggle = 0
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " let g:SuperTabDefaultCompletionType = "context"
+autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 autocmd VimEnter * RainbowParenthesesActivate
 autocmd Syntax * RainbowParenthesesLoadRound
@@ -233,8 +230,6 @@ autocmd FileType puppet     set sw=2 | set ts=2 | set sts=2
 " screwing up folding when switching between windows.
 " autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
 " autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-
-set kp=man23
 
 " Syntax coloring lines that are too long just slows down the world
 " set synmaxcol=128
