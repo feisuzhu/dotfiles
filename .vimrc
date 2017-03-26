@@ -82,6 +82,7 @@ Plug 'nickhutchinson/vim-systemtap'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'fatih/vim-go'
 Plug 'posva/vim-vue'
+Plug 'alderz/smali-vim'
 call plug#end()
 
 filetype plugin on
