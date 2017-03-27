@@ -66,7 +66,7 @@ conky.config = {
 }
 
 conky.text = [[
-${font DS\-Digital:style=Bold:size=45}${color #000000} ${time %H:%M:%S}${font}${color}
+${font DS\-Digital:style=Bold:size=45}${alignc}${color #000000}${time %H:%M:%S}${font}${color}
 ${color #08CEEB}${font 文泉驿等宽微米黑:size=12}${alignc}${time %b%d 星期%a}${color}${font}
 ${hr}
 $nodename - $sysname $kernel
