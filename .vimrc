@@ -78,7 +78,11 @@ Plug 'robbles/logstash.vim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'nickhutchinson/vim-systemtap'
+Plug 'maksimr/vim-jsbeautify'
 Plug 'fatih/vim-go'
+Plug 'posva/vim-vue'
+Plug 'alderz/smali-vim'
 call plug#end()
 
 filetype plugin on
@@ -148,7 +152,7 @@ nnoremap + :cnext<CR>
 nmap \t :Files<CR>
 nmap \T :Tags<CR>
 nmap \l :NERDTreeFind<CR>
-nmap \\ :nohl<CR>:set nopaste<CR>:setlocal fdm=syntax<CR>:setlocal fdm=manual<CR>
+nmap \\ :nohl<CR>:set nopaste<CR>
 vmap \= :Tabularize /^[^=]*\zs/l0r1<CR>
 vmap \: :Tabularize /:\zs/l0r1<CR>
 vmap \, :Tabularize /,\zs/l0r1<CR>
