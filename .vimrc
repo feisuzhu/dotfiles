@@ -132,7 +132,8 @@ nmap <Space>b \Ob
 let g:toggle_list_no_mappings = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:syntastic_mode_map = { 'mode': 'active' }
 let g:syntastic_disabled_filetypes=['html']
 nmap <Space><Space> :call ToggleLocationList()<CR>
 
@@ -235,6 +236,10 @@ autocmd FileType puppet     set sw=2 | set ts=2 | set sts=2
 if !has('nvim')
     set ttyfast
     set ttyscroll=3
+endif
+
+if has('nvim')
+    tnoremap <C-\><C-\> <C-\><C-n>
 endif
 
 set lazyredraw

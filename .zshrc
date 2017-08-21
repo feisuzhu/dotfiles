@@ -183,3 +183,5 @@ alias l='ssh -A lcrelay'
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export EDITOR=nvim
