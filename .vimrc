@@ -77,6 +77,7 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'fatih/vim-go'
 Plug 'posva/vim-vue'
 Plug 'alderz/smali-vim'
+Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
 filetype plugin on
@@ -89,8 +90,15 @@ set laststatus=2
 set encoding=utf-8
 set t_Co=256
 
-let g:airline_powerline_fonts=1
-let g:airline#extensions#ale#enabled = 1
+let mdtypes = ['md', 'markdown']
+
+if index(mdtypes, &filetype) == -1
+  let g:table_mode_corner_corner='+'
+  let g:table_mode_header_fillchar='='
+else
+  let g:airline_powerline_fonts=1
+  let g:airline#extensions#ale#enabled = 1
+endif
 
 " autocmd FileType python setlocal foldmethod=indent
 set foldlevel=99
@@ -156,6 +164,8 @@ set mouse=a
 set tags=tags;
 
 nmap <Space>t :!ctags<CR><CR>
+nmap <Space>T :TableModeToggle<CR><CR>
+nmap <Space>R :TableModeRealign<CR><CR>
 
 imap <C-\><C-\> <C-y>,
 
