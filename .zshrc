@@ -183,3 +183,7 @@ alias l='ssh -A lcrelay'
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export EDITOR=nvim
+
+alias riemann="java -server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:+UseCompressedOops -XX:+CMSClassUnloadingEnabled -XX:-OmitStackTraceInFastThrow -cp $GOPATH/src/github.com/leancloud/satori/satori/images/riemann/app/riemann.jar riemann.bin"

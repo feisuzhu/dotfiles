@@ -10,22 +10,16 @@ call plug#begin('~/.vim/plugged')
 " Color scheme
 Plug 'feisuzhu/ingretu'
 " status line
-if has('nvim')
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    let g:airline_powerline_fonts=1
-else
-    Plug 'powerline/powerline'
-    set rtp+=$HOME/.vim/plugged/powerline/powerline/bindings/vim/
-endif
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " tab completion
 Plug 'ervandew/supertab'
 " better than grep
 Plug 'mileszs/ack.vim'
 " :NERDTree
 Plug 'scrooloose/nerdtree'
-" syntax checking using flake8
-Plug 'scrooloose/syntastic'
+" syntax checking
+Plug 'w0rp/ale'
 " enhanced python syntax
 " Plug 'ervandew/python.vim--Vasiliev'
 " Python folding
@@ -95,7 +89,8 @@ set laststatus=2
 set encoding=utf-8
 set t_Co=256
 
-let g:Powerline_symbols = 'fancy'
+let g:airline_powerline_fonts=1
+let g:airline#extensions#ale#enabled = 1
 
 " autocmd FileType python setlocal foldmethod=indent
 set foldlevel=99
@@ -134,10 +129,6 @@ nmap <Space>w \Ow
 nmap <Space>b \Ob
 
 let g:toggle_list_no_mappings = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-let g:syntastic_disabled_filetypes=['html']
 nmap <Space><Space> :call ToggleLocationList()<CR>
 
 autocmd FileType c,cpp,java,php,python,perl autocmd BufWritePre <buffer> :%s/\s\+$//e
@@ -195,6 +186,10 @@ let g:rbpt_loadcmd_toggle = 0
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
+let g:ale_linters = {'go': ['gometalinter']}
+" let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=unused --enable=staticcheck --enable=structcheck --enable=golint --enable=errcheck --enable=goconst --enable=gocyclo --enable=gotype'
+let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=golint --enable=errcheck --enable=gocyclo --enable=gotype'
+
 " let g:SuperTabDefaultCompletionType = "context"
 autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
@@ -239,6 +234,10 @@ autocmd FileType puppet     set sw=2 | set ts=2 | set sts=2
 if !has('nvim')
     set ttyfast
     set ttyscroll=3
+endif
+
+if has('nvim')
+    tnoremap <C-\><C-\> <C-\><C-n>
 endif
 
 set lazyredraw
