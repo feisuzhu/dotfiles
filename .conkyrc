@@ -74,10 +74,10 @@ ${color grey}Frequency (in MHz):$color $freq
 ${color grey}Uptime:$color $uptime
 ${color grey}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}
 ${hr}
-${color 66ccff}${font 文泉驿等宽微米黑:size=14}${execpi 30 cat ~/TODO | grep -v '^\*'}${color}${font}
+${color 66ccff}${font 文泉驿等宽微米黑:size=14}${execi 30 cat ~/TODO | grep -v '^\*'}${color}${font}
 ${hr}
-${color green}${font 文泉驿等宽微米黑:size=14}${execpi 30 ~/my_projects/satori-conf/conky-plugin.py}${color}${font}
-${hr}
+# ${color green}${font 文泉驿等宽微米黑:size=14}${execi 30 ~/my_projects/satori-conf/conky-plugin.py}${color}${font}
+# ${hr}
 ${color 00de77}Name              PID   CPU%   MEM%
 ${color 00de77} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
 ${color 00de77} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
