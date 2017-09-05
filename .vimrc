@@ -93,12 +93,19 @@ set t_Co=256
 let mdtypes = ['md', 'markdown']
 
 if index(mdtypes, &filetype) == -1
-  let g:table_mode_corner_corner='+'
-  let g:table_mode_header_fillchar='='
+  let g:table_mode_corner_corner = '+'
+  let g:table_mode_header_fillchar = '='
 else
-  let g:airline_powerline_fonts=1
+  let g:airline_powerline_fonts = 1
   let g:airline#extensions#ale#enabled = 1
 endif
+" let g:table_mode_delete_row_map = 'tdd'
+" let g:table_mode_delete_column_map = 'tdc'
+" let g:table_mode_realign_map = 'tr'
+
+nmap tr <Plug>(table-mode-realign)
+nmap tdd <Plug>(table-mode-delete-row)
+nmap tdc <Plug>(table-mode-delete-column)
 
 " autocmd FileType python setlocal foldmethod=indent
 set foldlevel=99
