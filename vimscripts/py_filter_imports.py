@@ -1,10 +1,16 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
-import sys
+# -- stdlib --
 from collections import defaultdict
 import ast
+import sys
 
+# -- third party --
+# -- own --
 
+# -- code --
 src = sys.stdin.read()
 
 MAX_LINE_WIDTH = 100
@@ -145,12 +151,12 @@ def fmtalias(a):
 try:
     module = ast.parse(src)
 except SyntaxError:
-    print do_sort(src)
+    print(do_sort(src))
     sys.exit()
 
 
 if not all(isinstance(s, (ast.Import, ast.ImportFrom)) for s in module.body):
-    print do_sort(src)
+    print(do_sort(src))
     sys.exit()
 
 # ----------------------
@@ -233,24 +239,27 @@ for a in imports:
     # print dst
     dst.append('import ' + a)
 
-print '# -*- coding: utf-8 -*-'
+if src.startswith('#!'):
+    print('#!/usr/bin/env python')
+
+print('# -*- coding: utf-8 -*-')
 if future:
-    print '\n'.join(future)
-print
+    print('\n'.join(future))
+print()
 
-print '# -- stdlib --'
+print('# -- stdlib --')
 if stdlibs:
-    print '\n'.join(stdlibs)
-    print
+    print('\n'.join(stdlibs))
+    print()
 
-print '# -- third party --'
+print('# -- third party --')
 if third_parties:
-    print '\n'.join(third_parties)
-    print
+    print('\n'.join(third_parties))
+    print()
 
-print '# -- own --'
+print('# -- own --')
 if own:
-    print '\n'.join(own)
-    print
+    print('\n'.join(own))
+    print()
 
-print '\n# -- code --'
+print('\n# -- code --')
