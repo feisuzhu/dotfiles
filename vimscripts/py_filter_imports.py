@@ -168,8 +168,14 @@ for stmt in module.body:
 
 
 # ----- Good habit! -----
-if 'absolute_import' not in froms['__future__']:
-    froms['__future__'].append('absolute_import')
+def _ensure_future(s):
+    if s not in froms['__future__']:
+        froms['__future__'].append(s)
+
+_ensure_future('absolute_import')
+_ensure_future('division')
+_ensure_future('print_function')
+_ensure_future('unicode_literals')
 # -----------------------
 
 imports = list(sorted(set(imports)))
