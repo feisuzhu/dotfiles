@@ -13,6 +13,7 @@
 	grep = auto
 [core]
     editor = vim
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [alias]
   abbr = "!sh -c 'git rev-list --all | grep ^$1 | while read commit; do git --no-pager log -n1 --pretty=format:5784acef31ec68226b79a9858161558597a1aac9quot;%H %ci %an %s%n5784acef31ec68226b79a9858161558597a1aac9quot; $commit; done' -"
   aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'

@@ -38,9 +38,11 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:~/hammers
+export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 export PATH=$PATH:~/android-sdk-linux/platform-tools:~/android-sdk-linux/tools:~/android-ndk-r10d/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin/:~/android-ndk-r10d/
-export PATH=$PATH:/usr/local/DS-5/bin
+for d in ~/hammers/bin*; do
+    export PATH=$PATH:$d
+done
 
 alias tests='cd ~/my_projects/thbattle/tests'
 alias kmaster="ps aux | grep master | grep ssh | awk '{print \$2}' | xargs kill"
