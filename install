@@ -2,12 +2,14 @@ git clone https://github.com/feisuzhu/dotfiles.git
 cd dotfiles
 DIR=`pwd`
 cd ~
-mkdir -p .vim .config
+mkdir -p .vim/autoload .config/nvim
+ln -svf $DIR/.vim/autoload ~/.config/nvim/autoload
 ln -svf $DIR/.ackrc ~/
 ln -svf $DIR/.agignore ~/
 ln -svf $DIR/.ctags ~/
 ln -svf $DIR/.gitconfig ~/
 ln -svf $DIR/.vimrc ~/
+ln -svf $DIR/.vimrc ~/.config/nvim/init.vim
 ln -svf $DIR/.gvimrc ~/
 ln -svf $DIR/.zshrc ~/
 ln -svf $DIR/flake8 ~/.config/
