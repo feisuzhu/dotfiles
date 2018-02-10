@@ -38,6 +38,9 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+export EDITOR=nvim
+export GOPATH=$HOME/go
+
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 export PATH=$PATH:~/android-sdk-linux/platform-tools:~/android-sdk-linux/tools:~/android-ndk-r10d/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin/:~/android-ndk-r10d/
 for d in ~/hammers/bin*; do
@@ -45,7 +48,11 @@ for d in ~/hammers/bin*; do
 done
 
 alias tests='cd ~/my_projects/thbattle/tests'
-alias kmaster="ps aux | grep master | grep ssh | awk '{print \$2}' | xargs kill"
+
+function kmaster {
+    ps aux | grep master | grep ssh | grep ${1:-.} | awk '{print $2}' | xargs kill
+}
+
 
 export PIP_DOWNLOAD_CACHE=~/.cache/pip
 
@@ -183,10 +190,7 @@ function rep {
 alias l='ssh -A lcrelay'
 
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -e /home/proton/.nix-profile/etc/profile.d/nix.sh ]; then . /home/proton/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-
-export EDITOR=nvim
 
 alias riemann="java -server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:+UseCompressedOops -XX:+CMSClassUnloadingEnabled -XX:-OmitStackTraceInFastThrow -cp $GOPATH/src/github.com/leancloud/satori/satori/images/riemann/app/riemann.jar riemann.bin"
