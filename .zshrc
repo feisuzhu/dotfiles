@@ -185,6 +185,7 @@ alias l='ssh -A lcrelay'
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -e /home/proton/.nix-profile/etc/profile.d/nix.sh ]; then . /home/proton/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 export EDITOR=nvim
 

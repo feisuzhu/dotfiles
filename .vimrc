@@ -78,6 +78,12 @@ Plug 'fatih/vim-go'
 Plug 'posva/vim-vue'
 Plug 'alderz/smali-vim'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'leafgarland/typescript-vim'
+Plug 'Shougo/vimproc.vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'Rykka/riv.vim'  " reStructuredText
+Plug 'feisuzhu/vim-pysql'
+Plug 'wesQ3/vim-windowswap'
 call plug#end()
 
 filetype plugin on
@@ -113,6 +119,9 @@ set foldlevel=99
 nmap <Tab> :NERDTreeToggle<CR>
 nmap <S-Tab> :TagbarToggle<CR>
 
+let g:riv_ignored_imaps = "<Tab>,<S-Tab>"
+let g:riv_ignored_nmaps = "<Tab>,<S-Tab>"
+
 set diffopt+=vertical
 
 set wildignore=*.py[co]
@@ -129,7 +138,7 @@ au FileType python set omnifunc=pythoncomplete#Complete
 au FileType c,cpp set omnifunc=OmniCppComplete
 set completeopt=menuone,longest,preview
 
-let NERDTreeIgnore = ['\.py[co]$', '\.o', 'a\.out']
+let NERDTreeIgnore = ['\.py[co]$', '\.o$', 'a\.out$', '^__pycache__$']
 
 let g:EasyMotion_leader_key = '\O'
 

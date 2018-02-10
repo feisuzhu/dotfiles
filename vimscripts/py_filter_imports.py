@@ -57,6 +57,7 @@ THIRD_PARTIES = (
     'arrow',
     'babel',
     'bcrypt',
+    'beaker',
     'beanstalkc',
     'bidict',
     'billiard',
@@ -66,13 +67,14 @@ THIRD_PARTIES = (
     'captchaimage',
     'cdecimal',
     'celery',
+    'click',
     'collective',
     'colorlog',
     'coverage',
+    'cryptography',
     'dateutil',
     'docutils',
     'easy_install',
-    'pymysql',
     'ecdsa',
     'flask',
     'flask_admin',
@@ -93,6 +95,7 @@ THIRD_PARTIES = (
     'kafka',
     'kombu',
     'leancloud',
+    'lxml',
     'magic',
     'mako',
     'markupsafe',
@@ -106,6 +109,7 @@ THIRD_PARTIES = (
     'pygit2',
     'pyglet',
     'pygments',
+    'pymysql',
     'pytz',
     'raven',
     'recipe',
@@ -133,6 +137,7 @@ THIRD_PARTIES = (
     'wtforms',
     'xml4h',
     'yaml',
+    'yoyo',
     'zc',
 )
 
@@ -178,6 +183,7 @@ def _ensure_future(s):
     if s not in froms['__future__']:
         froms['__future__'].append(s)
 
+
 _ensure_future('absolute_import')
 _ensure_future('division')
 _ensure_future('print_function')
@@ -185,8 +191,8 @@ _ensure_future('unicode_literals')
 # -----------------------
 
 imports = list(sorted(set(imports)))
-froms = froms.items()
-froms.sort(key=lambda (k, v): k)
+froms = list(froms.items())
+froms.sort(key=lambda i: i[0])
 for k, v in froms:
     v[:] = list(sorted(set(v)))
 
