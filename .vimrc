@@ -223,6 +223,8 @@ autocmd VimEnter * RainbowParenthesesActivate
 autocmd Syntax * RainbowParenthesesLoadRound
 autocmd Syntax html,htmldjango RainbowParenthesesLoadTornado
 
+autocmd BufEnter * :syntax sync fromstart
+
 " ----------------------
 
 set ts=4
