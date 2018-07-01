@@ -43,7 +43,7 @@ STDLIBS = (
     'toaiff', 'token', 'tokenize', 'trace', 'traceback', 'tty', 'types', 'unittest', 'urllib', 'urllib2',
     'urlparse', 'user', 'uu', 'uuid', 'warnings', 'wave', 'weakref', 'webbrowser', 'whichdb', 'wsgiref',
     'xdrlib', 'xml', 'xmllib', 'xmlrpclib', 'zipfile', 'zipimport', 'zlib',
-    'datetime',
+    'datetime', 'pathlib',
 )
 
 THIRD_PARTIES = (
@@ -73,6 +73,7 @@ THIRD_PARTIES = (
     'coverage',
     'cryptography',
     'dateutil',
+    'django',
     'docutils',
     'easy_install',
     'ecdsa',
