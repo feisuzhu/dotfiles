@@ -35,7 +35,6 @@ Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim'
 " Close buffer without closing window
 Plug 'rbgrouleff/bclose.vim'
-" TagBar
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/OmniCppComplete'
 Plug 'groenewege/vim-less'
@@ -46,7 +45,7 @@ Plug 'guns/vim-clojure-static'
 " Plug 'tpope/vim-classpath'
 " Plug 'venantius/vim-eastwood'
 
-Plug 'feisuzhu/rainbow_parentheses.vim'
+Plug 'luochen1990/rainbow'
 Plug 'uarun/vim-protobuf'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'kchmck/vim-coffee-script'
@@ -65,7 +64,7 @@ Plug 'bps/vim-textobj-python'
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'rust-lang/rust.vim'
 Plug 'phildawes/racer'
-Plug 'davidhalter/jedi'
+Plug 'davidhalter/jedi-vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'EvanDotPro/nerdtree-chmod'
 Plug 'robbles/logstash.vim'
@@ -134,10 +133,6 @@ else
     set clipboard=unnamedplus
 endif
 
-au FileType python set omnifunc=pythoncomplete#Complete
-au FileType c,cpp set omnifunc=OmniCppComplete
-set completeopt=menuone,longest,preview
-
 let NERDTreeIgnore = ['\.py[co]$', '\.o$', 'a\.out$', '^__pycache__$']
 
 let g:EasyMotion_leader_key = '\O'
@@ -187,28 +182,29 @@ imap <C-\><C-\> <C-y>,
 
 syntax on
 
-" rainbow paren
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-
-let g:rbpt_max = 16
-let g:rbpt_loadcmd_toggle = 0
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_conf = {
+\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+\	'operators': '_,_',
+\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\	'separately': {
+\		'*': {},
+\		'tex': {
+\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+\		},
+\		'lisp': {
+\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\		},
+\		'vim': {
+\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+\		},
+\		'html': {
+\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+\		},
+\		'css': 0,
+\	}
+\}
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -218,10 +214,7 @@ let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=go
 
 " let g:SuperTabDefaultCompletionType = "context"
 autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-
-autocmd VimEnter * RainbowParenthesesActivate
-autocmd Syntax * RainbowParenthesesLoadRound
-autocmd Syntax html,htmldjango RainbowParenthesesLoadTornado
+autocmd FileType python let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 autocmd BufEnter * :syntax sync fromstart
 
