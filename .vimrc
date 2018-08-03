@@ -217,6 +217,7 @@ autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 autocmd FileType python let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 autocmd BufEnter * :syntax sync fromstart
+autocmd BufEnter * nnoremap <buffer> <C-]> :call jedi#goto()<CR>
 
 " ----------------------
 
