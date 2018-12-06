@@ -89,6 +89,7 @@ THIRD_PARTIES = (
     'flower',
     'funtests',
     'gevent',
+    'graphql',
     'graphene',
     'graphene_django',
     'greenlet',
@@ -210,6 +211,7 @@ own = []
 
 def where(name):
     name = name.split('.')[0]
+    name = name.split(' as ')[0]
     if name == '__future__':
         return future
     if name in STDLIBS:

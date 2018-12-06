@@ -35,10 +35,11 @@ conky.config = {
     default_shade_color = 'white',
     draw_borders = false,
     draw_graph_borders = true,
-    -- draw_outline = true,
+    draw_outline = true,
     draw_shades = false,
     use_xft = true,
-    font = '文泉驿等宽微米黑:size=9',
+    -- font = '文泉驿等宽微米黑:size=9',
+    font = 'Iosevka Term:style=Regular:size=9',
     gap_x = 0,
     gap_y = 0,
     minimum_height = 5,
@@ -66,7 +67,7 @@ conky.config = {
 }
 
 conky.text = [[
-${font DS\-Digital:style=Bold:size=45}${alignc}${color #000000}${time %H:%M:%S}${font}${color}
+${font Iosevka Term:style=Bold:size=45}${alignc}${color #a0a0ff}${time %H:%M:%S}${font}${color}
 ${color #08CEEB}${font 文泉驿等宽微米黑:size=12}${alignc}${time %b%d 星期%a}${color}${font}
 ${hr}
 $nodename - $sysname $kernel
