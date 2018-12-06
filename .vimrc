@@ -10,10 +10,10 @@ endif
 call plug#begin('~/.vim/plugged')
 " Color scheme
 Plug 'feisuzhu/ingretu'
-" status line
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ervandew/supertab' " tab completion
+
 Plug 'mileszs/ack.vim' " better than grep
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale' " asynchronous linting engine
@@ -51,12 +51,11 @@ Plug 'bps/vim-textobj-python'
 
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer'  " Rust code completion
 Plug 'davidhalter/jedi-vim'  " Python things
 Plug 'derekwyatt/vim-scala'
 Plug 'EvanDotPro/nerdtree-chmod'
 Plug 'robbles/logstash.vim'
-Plug 'tpope/vim-surround'  " Fancy parentheses completion
+Plug 'tpope/vim-surround'  " Fancy parentheses manipulation
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'nickhutchinson/vim-systemtap'
@@ -71,6 +70,19 @@ Plug 'Quramy/tsuquyomi'  " TypeScript things
 Plug 'Rykka/riv.vim'  " reStructuredText
 Plug 'feisuzhu/vim-pysql'  " Syntax highlights embedded SQL strings
 Plug 'pangloss/vim-javascript'
+
+" Autocomplete framework
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plug 'zchee/deoplete-jedi'
+Plug 'racer-rust/vim-racer'  " Rust code completion
+
 call plug#end()
 " <<<<<
 " >>>>> General Settings
@@ -236,6 +248,11 @@ let g:ale_linters = {'go': ['gometalinter']}
 " let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=unused --enable=staticcheck --enable=structcheck --enable=golint --enable=errcheck --enable=goconst --enable=gocyclo --enable=gotype'
 let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=golint --enable=errcheck --enable=gocyclo --enable=gotype'
 " <<<<<
+" >>>>> deoplete
+let g:deoplete#enable_at_startup = 1
+" <TAB> for completion
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <<<<<
 " >>>>> Golang rules
 autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 " <<<<<
@@ -245,7 +262,7 @@ autocmd BufEnter *.py nnoremap <buffer> <C-]> :call jedi#goto()<CR>
 vmap \p :!autopep8 -<CR>
 " <<<<<
 " >>>>> Rust rules
-let g:autofmt_autosave = 1
+let g:rustfmt_autosave = 1
 autocmd FileType rust nmap <buffer> <C-]> <Plug>(rust-def)
 autocmd FileType rust nmap <buffer> K <Plug>(rust-doc)
 " <<<<<
