@@ -80,7 +80,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-jedi'   " Python code completion
 Plug 'racer-rust/vim-racer'  " Rust code completion
 
 call plug#end()
@@ -250,6 +250,9 @@ let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=go
 " <<<<<
 " >>>>> deoplete
 let g:deoplete#enable_at_startup = 1
+" Disable popup text truncation
+call deoplete#custom#source('racer', 'max_abbr_width', 0)
+call deoplete#custom#source('racer', 'max_menu_width', 0)
 " <TAB> for completion
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <<<<<
@@ -265,6 +268,7 @@ vmap \p :!autopep8 -<CR>
 let g:rustfmt_autosave = 1
 autocmd FileType rust nmap <buffer> <C-]> <Plug>(rust-def)
 autocmd FileType rust nmap <buffer> K <Plug>(rust-doc)
+autocmd FileType rust set makeprg=cargo
 " <<<<<
 " >>>>> Markdown quirks
 let mdtypes = ['md', 'markdown']
