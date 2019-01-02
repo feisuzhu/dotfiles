@@ -255,6 +255,18 @@ call deoplete#custom#source('racer', 'max_abbr_width', 0)
 call deoplete#custom#source('racer', 'max_menu_width', 0)
 " <TAB> for completion
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Disable completion when using multiple cursors
+function! Multiple_cursors_before()
+    call deoplete#custom#option('auto_complete', v:false)
+endfunction
+
+function! Multiple_cursors_after()
+    call deoplete#custom#option('auto_complete', v:true)
+endfunction
+" <<<<<
+" >>>>> jedi
+let g:jedi#completions_enabled=0
 " <<<<<
 " >>>>> Golang rules
 autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
