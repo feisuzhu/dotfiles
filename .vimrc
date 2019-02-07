@@ -244,7 +244,7 @@ let g:rainbow_conf = {
 let g:ackprg = 'ag --nogroup --nocolor --column'
 " <<<<<
 " >>>>> ale
-let g:ale_linters = {'go': ['gometalinter']}
+let g:ale_linters = {'go': ['gometalinter'], 'python': ['flake8']}
 " let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=unused --enable=staticcheck --enable=structcheck --enable=golint --enable=errcheck --enable=goconst --enable=gocyclo --enable=gotype'
 let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=golint --enable=errcheck --enable=gocyclo --enable=gotype'
 " <<<<<
