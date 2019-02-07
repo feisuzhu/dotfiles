@@ -94,6 +94,9 @@ def where(name):
     except ImportError:
         return errord
 
+    if path is None:  # `sys` and friends
+        return stdlibs
+
     if '/site-packages/' in path or\
        '/dist-packages/' in path:
         return third_parties
