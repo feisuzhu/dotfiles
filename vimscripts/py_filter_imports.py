@@ -37,7 +37,7 @@ except SyntaxError:
     sys.exit()
 
 
-if not all(isinstance(s, (ast.Import, ast.ImportFrom)) for s in module.body):
+if not all(isinstance(s, (ast.Import, ast.ImportFrom, ast.If)) for s in module.body):
     print(do_sort(src))
     sys.exit()
 
@@ -50,9 +50,31 @@ for stmt in module.body:
     if isinstance(stmt, ast.Import):
         imports.extend([fmtalias(i) for i in stmt.names])
     elif isinstance(stmt, ast.ImportFrom):
+
         lvl = '.' * stmt.level
         mod = stmt.module or ''
+
+        if mod.endswith('TT'):
+            froms['typing'].append('TYPE_CHECKING')
+
         froms[lvl + mod].extend([fmtalias(i) for i in stmt.names])
+    elif isinstance(stmt, ast.If):
+        if isinstance(stmt.test, ast.Name):
+            if stmt.test.id == 'TYPE_CHECKING':
+                froms['typing'].append('TYPE_CHECKING')
+                for stmt in stmt.body:
+                    if isinstance(stmt, ast.Import):
+                        imports.extend([fmtalias(i) + 'TT' for i in stmt.names])
+                    elif isinstance(stmt, ast.ImportFrom):
+                        lvl = '.' * stmt.level
+                        mod = stmt.module or ''
+                        froms[lvl + mod + 'TT'].extend([fmtalias(i) for i in stmt.names])
+            else:
+                raise Exception("COMPLEX CODE!")
+        else:
+            raise Exception("COMPLEX CODE!")
+    else:
+        raise Exception("COMPLEX CODE!")
 
 
 if sys.version_info.major == 2:
@@ -78,10 +100,14 @@ future = []
 stdlibs = []
 third_parties = []
 own = []
+typing = []
 errord = []
 
 
 def where(name):
+    if name.endswith('TT'):
+        return typing
+
     name = name.split('.')[0]
     name = name.split(' as ')[0]
     if name == '__future__':
@@ -156,6 +182,11 @@ if third_parties:
 print('# -- own --')
 if own:
     print('\n'.join(own))
+    print()
+
+if typing:
+    print('# -- typing --')
+    print('\n    '.join(['if TYPE_CHECKING:'] + typing).replace('TT', ''))
     print()
 
 if errord:
