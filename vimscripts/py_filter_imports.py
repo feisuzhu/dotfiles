@@ -7,6 +7,7 @@ from collections import defaultdict
 import ast
 import imp
 import os
+import subprocess
 import sys
 
 # -- third party --
@@ -42,13 +43,29 @@ if not all(isinstance(s, (ast.Import, ast.ImportFrom, ast.If)) for s in module.b
     sys.exit()
 
 # ----------------------
+unused = []
+
+if len(sys.argv) > 1:
+    try:
+        fn = sys.argv[1]
+        cmd = '''flake8 --format '%(text)s' ''' + fn + ''' | grep -Po "(?<=')([^)]+)(?=' imported but unused)"'''
+        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        err = p.stderr.read()
+        if not err:
+            lst = p.stdout.read().decode('utf-8').split()
+            unused.extend(lst)
+    except Exception:
+        pass
+    finally:
+        p.kill()
+
 
 froms = defaultdict(list)
 imports = []
 
 for stmt in module.body:
     if isinstance(stmt, ast.Import):
-        imports.extend([fmtalias(i) for i in stmt.names])
+        imports.extend([fmtalias(i) for i in stmt.names if i.name not in unused])
     elif isinstance(stmt, ast.ImportFrom):
 
         lvl = '.' * stmt.level
@@ -57,7 +74,23 @@ for stmt in module.body:
         if mod.endswith('TT'):
             froms['typing'].append('TYPE_CHECKING')
 
-        froms[lvl + mod].extend([fmtalias(i) for i in stmt.names])
+        for i in stmt.names:
+            ful = lvl + mod
+            t = {
+                '..actions': 'thb.actions',
+                '..cards': 'thb.cards.classes',
+                '..inputlets': 'thb.inputlets',
+                '.baseclasses': 'thb.characters.base',
+            }
+            ful = t.get(ful, ful)
+            if '%s.%s' % (ful, i.name) in unused:
+                continue
+
+            if ful == 'game.autoenv' and fmtalias(i) not in ('Game', 'user_input'):
+                froms['game.base'].append(fmtalias(i))
+            else:
+                froms[ful].append(fmtalias(i))
+
     elif isinstance(stmt, ast.If):
         if isinstance(stmt.test, ast.Name):
             if stmt.test.id == 'TYPE_CHECKING':
@@ -186,7 +219,9 @@ if own:
 
 if typing:
     print('# -- typing --')
-    print('\n    '.join(['if TYPE_CHECKING:'] + typing).replace('TT', ''))
+    typing = [f'    {i}  # noqa: F401' for i in typing]
+    print('if TYPE_CHECKING:')
+    print('\n'.join(typing).replace('TT', ''))
     print()
 
 if errord:
