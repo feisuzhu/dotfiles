@@ -88,6 +88,9 @@ for stmt in module.body:
 
             if ful == 'game.autoenv' and fmtalias(i) not in ('Game', 'user_input'):
                 froms['game.base'].append(fmtalias(i))
+
+            elif ful == 'thb.cards.classes' and fmtalias(i) in ('Card', 'Skill', 'VirtualCard'):
+                froms['thb.cards.base'].append(fmtalias(i))
             else:
                 froms[ful].append(fmtalias(i))
 

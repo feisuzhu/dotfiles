@@ -106,10 +106,10 @@ done
 
 
 function proxy {
-    export HTTP_PROXY="http://localhost:8118"
-    export HTTPS_PROXY="http://localhost:8118"
-    export http_proxy="http://localhost:8118"
-    export https_proxy="http://localhost:8118"
+    export HTTP_PROXY=$(cat ~/.proxy)
+    export HTTPS_PROXY=$(cat ~/.proxy)
+    export http_proxy=$(cat ~/.proxy)
+    export https_proxy=$(cat ~/.proxy)
 }
 
 function noproxy {
