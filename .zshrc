@@ -33,18 +33,15 @@ CASE_SENSITIVE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git kube-ps1)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export EDITOR=nvim
-export GOROOT=$HOME/hammers/box/go
-export GOPATH=$HOME/my_projects/gopath
-
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:~/android-sdk-linux/platform-tools:~/android-sdk-linux/tools:~/android-ndk-r10d/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin/:~/android-ndk-r10d/
+
 for d in ~/hammers/bin*; do
     export PATH=$PATH:$d
 done
@@ -189,6 +186,17 @@ function rep {
         scp "thbcn:/data/data/thb/archives/${1}-$2.gz" .
     fi
 }
+
+function kps {
+    export PROMPT="\$(kube_ps1) $PROMPT"
+}
+
+export KUBE_PS1_SYMBOL_USE_IMG=true
+export KUBE_PS1_NS_ENABLE=false
+export KUBE_PS1_DIVIDER=""
+export KUBE_PS1_PREFIX=""
+export KUBE_PS1_SUFFIX=""
+
 
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
