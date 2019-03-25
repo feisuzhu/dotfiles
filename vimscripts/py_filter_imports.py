@@ -222,7 +222,7 @@ if own:
 
 if typing:
     print('# -- typing --')
-    typing = [f'    {i}  # noqa: F401' for i in typing]
+    typing = ['    {}  # noqa: F401'.format(i) for i in typing]
     print('if TYPE_CHECKING:')
     print('\n'.join(typing).replace('TT', ''))
     print()

@@ -184,8 +184,8 @@ nmap <Space><Space> :call ToggleLocationList()<CR>
 nmap <S-Tab> :TagbarToggle<CR>
 " <<<<<
 " >>>>> fzf
-nmap \t :Files<CR>
-nmap \T :Tags<CR>
+nmap sf :Files<CR>
+" nmap st :Tags<CR>
 " <<<<<
 " >>>>> tabular
 vmap \= :Tabularize /^[^=]*\zs/l0r1<CR>
