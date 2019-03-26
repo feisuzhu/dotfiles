@@ -71,6 +71,8 @@ Plug 'Rykka/riv.vim'  " reStructuredText
 Plug 'feisuzhu/vim-pysql'  " Syntax highlights embedded SQL strings
 Plug 'pangloss/vim-javascript'
 
+Plug 'pedrohdz/vim-yaml-folds'
+
 " Autocomplete framework
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
