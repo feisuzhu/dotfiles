@@ -70,6 +70,7 @@ Plug 'Quramy/tsuquyomi'  " TypeScript things
 Plug 'Rykka/riv.vim'  " reStructuredText
 Plug 'feisuzhu/vim-pysql'  " Syntax highlights embedded SQL strings
 Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-commentary'
 
 " Autocomplete framework
 if has('nvim')
