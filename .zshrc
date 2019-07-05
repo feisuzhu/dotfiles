@@ -204,3 +204,7 @@ export KUBE_PS1_SUFFIX=""
 if [ -e /home/proton/.nix-profile/etc/profile.d/nix.sh ]; then . /home/proton/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 alias riemann="java -server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:+UseCompressedOops -XX:+CMSClassUnloadingEnabled -XX:-OmitStackTraceInFastThrow -cp $GOPATH/src/github.com/leancloud/satori/satori/images/riemann/app/riemann.jar riemann.bin"
+
+function psh {
+    . $(dirname $(poetry run which python))/activate
+}
