@@ -73,6 +73,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-commentary'
 
 Plug 'pedrohdz/vim-yaml-folds'
+Plug 'farmergreg/vim-lastplace'  " Jump to last edit location
 
 " Autocomplete framework
 if has('nvim')
@@ -134,6 +135,9 @@ endif
 
 set lazyredraw
 syntax on
+
+set undofile
+set undodir=~/.vim/undodir
 " <<<<<
 " >>>>> Language indentation rules
 autocmd FileType clojure    set sw=2 | set ts=2 | set sts=2
