@@ -115,15 +115,17 @@ for stmt in module.body:
         raise Exception("COMPLEX CODE!")
 
 
-if sys.version_info.major == 2:
-    def _ensure_future(s):
-        if s not in froms['__future__']:
-            froms['__future__'].append(s)
+def _ensure_future(s):
+    if s not in froms['__future__']:
+        froms['__future__'].append(s)
 
+if sys.version_info.major == 2:
     _ensure_future('absolute_import')
     _ensure_future('division')
     _ensure_future('print_function')
     _ensure_future('unicode_literals')
+elif sys.version_info.major == 3:
+    _ensure_future('annotations')
 
 
 imports = list(sorted(set(imports)))
