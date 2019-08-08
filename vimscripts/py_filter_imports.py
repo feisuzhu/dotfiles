@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python -W ignore
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function, unicode_literals
 import warnings
@@ -7,7 +7,12 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 # -- stdlib --
 from collections import defaultdict
 import ast
-import imp
+import warnings
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    import imp
+
 import os
 import subprocess
 import sys
