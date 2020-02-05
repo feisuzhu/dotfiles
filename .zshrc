@@ -45,7 +45,7 @@ for d in ~/hammers/bin*; do
 done
 
 function kmaster {
-    ps aux | grep master | grep ssh | grep ${1:-.} | awk '{print $2}' | xargs kill
+    ps aux | grep '\[mux\]' | grep ssh | grep ${1:-.} | awk '{print $2}' | xargs kill
 }
 
 
@@ -173,6 +173,8 @@ function exhausted {
 function testup {
     ssh -A thbcn ssh -A proton@thbattle.net bash -x update_testing
     ssh thbcn sudo bash -x ~root/test_restart
+    git push nas-unity-logic +testing
+    ssh nas.local 'cd /pool/proton/thb-unity-logic && git reset --hard'
 }
 
 function rep {

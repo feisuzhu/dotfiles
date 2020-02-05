@@ -302,7 +302,7 @@ endif
 " <<<<<
 " >>>>> Misc stuff
 " Trim trailing spaces
-autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go,yaml autocmd BufWritePre <buffer> :%s/\s\+$//e
 " <<<<<
 
 " vim: set foldmethod=marker foldmarker=>>>>>,<<<<< foldlevel=0:
