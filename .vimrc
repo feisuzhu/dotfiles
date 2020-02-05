@@ -85,7 +85,12 @@ else
 endif
 
 Plug 'zchee/deoplete-jedi'   " Python code completion
-Plug 'racer-rust/vim-racer'  " Rust code completion
+" Plug 'racer-rust/vim-racer'  " Rust code completion, racer, disable
+" Rust code completion, rls version
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 call plug#end()
 " <<<<<
@@ -254,6 +259,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:ale_linters = {'go': ['gometalinter'], 'python': ['flake8']}
 " let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=unused --enable=staticcheck --enable=structcheck --enable=golint --enable=errcheck --enable=goconst --enable=gocyclo --enable=gotype'
 let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=golint --enable=errcheck --enable=gocyclo --enable=gotype'
+let g:ale_rust_cargo_use_clippy = 1
 " <<<<<
 " >>>>> deoplete
 let g:deoplete#enable_at_startup = 1
@@ -272,6 +278,15 @@ function! Multiple_cursors_after()
     call deoplete#custom#option('auto_complete', v:true)
 endfunction
 " <<<<<
+" >>>>> LanguageClient
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+    \ }
+" <<<<<
 " >>>>> jedi
 let g:jedi#completions_enabled=0
 " <<<<<
@@ -285,8 +300,14 @@ vmap \p :!autopep8 -<CR>
 " <<<<<
 " >>>>> Rust rules
 let g:rustfmt_autosave = 1
-autocmd FileType rust nmap <buffer> <C-]> <Plug>(rust-def)
-autocmd FileType rust nmap <buffer> K <Plug>(rust-doc)
+" Racer commands, disable
+" autocmd FileType rust nmap <buffer> <C-]> <Plug>(rust-def)
+" autocmd FileType rust nmap <buffer> K <Plug>(rust-doc)
+
+autocmd FileType rust nnoremap <buffer> <F5> :call LanguageClient_contextMenu()<CR>
+autocmd FileType rust nnoremap <buffer> <C-]> :call LanguageClient#textDocument_definition()<CR>
+autocmd FileType rust nnoremap <buffer> K :call LanguageClient#textDocument_hover()<CR>
+autocmd FileType rust nnoremap <buffer> <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType rust set makeprg=cargo
 " <<<<<
 " >>>>> Markdown quirks

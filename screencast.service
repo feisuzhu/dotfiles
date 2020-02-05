@@ -4,7 +4,7 @@ After=graphical.target
 
 [Service]
 WorkingDirectory=/home/proton/screencasts
-ExecStart=/bin/bash -c 'exec /usr/bin/ffmpeg -f x11grab -video_size 2560x1440 -i :1 -r 2 -c:v libx264 -preset slow -crf 18 -r 120 -filter:v setpts=PTS/60 $(date +%%Y-%%m-%%d-%%H-%%M).mkv'
+ExecStart=/bin/bash -c 'exec /usr/bin/ffmpeg -f x11grab -video_size 2560x1440 -i $DISPLAY -r 2 -c:v libx264 -preset slow -crf 18 -r 120 -filter:v setpts=PTS/60 $(date +%%Y-%%m-%%d-%%H-%%M).mkv'
 SuccessExitStatus=255
 Restart=on-failure
 

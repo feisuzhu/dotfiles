@@ -45,7 +45,7 @@ for d in ~/hammers/bin*; do
 done
 
 function kmaster {
-    ps aux | grep master | grep ssh | grep ${1:-.} | awk '{print $2}' | xargs kill
+    ps aux | grep '\[mux\]' | grep ssh | grep ${1:-.} | awk '{print $2}' | xargs kill
 }
 
 
