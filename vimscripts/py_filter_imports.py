@@ -95,9 +95,13 @@ for stmt in module.body:
 
             if ful == 'game.autoenv' and fmtalias(i) not in ('Game', 'user_input'):
                 froms['game.base'].append(fmtalias(i))
-
             elif ful == 'thb.cards.classes' and fmtalias(i) in ('Card', 'Skill', 'VirtualCard'):
                 froms['thb.cards.base'].append(fmtalias(i))
+            elif ful == 'game.autoenv':
+                if fmtalias(i) in ('user_input',):
+                    pass
+                else:
+                    froms['game.base'].append(fmtalias(i))
             else:
                 froms[ful].append(fmtalias(i))
 
@@ -123,6 +127,7 @@ for stmt in module.body:
 def _ensure_future(s):
     if s not in froms['__future__']:
         froms['__future__'].append(s)
+
 
 if sys.version_info.major == 2:
     _ensure_future('absolute_import')

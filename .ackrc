@@ -1,3 +1,4 @@
 --type-set=less=.less
 --ignore-file=is:tags
 --ignore-file=is:client_log.txt
+--ignore-file=is:zz_generated.*.go
