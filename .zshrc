@@ -196,6 +196,20 @@ export KUBE_PS1_PREFIX=""
 export KUBE_PS1_SUFFIX=""
 
 
+function k {
+    if [ -z "$KUBE_ENV_SHOWN" ]; then
+        kps
+        export KUBE_ENV_SHOWN=1
+        return
+    fi
+    kubectl "$@"
+}
+
+function kubeme {
+    sudo chmod 0777 /etc/kubernetes/admin.conf
+    export KUBECONFIG=/etc/kubernetes/admin.conf
+}
+
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.cargo/env ] && source ~/.cargo/env
