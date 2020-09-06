@@ -93,6 +93,19 @@ for stmt in module.body:
             if '%s.%s' % (ful, i.name) in unused:
                 continue
 
+            meh = [
+                'thb.meta.common.passive_clickable',
+                'thb.meta.common.passive_is_action_valid',
+                'thb.meta.common.card_desc',
+                'thb.meta.common.my_turn',
+                'thb.meta.common.build_handcard',
+                'thb.meta.common.limit1_skill_used',
+                'thb.meta.common.G',
+            ]
+
+            if '%s.%s' % (ful, i.name) in meh:
+                continue
+
             if ful == 'game.autoenv' and fmtalias(i) not in ('Game', 'user_input'):
                 froms['game.base'].append(fmtalias(i))
             elif ful == 'thb.cards.classes' and fmtalias(i) in ('Card', 'Skill', 'VirtualCard'):

@@ -187,6 +187,8 @@ nmap <Space>f <Plug>(easymotion-prefix)f
 nmap <Space>F <Plug>(easymotion-prefix)F
 nmap <Space>w <Plug>(easymotion-prefix)w
 nmap <Space>b <Plug>(easymotion-prefix)b
+hi EasyMotionTarget ctermbg=none ctermfg=white
+hi EasyMotionShade  ctermbg=none ctermfg=blue
 " <<<<<
 " >>>>> togglelist
 let g:toggle_list_no_mappings = 1

@@ -220,3 +220,6 @@ alias riemann="java -server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSPar
 function psh {
     . $(dirname $(poetry run which python))/activate
 }
+
+alias say='spd-say -r -50'
+alias clip='xclip -selection clipboard'
