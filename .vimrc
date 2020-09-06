@@ -74,6 +74,7 @@ Plug 'tpope/vim-commentary'
 
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'farmergreg/vim-lastplace'  " Jump to last edit location
+Plug 'zchee/vim-flatbuffers'
 
 " Autocomplete framework
 if has('nvim')
@@ -262,12 +263,16 @@ let g:ale_linters = {'go': ['gometalinter'], 'python': ['flake8']}
 " let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=unused --enable=staticcheck --enable=structcheck --enable=golint --enable=errcheck --enable=goconst --enable=gocyclo --enable=gotype'
 let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=golint --enable=errcheck --enable=gocyclo --enable=gotype'
 let g:ale_rust_cargo_use_clippy = 1
+
+highlight ALEError ctermbg=52
+
 " <<<<<
 " >>>>> deoplete
 let g:deoplete#enable_at_startup = 1
 " Disable popup text truncation
-call deoplete#custom#source('racer', 'max_abbr_width', 0)
-call deoplete#custom#source('racer', 'max_menu_width', 0)
+call deoplete#custom#source('_', 'max_abbr_width', 0)
+call deoplete#custom#source('_', 'max_menu_width', 0)
+call deoplete#custom#source('_', 'max_kind_width', 0)
 " <TAB> for completion
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
