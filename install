@@ -14,4 +14,7 @@ ln -svf $DIR/.gvimrc ~/
 ln -svf $DIR/.zshrc ~/
 ln -svf $DIR/flake8 ~/.config/
 ln -svf $DIR/vimscripts .vim/vimscripts
+mkdir -p ~/.config/i3
+ln -svf $DIR/i3-config ~/.config/i3/config
+ln -svf $DIR/.zshrc ~/
 vim
