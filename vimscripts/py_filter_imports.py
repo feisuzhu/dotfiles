@@ -1,6 +1,5 @@
-#!/usr/bin/env python -W ignore
+#!python3 -W ignore
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function, unicode_literals
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -8,6 +7,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 from collections import defaultdict
 import ast
 import warnings
+import sysconfig
 
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
@@ -148,7 +148,8 @@ if sys.version_info.major == 2:
     _ensure_future('print_function')
     _ensure_future('unicode_literals')
 elif sys.version_info.major == 3:
-    _ensure_future('annotations')
+    pass
+    # _ensure_future('annotations')
 
 
 imports = list(sorted(set(imports)))
@@ -189,10 +190,12 @@ def where(name):
     if '/site-packages/' in path or\
        '/dist-packages/' in path:
         return third_parties
+    elif path.startswith(sysconfig.get_path('stdlib')):
+        return stdlibs
     elif path.startswith(os.getcwd()):
         return own
     else:
-        return stdlibs
+        return third_parties
 
 
 for name, aliases in froms:
