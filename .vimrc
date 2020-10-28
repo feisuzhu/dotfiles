@@ -146,6 +146,7 @@ set undofile
 set undodir=~/.vim/undodir
 " <<<<<
 " >>>>> Language indentation rules
+let g:indentLine_setConceal = 0
 autocmd FileType clojure    set sw=2 | set ts=2 | set sts=2
 autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
 autocmd FileType python     set sw=4 | set ts=4 | set sts=4
