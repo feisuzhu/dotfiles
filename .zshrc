@@ -40,7 +40,8 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 export EDITOR=nvim
 
-for d in ~/hammers/bin*; do
+
+for d in ~/bin ~/hammers/bin*; do
     export PATH=$d:$PATH
 done
 
@@ -223,3 +224,7 @@ function psh {
 
 alias say='spd-say -r -50'
 alias clip='xclip -selection clipboard'
+
+function catch {
+    cd $(dirname $(which $1))
+}
