@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+if [ -z "$@" ]
+then
+    echo -en "\x00prompt\x1fSnippets\n"
+    echo -en "\0markup-rows\x1ftrue\n"
+    ls $SCRIPTPATH/snippets
+else
+  coproc (xdotool type --clearmodifiers --file $SCRIPTPATH/snippets/$1)
+fi
