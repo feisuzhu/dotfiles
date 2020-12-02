@@ -40,11 +40,6 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 export EDITOR=nvim
 
-
-for d in ~/bin ~/hammers/bin*; do
-    export PATH=$d:$PATH
-done
-
 function kmaster {
     ps aux | grep '\[mux\]' | grep ssh | grep ${1:-.} | awk '{print $2}' | xargs kill
 }

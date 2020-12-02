@@ -287,6 +287,7 @@ function! Multiple_cursors_after()
 endfunction
 " <<<<<
 " >>>>> LanguageClient
+    " \ 'rust': ['/bin/bash', '-c', 'tee /dev/shm/req.log | ~/.cargo/bin/rustup run stable rls | tee /dev/shm/resp.log'],
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
@@ -299,10 +300,10 @@ let g:LanguageClient_serverCommands = {
 let g:jedi#completions_enabled=0
 " <<<<<
 " >>>>> Golang rules
-autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+" autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 " <<<<<
 " >>>>> Python rules
-autocmd FileType python let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+" autocmd FileType python let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 autocmd BufEnter *.py nnoremap <buffer> <C-]> :call jedi#goto()<CR>
 vmap \p :!autopep8 -<CR>
 " <<<<<
@@ -314,6 +315,7 @@ let g:rustfmt_autosave = 1
 
 autocmd FileType rust nnoremap <buffer> <F5> :call LanguageClient_contextMenu()<CR>
 autocmd FileType rust nnoremap <buffer> <C-]> :call LanguageClient#textDocument_definition()<CR>
+autocmd FileType rust nnoremap <buffer> <C-[> :call Lang
 autocmd FileType rust nnoremap <buffer> K :call LanguageClient#textDocument_hover()<CR>
 autocmd FileType rust nnoremap <buffer> <F2> :call LanguageClient#textDocument_rename()<CR>
 autocmd FileType rust set makeprg=cargo
