@@ -16,7 +16,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'mileszs/ack.vim' " better than grep
 Plug 'scrooloose/nerdtree'
-Plug 'w0rp/ale' " asynchronous linting engine
+" Plug 'w0rp/ale' " asynchronous linting engine
 Plug 'tmhedberg/SimpylFold' " enhanced python folding
 Plug 'tpope/vim-fugitive' " Git integration
 Plug 'tpope/vim-markdown'
@@ -42,7 +42,7 @@ Plug 'chase/nginx.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'digitaltoad/vim-jade'
 Plug 'godlygeek/tabular' " Align your code vertically
-Plug 'milkypostman/vim-togglelist'
+" Plug 'milkypostman/vim-togglelist'  " Obsoleted by coc
 Plug 'ekalinin/Dockerfile.vim'
 
 " Text object for python
@@ -52,7 +52,7 @@ Plug 'ekalinin/Dockerfile.vim'
 
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'rust-lang/rust.vim'
-Plug 'davidhalter/jedi-vim'  " Python things
+" Plug 'davidhalter/jedi-vim'  " Python things
 Plug 'derekwyatt/vim-scala'
 Plug 'EvanDotPro/nerdtree-chmod'
 Plug 'robbles/logstash.vim'
@@ -192,10 +192,6 @@ nmap <Space>b <Plug>(easymotion-prefix)b
 hi EasyMotionTarget ctermbg=none ctermfg=white
 hi EasyMotionShade  ctermbg=none ctermfg=blue
 " <<<<<
-" >>>>> togglelist
-let g:toggle_list_no_mappings = 1
-nmap <Space><Space> :call ToggleLocationList()<CR>
-" <<<<<
 " >>>>> Tagbar
 nmap <S-Tab> :TagbarToggle<CR>
 " <<<<<
@@ -260,7 +256,8 @@ let g:rainbow_conf = {
 let g:ackprg = 'ag --nogroup --nocolor --column'
 " <<<<<
 " >>>>> ale
-let g:ale_linters = {'go': ['gometalinter'], 'python': ['flake8']}
+" let g:ale_linters = {'go': ['gometalinter'], 'python': ['flake8']}
+let g:ale_linters = {'go': ['gometalinter']}
 " let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=unused --enable=staticcheck --enable=structcheck --enable=golint --enable=errcheck --enable=goconst --enable=gocyclo --enable=gotype'
 let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=golint --enable=errcheck --enable=gocyclo --enable=gotype'
 let g:ale_rust_cargo_use_clippy = 1
@@ -269,10 +266,11 @@ highlight ALEError ctermbg=52
 
 " <<<<<
 " >>>>> coc.nvim
+" \   'coc-git',
 let g:coc_global_extensions = [
 \   'coc-json',
-\   'coc-git',
 \   'coc-jedi',
+\   'coc-pyright',
 \   'coc-rls',
 \ ]
 
@@ -308,8 +306,8 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
+nmap <C-]> <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> <C-]> <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
@@ -403,7 +401,8 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings fr CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space><space>  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
 nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
@@ -429,7 +428,7 @@ let g:jedi#completions_enabled=0
 " <<<<<
 " >>>>> Python rules
 " autocmd FileType python let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-autocmd BufEnter *.py nnoremap <buffer> <C-]> :call jedi#goto()<CR>
+" autocmd BufEnter *.py nnoremap <buffer> <C-]> :call jedi#goto()<CR>
 vmap \p :!autopep8 -<CR>
 " <<<<<
 " >>>>> Rust rules

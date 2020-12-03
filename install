@@ -4,16 +4,18 @@ DIR=`pwd`
 cd ~
 mkdir -p .vim/autoload .config/nvim
 ln -svf $DIR/.vim/autoload ~/.config/nvim/autoload
+ln -svf $DIR/.vimrc ~/.config/nvim/init.vim
+ln -svf $DIR/coc-settings.json ~/.config/nvim/coc-settings.json
+ln -svf $DIR/vimscripts .vim/vimscripts
+
 ln -svf $DIR/.ackrc ~/
 ln -svf $DIR/.agignore ~/
 ln -svf $DIR/.ctags ~/
 ln -svf $DIR/.gitconfig ~/
 ln -svf $DIR/.vimrc ~/
-ln -svf $DIR/.vimrc ~/.config/nvim/init.vim
 ln -svf $DIR/.gvimrc ~/
 ln -svf $DIR/.zshrc ~/
 ln -svf $DIR/flake8 ~/.config/
-ln -svf $DIR/vimscripts .vim/vimscripts
 mkdir -p ~/.config/i3
 ln -svf $DIR/i3-config ~/.config/i3/config
 ln -svf $DIR/.zshenv ~/
