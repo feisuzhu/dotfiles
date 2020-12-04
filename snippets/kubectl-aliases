@@ -1,6 +1,8 @@
+export KUBECONFIG=/etc/kubernetes/admin.conf
 alias k='kubectl'
 alias kc='kubectl -n rook-ceph'
 alias ks='kubectl -n kube-system'
 alias ki='kubectl -n istio-system'
 alias km='kubectl -n cert-manager'
 alias kd='kubectl -n default'
+alias kn='kubectl -n infra'

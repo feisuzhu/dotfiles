@@ -433,7 +433,7 @@ vmap \p :!autopep8 -<CR>
 " <<<<<
 " >>>>> Rust rules
 let g:rustfmt_autosave = 1
-autocmd FileType rust set makeprg=cargo
+autocmd FileType rust set makeprg=cargo\ build
 " <<<<<
 " >>>>> Markdown quirks
 let mdtypes = ['md', 'markdown']
