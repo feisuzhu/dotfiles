@@ -144,6 +144,8 @@ endif
 
 set undofile
 set undodir=~/.vim/undodir
+
+highlight Pmenu ctermbg=8
 " <<<<<
 " >>>>> Language indentation rules
 let g:indentLine_setConceal = 0
@@ -166,9 +168,6 @@ nmap <Space>k :wincmd k<CR>
 nmap <Space>j :wincmd j<CR>
 nmap <Space>h :wincmd h<CR>
 nmap <Space>l :wincmd l<CR>
-
-nmap - :lprev<CR>
-nmap = :lnext<CR>
 
 nnoremap _ :cprev<CR>
 nnoremap + :cnext<CR>
@@ -194,6 +193,12 @@ hi EasyMotionShade  ctermbg=none ctermfg=blue
 " <<<<<
 " >>>>> Tagbar
 nmap <S-Tab> :TagbarToggle<CR>
+" <<<<<
+" >>>>> airline
+let g:airline#extensions#default#layout = [
+    \ [ 'a', 'b', 'warning', 'error', 'c' ],
+    \ [ 'x', 'y', 'z']
+    \ ]
 " <<<<<
 " >>>>> fzf
 nmap sf :Files<CR>
@@ -267,9 +272,9 @@ highlight ALEError ctermbg=52
 " <<<<<
 " >>>>> coc.nvim
 " \   'coc-git',
+" \   'coc-jedi',
 let g:coc_global_extensions = [
 \   'coc-json',
-\   'coc-jedi',
 \   'coc-pyright',
 \   'coc-rls',
 \ ]
@@ -299,14 +304,14 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+nnoremap <silent> - :<C-u>call CocActionAsync('diagnosticNext',     'warning')<CR>
+nnoremap <silent> = :<C-u>call CocActionAsync('diagnosticPrevious', 'warning')<CR>
+
 
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <C-]> <Plug>(coc-definition)
+" nmap <silent> gd <Plug>(coc-definition)
+autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go,yaml nmap <buffer> <C-]> <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -397,7 +402,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings fr CoCList
 " Show all diagnostics.
@@ -419,6 +424,8 @@ nnoremap <silent><nowait> + :<C-u>CocNext<CR>
 nnoremap <silent><nowait> _ :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+nmap ' <Plug>(coc-codelens-action)
 " <<<<<
 " >>>>> jedi
 let g:jedi#completions_enabled=0
@@ -443,7 +450,7 @@ if index(mdtypes, &filetype) == -1
   let g:table_mode_header_fillchar = '='
 else
   let g:airline_powerline_fonts = 1
-  let g:airline#extensions#ale#enabled = 1
+  " let g:airline#extensions#ale#enabled = 1
 endif
 " <<<<<
 " >>>>> Misc stuff
