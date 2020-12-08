@@ -8,5 +8,7 @@ then
     echo -en "\0markup-rows\x1ftrue\n"
     ls $SCRIPTPATH/snippets
 else
-  coproc (xdotool type --clearmodifiers --file $SCRIPTPATH/snippets/$1)
+  cat $SCRIPTPATH/snippets/$1 | xsel -i
+  # coproc (xdotool type --clearmodifiers --delay 20 --file $SCRIPTPATH/snippets/$1)
+  coproc (xdotool key Shift+Insert)
 fi
