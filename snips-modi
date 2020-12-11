@@ -9,6 +9,7 @@ then
     ls $SCRIPTPATH/snippets
 else
   cat $SCRIPTPATH/snippets/$1 | xsel -i
+  cat $SCRIPTPATH/snippets/$1 | xsel -i -b
   # coproc (xdotool type --clearmodifiers --delay 20 --file $SCRIPTPATH/snippets/$1)
   coproc (xdotool key Shift+Insert)
 fi
