@@ -1,0 +1,9 @@
+import greenlet
+import gc
+import traceback
+l = [v for v in gc.get_objects() if isinstance(v, greenlet.greenlet)]
+for g in l:
+  if g.gr_frame:
+    print(g.gr_frame)
+    traceback.print_stack(g.gr_frame)
+    print('-----')

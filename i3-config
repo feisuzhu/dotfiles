@@ -153,6 +153,8 @@ bindsym $mod+a exec ~/hammers/bin/satori-rofi
 bindsym $mod+grave exec rofi -show snip -modi snip:~/hammers/box/snips/snips-modi
 bindsym $mod+d exec zsh -c "rofi -show run"
 
+bindsym --release Control+Mod1+a exec zsh -c "cd /dev/shm && scrot -s"
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
