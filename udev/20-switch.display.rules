@@ -1,0 +1,3 @@
+# 046a:0011 is Cherry Keyboard
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="046a", ATTRS{idProduct}=="0011", ACTION=="add", RUN+="/usr/bin/ddcutil setvcp 0x60 0x0f"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="046a", ATTRS{idProduct}=="0011", ACTION=="remove", RUN+="/usr/bin/ddcutil setvcp 0x60 0x10"
