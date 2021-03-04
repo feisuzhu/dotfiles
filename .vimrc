@@ -274,10 +274,11 @@ highlight ALEError ctermbg=52
 " >>>>> coc.nvim
 " \   'coc-git',
 " \   'coc-jedi',
+" \   'coc-rls',
 let g:coc_global_extensions = [
 \   'coc-json',
 \   'coc-pyright',
-\   'coc-rls',
+\   'coc-rust-analyzer',
 \ ]
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -427,6 +428,12 @@ nnoremap <silent><nowait> _ :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 nmap ' <Plug>(coc-codelens-action)
+
+
+" ---------------------
+" Added by meta
+nnoremap <Space><Enter> :<C-u>CocAction<CR>
+
 " <<<<<
 " >>>>> jedi
 let g:jedi#completions_enabled=0
