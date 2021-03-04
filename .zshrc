@@ -198,6 +198,17 @@ function k {
         export KUBE_ENV_SHOWN=1
         return
     fi
+    if [[ "a$@" = "aapply -k ." ]]; then
+        CURRENT=$(kubectl config view -o jsonpath='{.current-context}')
+        TARGET=$(basename $(pwd))
+        if [ "$TARGET" = "apps" ]; then
+            TARGET=$(basename $(readlink --canonicalize $(pwd)/..))
+        fi
+        if [ "$CURRENT" != "$TARGET" ]; then
+            echo YOU ARE APPLYING $TARGET CONFIGURATION TO $CURRENT !!!
+            return
+        fi
+    fi
     kubectl "$@"
 }
 

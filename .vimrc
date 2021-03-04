@@ -76,6 +76,7 @@ Plug 'tpope/vim-commentary'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'farmergreg/vim-lastplace'  " Jump to last edit location
 Plug 'zchee/vim-flatbuffers'
+Plug 'sgeb/vim-diff-fold'
 
 " Autocomplete framework
 if has('nvim')
