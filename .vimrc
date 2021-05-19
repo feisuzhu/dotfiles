@@ -78,6 +78,8 @@ Plug 'farmergreg/vim-lastplace'  " Jump to last edit location
 Plug 'zchee/vim-flatbuffers'
 Plug 'sgeb/vim-diff-fold'
 
+Plug 'powerman/vim-plugin-AnsiEsc'
+
 " Autocomplete framework
 if has('nvim')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
