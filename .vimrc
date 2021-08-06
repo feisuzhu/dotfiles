@@ -91,6 +91,7 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 " Autocomplete framework
 if has('nvim')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'antoinemadec/coc-fzf'
 endif
 
 call plug#end()
@@ -214,6 +215,7 @@ let g:airline#extensions#default#layout = [
 " >>>>> fzf
 nmap sf :Files<CR>
 " nmap st :Tags<CR>
+nmap st :CocFzfList symbols<CR>
 " <<<<<
 " >>>>> tabular
 vmap \= :Tabularize /^[^=]*\zs/l0r1<CR>
@@ -419,15 +421,16 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Mappings fr CoCList
 " Show all diagnostics.
 " nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-nnoremap <silent><nowait> <space><space>  :<C-u>CocList diagnostics<cr>
+" Modified by Proton: Replace CocList with CocFzfList
+nnoremap <silent><nowait> <space><space>  :<C-u>CocFzfList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>e  :<C-u>CocFzfList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>c  :<C-u>CocFzfList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <space>o  :<C-u>CocFzfList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>s  :<C-u>CocFzfList symbols<cr>
 " Do default action for next item.
 " nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> + :<C-u>CocNext<CR>
@@ -435,14 +438,14 @@ nnoremap <silent><nowait> + :<C-u>CocNext<CR>
 " nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> _ :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent><nowait> <space>p  :<C-u>CocFzfListResume<CR>
 
 nmap ' <Plug>(coc-codelens-action)
 
 
 " ---------------------
 " Added by meta
-nnoremap <Space><Enter> :<C-u>CocAction<CR>
+nnoremap <Space><Enter> :<C-u>CocFzfList<CR>
 
 " <<<<<
 " >>>>> jedi
