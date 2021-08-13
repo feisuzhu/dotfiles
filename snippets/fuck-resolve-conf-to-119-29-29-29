@@ -1,0 +1,3 @@
+cat <<EOF | sudo tee /etc/resolv.conf
+nameserver 119.29.29.29
+EOF

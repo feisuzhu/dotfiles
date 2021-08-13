@@ -1,10 +1,18 @@
 set nocompatible
 
 " >>>>> Plugins
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+if has('nvim')
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+  endif
+else
+  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+  endif
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -14,7 +22,8 @@ Plug 'feisuzhu/ingretu'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'mileszs/ack.vim' " better than grep
+" better than grep, obsoleted by fzf.vim(native ag integration)
+" Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree'
 " Plug 'w0rp/ale' " asynchronous linting engine
 Plug 'tmhedberg/SimpylFold' " enhanced python folding
@@ -61,7 +70,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'maksimr/vim-jsbeautify'
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 Plug 'posva/vim-vue'
 Plug 'alderz/smali-vim'
 Plug 'dhruvasagar/vim-table-mode' " Fantastic table editor
@@ -78,9 +87,12 @@ Plug 'farmergreg/vim-lastplace'  " Jump to last edit location
 Plug 'zchee/vim-flatbuffers'
 Plug 'sgeb/vim-diff-fold'
 
+Plug 'powerman/vim-plugin-AnsiEsc'
+
 " Autocomplete framework
 if has('nvim')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'antoinemadec/coc-fzf'
 endif
 
 call plug#end()
@@ -155,6 +167,7 @@ autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
 autocmd FileType python     set sw=4 | set ts=4 | set sts=4
 autocmd FileType puppet     set sw=2 | set ts=2 | set sts=2
 autocmd FileType rust       set sw=4 | set ts=4 | set sts=4
+autocmd FileType go         set sw=4 | set ts=4 | set sts=4 | set noexpandtab
 " <<<<<
 " >>>>> Clipboard
 let os=substitute(system('uname'), '\n', '', '')
@@ -204,6 +217,7 @@ let g:airline#extensions#default#layout = [
 " >>>>> fzf
 nmap sf :Files<CR>
 " nmap st :Tags<CR>
+nmap st :CocFzfList symbols<CR>
 " <<<<<
 " >>>>> tabular
 vmap \= :Tabularize /^[^=]*\zs/l0r1<CR>
@@ -409,15 +423,16 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Mappings fr CoCList
 " Show all diagnostics.
 " nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-nnoremap <silent><nowait> <space><space>  :<C-u>CocList diagnostics<cr>
+" Modified by Proton: Replace CocList with CocFzfList
+nnoremap <silent><nowait> <space><space>  :<C-u>CocFzfList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>e  :<C-u>CocFzfList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>c  :<C-u>CocFzfList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <space>o  :<C-u>CocFzfList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>s  :<C-u>CocFzfList symbols<cr>
 " Do default action for next item.
 " nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> + :<C-u>CocNext<CR>
@@ -425,14 +440,14 @@ nnoremap <silent><nowait> + :<C-u>CocNext<CR>
 " nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> _ :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent><nowait> <space>p  :<C-u>CocFzfListResume<CR>
 
 nmap ' <Plug>(coc-codelens-action)
 
 
 " ---------------------
 " Added by meta
-nnoremap <Space><Enter> :<C-u>CocAction<CR>
+nnoremap <Space><Enter> :<C-u>CocFzfList<CR>
 
 " <<<<<
 " >>>>> jedi
