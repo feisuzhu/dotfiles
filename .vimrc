@@ -22,7 +22,8 @@ Plug 'feisuzhu/ingretu'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'mileszs/ack.vim' " better than grep
+" better than grep, obsoleted by fzf.vim(native ag integration)
+" Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree'
 " Plug 'w0rp/ale' " asynchronous linting engine
 Plug 'tmhedberg/SimpylFold' " enhanced python folding
@@ -69,7 +70,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'maksimr/vim-jsbeautify'
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 Plug 'posva/vim-vue'
 Plug 'alderz/smali-vim'
 Plug 'dhruvasagar/vim-table-mode' " Fantastic table editor
@@ -166,6 +167,7 @@ autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
 autocmd FileType python     set sw=4 | set ts=4 | set sts=4
 autocmd FileType puppet     set sw=2 | set ts=2 | set sts=2
 autocmd FileType rust       set sw=4 | set ts=4 | set sts=4
+autocmd FileType go         set sw=4 | set ts=4 | set sts=4 | set noexpandtab
 " <<<<<
 " >>>>> Clipboard
 let os=substitute(system('uname'), '\n', '', '')
