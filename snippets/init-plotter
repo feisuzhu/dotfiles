@@ -1,0 +1,10 @@
+mkdir -p /plot/{b,c,d,e}
+for i in vd{b..e}; do mkfs.ext4 /dev/$i & done
+cat <<EOF >> /etc/fstab
+/dev/vdb /plot/b ext4 barrier=0,data=writeback 0 0
+/dev/vdc /plot/c ext4 barrier=0,data=writeback 0 0
+/dev/vdd /plot/d ext4 barrier=0,data=writeback 0 0
+/dev/vde /plot/e ext4 barrier=0,data=writeback 0 0
+EOF
+mount -a
+mount
