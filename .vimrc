@@ -327,10 +327,24 @@ nnoremap <silent> = :<C-u>call CocActionAsync('diagnosticPrevious', 'warning')<C
 
 " GoTo code navigation.
 " nmap <silent> gd <Plug>(coc-definition)
+
+function! s:coc_fzf_code_jump()
+    let l:options = {
+\        'source': [
+\            "jumpReferences",
+\            "jumpDeclaration",
+\            "jumpTypeDefinition",
+\            "jumpImplementation",
+\            "jumpDefinition",
+\        ],
+\        'options': ["--no-sort"],
+\        'sink': function("CocActionAsync"),
+\    }
+    call fzf#run(fzf#wrap(l:options))
+endfunction
+
 autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go,yaml nmap <buffer> <C-]> <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go,yaml nmap <buffer> } :call <SID>coc_fzf_code_jump()<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
