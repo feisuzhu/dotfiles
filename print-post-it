@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+
+# -- stdlib --
+import asyncio
+import base64
+import os
+import shutil
+import sqlite3
+import subprocess
+import sys
+import tempfile
+import time
+
+# -- third party --
+from pyppeteer import launch
+import cups
+
+# -- own --
+
+# -- code --
+def run(*args, **kwargs):
+    return subprocess.Popen(
+        args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        **kwargs
+    )
+
+
+async def generate_pdf(out, textbytes):
+    browser = await launch()
+    page = await browser.newPage()
+    data = b'data:text/html;charset=UTF-8;base64,' + base64.b64encode(textbytes)
+    await page.goto(data.decode('utf-8'), {'waitUntil': 'networkidle2'})
+    await page.pdf({
+      'path': out,
+      'width': '50mm',
+      'height': '20mm',
+      'printBackground': False,
+      'margin': {
+        'top': '1mm',
+        'bottom': '1mm',
+        'left': '1mm',
+        'right': '1mm',
+      }
+    })
+    await browser.close()
+
+db = sqlite3.connect(os.path.expanduser("~/.post-it.db"))
+db.execute("CREATE TABLE IF NOT EXISTS post (time, content)")
+c = db.cursor()
+c.execute('SELECT content FROM post ORDER BY time DESC LIMIT 1')
+row = c.fetchone()
+last = row[0] if row else ''
+
+proc = run('zenity', '--entry', '--title', '打印 PostIt', '--text', '输入 PostIt 的内容', '--entry-text', last)
+content = proc.stdout.read().strip()
+
+if not content:
+   sys.exit(1)
+
+c.execute('INSERT INTO post (time, content) VALUES (?, ?)', [int(time.time()), content.decode('utf-8')])
+db.commit()
+
+tmpdir = tempfile.mkdtemp()
+fn = f'{tmpdir}/post-it.pdf'
+
+asyncio.get_event_loop().run_until_complete(generate_pdf(fn, content))
+conn = cups.Connection()
+conn.printFile('Gprinter-GP-1324D', fn, 'PostIt', {})
+shutil.rmtree(tmpdir, ignore_errors=True)
