@@ -88,6 +88,7 @@ Plug 'zchee/vim-flatbuffers'
 Plug 'sgeb/vim-diff-fold'
 
 Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'ojroques/vim-oscyank'
 
 " Autocomplete framework
 if has('nvim')
