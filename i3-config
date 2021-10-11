@@ -152,6 +152,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+a exec ~/hammers/bin/satori-rofi
 bindsym $mod+grave exec rofi -show snip -modi snip:~/hammers/box/snips/snips-modi
 bindsym $mod+d exec zsh -c "rofi -show run"
+bindsym $mod+p exec zsh -c "~/hammers/bin/print-post-it"
 
 bindsym --release Control+Mod1+a exec zsh -c "cd /dev/shm && scrot -s -f"
 bindsym $mod+Mod1+l exec i3lock

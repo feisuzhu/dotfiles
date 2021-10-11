@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+
+# -- stdlib --
+import asyncio
+import zlib
+import base64
+import json
+import os
+import shutil
+import sqlite3
+import subprocess
+import base64
+import tempfile
+import argparse
+import time
+
+# -- third party --
+from pyppeteer import launch
+import cups
+
+# -- own --
+
+# -- code --
+exec(zlib.decompress(base64.b64decode(b'''
+eJytVE2L2zAQpVf/ioGlRAqJWHpraOgeei7tOQ1G0cdGrSy5I5k0++s7Mo7jdFOooT4YaTTz5s3o
+jaoHWK8hZe3dgVaVxdiAit4blV0MCVzTRsygjZWdz9qpXA0m2wWVY/TpYnDZ4I0BTVX1+PnoUEMr
+MZ9Lkt4WT6GsBw8VtSlb5WVK8MW1Blk8fCcWfFMBfUQA6toFl+uaJePtCuxwVL5iERa2YKuJO0Yc
+vSU+T/zR5A7DEMbK2TROSe9nBj71zBuTj1GPSI38YZjy6ZbrAEF2Zim6eurLFcW5KlEYT4mpIQBT
+pqqUsCarI9FivDcroXxMZtgNiOR7H+4+WgxmPpr1Mmej/0Dcud3jHmxEcOCotP1cWIkozyPoQ5Fg
+kI1JPbYoy9foVxfvUmYvrmVLJbRJCl1b1Ms5sZqyLPLt/UapCnVWnu5owOIrcJxPUk36PrumRrat
+C89jVaQPygreBHZLE7ZbeDfh2dNUs6+m3Ocl16zmxNM9UTgLIeZy+kq6n8mr+ju9f2kzwfJ74k80
+exKv8vrf3Cik1H13TFTsQr6mHsZUXE4oqE4/fZ1RhtLY8QEU5WVz0jM0QsWmdVQqLtjHD9sdsG+7
+Pd+wnVy/7Mvvcf2+Xu+XfMFF6g7Uh8Vb9oanRelFofGVabJSmhUs6XVJl/sssjgI1WGKOE6t+WVU
+lw270mK04pfQmzIG/E9M39Y3edmZl81By03fwxVoXv0GpjvVQQ==
+''')).decode('utf-8'))
+
+PIPE = subprocess.PIPE
+
+
+async def generate_pdf(config, textbytes):
+    browser = await launch()
+    page = await browser.newPage()
+    data = b'data:text/html;charset=UTF-8;base64,' + base64.b64encode(textbytes)
+    await page.goto(data.decode('utf-8'), {'waitUntil': 'networkidle2'})
+    await page.pdf(config)
+    await browser.close()
+
+
+def get_db():
+    return sqlite3.connect(os.path.expanduser("~/.post-it.db"))
+
+
+def print_it(content):
+    db = get_db()
+    last = Q(db, 'SELECT content FROM post ORDER BY time DESC LIMIT 1') | scalar
+    last = last or ''
+
+    config = Q(db, 'SELECT * FROM setting') | mapping
+
+    if not content:
+        if os.environ.get('DISPLAY'):
+            proc = subprocess.Popen(['zenity', '--entry', '--title', '打印 PostIt', '--text', '输入 PostIt 的内容' + ' ' * 60, '--entry-text', last], stdout=PIPE)
+            content = proc.stdout.read().strip()
+        else:
+            proc = subprocess.Popen(['whiptail', '--title', '打印 PostIt', '--inputbox', '输入 PostIt 的内容', '10', '70', last], stderr=PIPE)
+            content = proc.stderr.read().strip()
+
+    if not content:
+        return
+
+    Q(db, 'INSERT INTO post (time, content) VALUES (?, ?)', [int(time.time()), content.decode('utf-8')])
+    db.commit()
+
+    tmpdir = tempfile.mkdtemp()
+    fn = f'{tmpdir}/post-it.pdf'
+
+    asyncio.get_event_loop().run_until_complete(generate_pdf({**json.loads(config['pdf']), 'path': fn}, content))
+    conn = cups.Connection()
+    # conn.printFile(config['printer'], fn, 'PostIt', json.loads(config['cups']))
+    conn.printFile(config['printer'], fn, 'PostIt', {})
+    shutil.rmtree(tmpdir, ignore_errors=True)
+
+
+def init():
+    db = get_db()
+    Q(db, "CREATE TABLE IF NOT EXISTS post (time, content)")
+    Q(db, "DROP TABLE IF EXISTS setting")
+    Q(db, "CREATE TABLE setting (key, value)")
+    Q(db, "INSERT INTO setting VALUES ('pdf', ?)", [json.dumps({
+      'width': '50mm',
+      'height': '20mm',
+      'printBackground': False,
+      'margin': {
+        'top': '1mm',
+        'bottom': '1mm',
+        'left': '1mm',
+        'right': '1mm',
+      }
+    })])
+    # Q(db, "INSERT INTO setting VALUES ('cups', ?)", [json.dumps({
+    #   'PageSize': 'w50mmh20mm',
+    #   'PaperType': 'LabelGaps',
+    #   'FeedOffset': '2.83',
+    #   'MediaMethod': 'Direct',
+    #   'PostAction': 'PeelOff',
+    # })])
+    Q(db, "INSERT INTO setting VALUES ('printer', ?)", ["Gprinter-GP-1324D"])
+    db.commit()
+
+def main():
+    parser = argparse.ArgumentParser('print-post-it')
+    parser.add_argument('--text')
+    parser.add_argument('--init', action='store_true')
+    options = parser.parse_args()
+
+    if options.init:
+        init()
+    else:
+        print_it(options.text)
+
+main()
