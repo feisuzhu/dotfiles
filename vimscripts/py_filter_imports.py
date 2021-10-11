@@ -187,10 +187,10 @@ def where(name):
     if path is None:  # `sys` and friends
         return stdlibs
 
-    if '/site-packages/' in path or\
+    if '/site-packages/' in path or \
        '/dist-packages/' in path:
         return third_parties
-    elif path.startswith(sysconfig.get_path('stdlib')):
+    elif path.startswith(os.path.realpath(sysconfig.get_path('stdlib'))):
         return stdlibs
     elif path.startswith(os.getcwd()):
         return own

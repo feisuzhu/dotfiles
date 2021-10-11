@@ -30,7 +30,7 @@ Plug 'tmhedberg/SimpylFold' " enhanced python folding
 Plug 'tpope/vim-fugitive' " Git integration
 Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim' " HTML Shortcuts
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 Plug 'groenewege/vim-less'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'guns/vim-clojure-static'
@@ -462,6 +462,7 @@ nmap ' <Plug>(coc-codelens-action)
 " ---------------------
 " Added by meta
 nnoremap <Space><Enter> :<C-u>CocFzfList<CR>
+vnoremap <Space><Enter> :CocFzfList<CR>
 
 " <<<<<
 " >>>>> jedi
