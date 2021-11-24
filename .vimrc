@@ -31,6 +31,7 @@ Plug 'tpope/vim-fugitive' " Git integration
 Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim' " HTML Shortcuts
 " Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
 Plug 'groenewege/vim-less'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'guns/vim-clojure-static'
@@ -163,6 +164,8 @@ highlight Pmenu ctermbg=8
 " <<<<<
 " >>>>> Language indentation rules
 let g:indentLine_setConceal = 0
+let g:indentLine_fileTypeExclude = ["nerdtree"]
+
 autocmd FileType clojure    set sw=2 | set ts=2 | set sts=2
 autocmd FileType javascript set sw=2 | set ts=2 | set sts=2
 autocmd FileType python     set sw=4 | set ts=4 | set sts=4
@@ -206,8 +209,8 @@ nmap <Space>b <Plug>(easymotion-prefix)b
 hi EasyMotionTarget ctermbg=none ctermfg=white
 hi EasyMotionShade  ctermbg=none ctermfg=blue
 " <<<<<
-" >>>>> Tagbar
-nmap <S-Tab> :TagbarToggle<CR>
+" >>>>> Vista
+nmap <S-Tab> :Vista coc<CR>
 " <<<<<
 " >>>>> airline
 let g:airline#extensions#default#layout = [
