@@ -115,7 +115,9 @@ def main():
 
     if options.init:
         init()
+    elif options.text:
+        print_it(options.text.encode('utf-8'))
     else:
-        print_it(options.text)
+        print_it(None)
 
 main()
