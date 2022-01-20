@@ -37,6 +37,18 @@ plugins=(git kube-ps1)
 
 source $ZSH/oh-my-zsh.sh
 
+export HISTSIZE=1000000
+#save history after logout
+export SAVEHIST=1000000
+#history file
+export HISTFILE=~/.zsh_history
+#append into history file
+setopt INC_APPEND_HISTORY
+#save only one command if 2 common are same and consistent
+setopt HIST_IGNORE_DUPS
+#add timestamp for each entry
+setopt EXTENDED_HISTORY
+
 # Customize to your needs...
 export EDITOR=nvim
 
