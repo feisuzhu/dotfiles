@@ -91,6 +91,8 @@ Plug 'sgeb/vim-diff-fold'
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'ojroques/vim-oscyank'
 
+Plug 'mmarchini/bpftrace.vim'
+
 " Autocomplete framework
 if has('nvim')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -493,6 +495,7 @@ if index(mdtypes, &filetype) == -1
   let g:table_mode_header_fillchar = '='
 else
   let g:airline_powerline_fonts = 1
+  let g:table_mode_corner = '|'
   " let g:airline#extensions#ale#enabled = 1
 endif
 " <<<<<

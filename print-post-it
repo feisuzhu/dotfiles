@@ -50,6 +50,21 @@ def get_db():
     return sqlite3.connect(os.path.expanduser("~/.post-it.db"))
 
 
+def decorate_content(content):
+    prelude = '''<style>*{font-family: "Sarasa Term SC";}</style>'''
+
+    tags = {
+        '[small]': '<style>*{font-size: 12px;}</style>',
+    }
+
+    for k, v in tags.items():
+        content = content.replace(k, v)
+
+    content = prelude + content
+
+    return content.strip()
+
+
 def print_it(content):
     db = get_db()
     last = Q(db, 'SELECT content FROM post ORDER BY time DESC LIMIT 1') | scalar
@@ -68,13 +83,15 @@ def print_it(content):
     if not content:
         return
 
+    print_content = decorate_content(content.decode('utf-8'))
+
     Q(db, 'INSERT INTO post (time, content) VALUES (?, ?)', [int(time.time()), content.decode('utf-8')])
     db.commit()
 
     tmpdir = tempfile.mkdtemp()
     fn = f'{tmpdir}/post-it.pdf'
 
-    asyncio.get_event_loop().run_until_complete(generate_pdf({**json.loads(config['pdf']), 'path': fn}, content))
+    asyncio.get_event_loop().run_until_complete(generate_pdf({**json.loads(config['pdf']), 'path': fn}, print_content.encode('utf-8')))
     conn = cups.Connection()
     # conn.printFile(config['printer'], fn, 'PostIt', json.loads(config['cups']))
     conn.printFile(config['printer'], fn, 'PostIt', {})
