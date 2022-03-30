@@ -196,7 +196,7 @@ nmap \\ :nohl<CR>:set nopaste<CR>
 " vmap <Space><Space> :!LC_ALL=C sort -u<CR>
 vmap <Space><Space> :!~/.vim/vimscripts/py_filter_imports.py %<CR>
 
-nmap <Space>t :!ctags<CR><CR>
+nmap <Space>t :!ctags -R .<CR><CR>
 
 if has('nvim')
     " Escape from terminal
