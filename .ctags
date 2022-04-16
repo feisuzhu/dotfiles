@@ -1,12 +1,12 @@
 -R
+--langdef=scala
+--langmap=scala:.scala
 --python-kinds=-i
 --fields=+aS
 --langmap=Lisp:+.clj
 --languages=python,c,c++,lisp,scala
 --regex-python=/return "(v2_[a-z0-9_]+)\.html"/\1/v/
 --regex-python=/# ANCHOR\((.+?)\)/anchor:\1/v/
---langdef=scala
---langmap=scala:.scala
 --regex-scala=/^[ \t]*((abstract|final|sealed|implicit|lazy)[ \t]*)*(private[^ ]*|protected)?[ \t]*class[ \t]+([a-zA-Z0-9_]+)/\4/c,classes/
 --regex-scala=/^[ \t]*((abstract|final|sealed|implicit|lazy)[ \t]*)*(private[^ ]*|protected)?[ \t]*object[ \t]+([a-zA-Z0-9_]+)/\4/c,objects/
 --regex-scala=/^[ \t]*((abstract|final|sealed|implicit|lazy)[ \t]*)*(private[^ ]*|protected)?[ \t]*((abstract|final|sealed|implicit|lazy)[ \t]*)*case class[ \t]+([a-zA-Z0-9_]+)/\6/c,case classes/
