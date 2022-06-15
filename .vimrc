@@ -87,11 +87,10 @@ Plug 'pedrohdz/vim-yaml-folds'
 Plug 'farmergreg/vim-lastplace'  " Jump to last edit location
 Plug 'zchee/vim-flatbuffers'
 Plug 'sgeb/vim-diff-fold'
-
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'ojroques/vim-oscyank'
-
 Plug 'mmarchini/bpftrace.vim'
+Plug 'pprovost/vim-ps1'
 
 " Autocomplete framework
 if has('nvim')
@@ -300,6 +299,8 @@ let g:coc_global_extensions = [
 \   'coc-pyright',
 \   'coc-rust-analyzer',
 \   'coc-go',
+\   'coc-tsserver',
+\   'coc-clangd',
 \ ]
 
 " Use tab for trigger completion with characters ahead and navigate.
