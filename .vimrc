@@ -91,6 +91,8 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'ojroques/vim-oscyank'
 Plug 'mmarchini/bpftrace.vim'
 Plug 'pprovost/vim-ps1'
+Plug 'github/copilot.vim'
+
 
 " Autocomplete framework
 if has('nvim')
