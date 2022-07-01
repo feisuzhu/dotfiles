@@ -188,6 +188,8 @@ bindsym $mod+r mode "resize"
 bindsym $mod+g exec i3-input -F "workspace number %s" -P 'Goto workspace: '
 bindsym $mod+n exec i3-input -F "rename workspace to \"$(i3-msg -t get_workspaces | jq -r \"map(select(.focused))[0].num\"):%s\"" -P 'New name for this workspace: '
 
+
+bindsym $mod+m exec i3-input -F 'mark %s' -P 'Mark: '
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
