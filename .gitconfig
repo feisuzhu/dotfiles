@@ -27,3 +27,11 @@
   quickserve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/
 [push]
 	default = matching
+[safe]
+	directory = /var/lib/git-cache
+	directory = /home/proton/actions-runner/_work/taichi/taichi
+	directory = /home/proton/actions-runner/feisuzhu/_work/Taichi-UnityExample/Taichi-UnityExample
+	directory = /home/proton/git-cache
+	directory = /home/proton/actions-runner/taichi/_work/taichi/taichi
+[rerere]
+	enabled = true
