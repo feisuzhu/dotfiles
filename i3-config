@@ -192,6 +192,9 @@ bindsym $mod+n exec i3-input -F "rename workspace to \"$(i3-msg -t get_workspace
 bindsym $mod+m exec i3-input -F 'mark %s' -P 'Mark: '
 for_window [workspace="\.float$"] floating enable
 
+bindsym $mod+KP_Add scratchpad show
+bindsym $mod+KP_Subtract move scratchpad
+
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

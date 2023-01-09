@@ -36,9 +36,12 @@ lw270mK04pfQmzIG/E9M39Y3edmZl81By03fwxVoXv0GpjvVQQ==
 
 PIPE = subprocess.PIPE
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
 
 async def generate_pdf(config, textbytes):
-    browser = await launch()
+    browser = await launch(headless=True, executablePath='/usr/bin/google-chrome', dumpio=True, args=['--no-sandbox', '--disable-setuid-sandbox'])
     page = await browser.newPage()
     data = b'data:text/html;charset=UTF-8;base64,' + base64.b64encode(textbytes)
     await page.goto(data.decode('utf-8'), {'waitUntil': 'networkidle2'})
