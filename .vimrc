@@ -72,14 +72,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'maksimr/vim-jsbeautify'
 " Plug 'fatih/vim-go'
-Plug 'posva/vim-vue'
+Plug 'leafOfTree/vim-vue-plugin'
 Plug 'alderz/smali-vim'
 Plug 'dhruvasagar/vim-table-mode' " Fantastic table editor
 Plug 'leafgarland/typescript-vim'
 Plug 'Shougo/vimproc.vim'
 Plug 'Quramy/tsuquyomi'  " TypeScript things
 Plug 'Rykka/riv.vim'  " reStructuredText
-Plug 'feisuzhu/vim-pysql'  " Syntax highlights embedded SQL strings
+" Plug 'feisuzhu/vim-pysql'  " Syntax highlights embedded SQL strings
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-commentary'
 
@@ -488,12 +488,11 @@ autocmd FileType rust set makeprg=cargo\ build
 let mdtypes = ['md', 'markdown']
 
 if index(mdtypes, &filetype) == -1
+  let g:table_mode_corner = '|'
+else
   let g:table_mode_corner_corner = '+'
   let g:table_mode_header_fillchar = '='
-else
   let g:airline_powerline_fonts = 1
-  let g:table_mode_corner = '|'
-  " let g:airline#extensions#ale#enabled = 1
 endif
 " <<<<<
 " >>>>> Misc stuff
