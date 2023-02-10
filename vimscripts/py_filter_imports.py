@@ -49,7 +49,7 @@ try:
         prioritized = src[l:r].strip()
         src = src[r:]
         module = ast.parse(src)
-    except IndexError:
+    except ValueError:
         pass
 except SyntaxError:
     print(do_sort(src))
