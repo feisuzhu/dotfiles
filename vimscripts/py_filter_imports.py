@@ -37,9 +37,20 @@ def fmtalias(a):
     else:
         return a.name
 
+prioritized = ''
 
 try:
     module = ast.parse(src)
+    try:
+        tok = '# -- prioritized --\n'
+        l = src.index(tok) + len(tok)
+        tok = '# -- stdlib --\n'
+        r = src.index(tok)
+        prioritized = src[l:r].strip()
+        src = src[r:]
+        module = ast.parse(src)
+    except IndexError:
+        pass
 except SyntaxError:
     print(do_sort(src))
     sys.exit()
@@ -234,6 +245,11 @@ print('# -*- coding: utf-8 -*-')
 if future:
     print('\n'.join(future))
 print()
+
+if prioritized:
+    print('# -- prioritized --')
+    print(prioritized)
+    print()
 
 print('# -- stdlib --')
 if stdlibs:
