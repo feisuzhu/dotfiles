@@ -1,3 +1,4 @@
+zstyle ':omz:update' mode disabled
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
