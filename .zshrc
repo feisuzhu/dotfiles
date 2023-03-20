@@ -51,7 +51,7 @@ setopt HIST_IGNORE_DUPS
 setopt EXTENDED_HISTORY
 
 # Customize to your needs...
-export EDITOR=nvim
+export EDITOR=`which nvim`
 
 function kmaster {
     ps aux | grep '\[mux\]' | grep ssh | grep ${1:-.} | awk '{print $2}' | xargs kill
