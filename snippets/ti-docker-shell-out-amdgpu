@@ -1,0 +1,4 @@
+cd actions-runner/_work/taichi/taichi.1/
+export  CI_DOCKER_RUN_EXTRA_ARGS="-v $PWD:/home/dev/taichi"
+. .github/workflows/scripts/common-utils.sh
+ci-docker-run-amdgpu --name proton-test -it --group-add=109 registry.botmaster.tgr/taichi-test-amdgpu:202303141831 bash

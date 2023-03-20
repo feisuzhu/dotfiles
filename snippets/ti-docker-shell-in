@@ -1,0 +1,4 @@
+cd taichi
+export PY=3.8
+export TI_LIB_DIR=$PWD/_skbuild/linux-x86_64-$PY/cmake-install/c_api/runtime
+python3 .github/workflows/scripts/build.py --shell

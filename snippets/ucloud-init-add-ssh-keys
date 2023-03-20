@@ -1,6 +1,0 @@
-#!/bin/bash
-
-cd
-mkdir -p .ssh
-curl -s https://github.com/feisuzhu.keys >> .ssh/authorized_keys
-curl -s https://github.com/aisensiy.keys >> .ssh/authorized_keys

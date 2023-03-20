@@ -1,5 +1,6 @@
 cd /etc/apt
-sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' sources.list
-sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' sources.list
-apt update
-apt install dnsutils iproute2 netcat
+sudo sed -i 's/archive.ubuntu.com/mirrors.tencent.com/g' sources.list
+sudo sed -i 's/security.ubuntu.com/mirrors.tencent.com/g' sources.list
+sudo apt update
+sudo apt install -y vim gdb
+true
