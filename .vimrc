@@ -100,6 +100,7 @@ Plug 'rhysd/vim-llvm'
 if has('nvim')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'antoinemadec/coc-fzf'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 endif
 
 call plug#end()
@@ -498,6 +499,15 @@ endif
 " >>>>> Misc stuff
 " Trim trailing spaces
 autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go,yaml autocmd BufWritePre <buffer> :%s/\s\+$//e
+" <<<<<
+" >>>>> Treesitter
+lua <<EOF
+require('nvim-treesitter.configs').setup {
+  ensure_installed = "all",
+  highlight = { enable = true },
+  indent = { enable = true }
+}
+EOF
 " <<<<<
 
 " vim: set foldmethod=marker foldmarker=>>>>>,<<<<< foldlevel=0:
