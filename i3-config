@@ -200,12 +200,12 @@ bindsym $mod+KP_Subtract move scratchpad
 # finds out, if available)
 bar {
         output DP-4
-        font pango:Iosevka Term 8
+        font pango:Iosevka Term 12
         # status_command i3status
         status_command i3blocks
 }
 
 bar {
-        output HDMI-0
-        font pango:Iosevka Term 8
+        output DP-0
+        font pango:Iosevka Term 12
 }
