@@ -27,3 +27,13 @@
   quickserve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/
 [push]
 	default = matching
+[http "https://github.com"]
+	proxy = http://192.168.233.56:7890
+    sslVerify = false
+[http "https://huggingface.co"]
+	proxy = http://192.168.233.56:7890
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
