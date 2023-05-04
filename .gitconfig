@@ -35,3 +35,8 @@
 	directory = /home/proton/actions-runner/taichi/_work/taichi/taichi
 [rerere]
 	enabled = true
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
