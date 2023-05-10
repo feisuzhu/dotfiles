@@ -40,7 +40,7 @@ Plug 'guns/vim-clojure-static'
 " Plug 'tpope/vim-classpath'
 " Plug 'venantius/vim-eastwood'
 
-Plug 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
 Plug 'uarun/vim-protobuf'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'kchmck/vim-coffee-script'
@@ -95,6 +95,12 @@ Plug 'github/copilot.vim'
 
 Plug 'tikhomirov/vim-glsl'
 Plug 'rhysd/vim-llvm'
+
+" Svelte
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
+" /Svelte
 
 " Autocomplete framework
 if has('nvim')
@@ -505,7 +511,7 @@ lua <<EOF
 require('nvim-treesitter.configs').setup {
   ensure_installed = "all",
   highlight = { enable = true },
-  indent = { enable = true }
+  -- indent = { enable = true }
 }
 EOF
 " <<<<<
