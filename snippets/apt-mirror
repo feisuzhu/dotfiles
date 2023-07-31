@@ -3,8 +3,6 @@ cat <<EOF > apt.conf.d/02proxy
 Acquire::http { Proxy "http://172.16.5.1:8000" }
 Acquire::https { Proxy "http://172.16.5.1:8000" }
 EOF
-sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' sources.list
-sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' sources.list
 apt update
 apt install -y vim gdb
 true

@@ -516,4 +516,7 @@ require('nvim-treesitter.configs').setup {
 EOF
 " <<<<<
 
+
+autocmd BufNewFile,BufRead git-revise-todo set filetype=gitrebase
+
 " vim: set foldmethod=marker foldmarker=>>>>>,<<<<< foldlevel=0:
