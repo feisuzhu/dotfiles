@@ -1,0 +1,6 @@
+cd /etc/apt/preferences.d
+cat <<EOF > 01temp
+Package: *
+Pin: origin "cn.archive.ubuntu.com"
+Pin-Priority: 10000
+EOF
