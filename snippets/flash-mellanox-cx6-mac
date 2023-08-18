@@ -1,0 +1,1 @@
+echo flint -d /dev/mst/mt4125_pciconf0 -uid 08c0eb00008ad764 -ocr sg
