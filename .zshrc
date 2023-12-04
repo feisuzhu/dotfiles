@@ -263,3 +263,8 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/proton/hammers/box/google-cloud-sdk/path.zsh.inc' ]; then . '/home/proton/hammers/box/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/proton/hammers/box/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/proton/hammers/box/google-cloud-sdk/completion.zsh.inc'; fi
