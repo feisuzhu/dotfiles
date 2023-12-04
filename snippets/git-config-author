@@ -1,0 +1,2 @@
+git config --global user.email "feisuzhu@163.com"
+git config --global user.name "Proton"

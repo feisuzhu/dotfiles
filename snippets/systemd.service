@@ -1,0 +1,17 @@
+[Unit]
+Description=Meshy-One Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/meshy-one
+ExecStart=/usr/local/bin/poetry run python server.py
+# StandardOutput=append:/var/log/apps/%N.log
+# StandardError=append:/var/log/apps/%N.log
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

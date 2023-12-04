@@ -1,0 +1,1 @@
+echo zpool create -O encryption=on -O keylocation=prompt -O keyformat=passphrase home mirror nvme{0,1}n1
