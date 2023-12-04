@@ -1,0 +1,1 @@
+sudo -E rsync -uav --rsync-path="/usr/bin/sudo /usr/bin/rsync" proton@172.16.8.10:/root/.cache/ /root/.cache/
