@@ -1,21 +1,19 @@
 #!python3 -W ignore
 # -*- coding: utf-8 -*-
+
+# -- prioritized --
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # -- stdlib --
 from collections import defaultdict
 import ast
-import warnings
-import sysconfig
-
-with warnings.catch_warnings():
-    warnings.simplefilter("ignore")
-    import imp
-
+import importlib.util
 import os
 import subprocess
 import sys
+import sysconfig
+import warnings
 
 # -- third party --
 # -- own --
@@ -190,13 +188,20 @@ def where(name):
     elif not name:  # . and ..
         return own
 
-    try:
-        _, path, _ = imp.find_module(name)
-    except ImportError:
+    spec = importlib.util.find_spec(name)
+    if spec is None:
         return errord
-
-    if path is None:  # `sys` and friends
+    elif spec.origin == 'built-in':
         return stdlibs
+
+    path = spec.origin
+    if path is None:
+        if not spec.submodule_search_locations:
+            return errord
+        path = spec.submodule_search_locations[0]
+
+    if not path:
+        return errord
 
     if '/site-packages/' in path or \
        '/dist-packages/' in path:
