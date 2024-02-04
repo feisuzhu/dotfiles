@@ -1,0 +1,7 @@
+zfs create home/docker -o mountpoint=/var/lib/docker
+mkdir -p /home/root/{.cache,.docker,.aws,.alisso}
+rm -rf /root/{.cache,.docker}
+ln -sf {/home,}/root/.cache
+ln -sf {/home,}/root/.docker
+ln -sf {/home,}/root/.aws
+ln -sf {/home,}/root/.alisso
