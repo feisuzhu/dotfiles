@@ -44,7 +44,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec "cd ~ && i3-sensible-terminal"
 
 # kill focused window
 bindsym $mod+q kill
@@ -153,7 +153,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 bindsym $mod+a exec ~/hammers/bin/satori-rofi
 bindsym $mod+grave exec rofi -show snip -modi snip:~/hammers/box/snips/snips-modi
-bindsym $mod+d exec zsh -c "rofi -show run"
+bindsym $mod+d exec zsh -c "cd ~ && rofi -show run"
 bindsym $mod+p exec zsh -c "~/hammers/bin/print-post-it"
 
 bindsym --release Control+Mod1+a exec zsh -c "cd /dev/shm && scrot -s -f"
