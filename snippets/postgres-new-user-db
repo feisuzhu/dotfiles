@@ -1,0 +1,2 @@
+CREATE USER foo PASSWORD 'passwd';
+CREATE DATABASE foo OWNER foo;
