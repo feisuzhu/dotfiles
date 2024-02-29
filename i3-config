@@ -33,6 +33,9 @@ exec --no-startup-id nm-applet
 exec_always --no-startup-id xset r rate 171 52
 exec --no-startup-id nitrogen --restore
 
+exec compton
+exec conky
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -44,7 +47,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec "cd ~ && i3-sensible-terminal"
 
 # kill focused window
 bindsym $mod+q kill
@@ -153,7 +156,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 bindsym $mod+a exec ~/hammers/bin/satori-rofi
 bindsym $mod+grave exec rofi -show snip -modi snip:~/hammers/box/snips/snips-modi
-bindsym $mod+d exec zsh -c "rofi -show run"
+bindsym $mod+d exec zsh -c "cd ~ && rofi -show run"
 bindsym $mod+p exec zsh -c "~/hammers/bin/print-post-it"
 
 bindsym --release Control+Mod1+a exec zsh -c "cd /dev/shm && scrot -s -f"
