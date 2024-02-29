@@ -144,6 +144,7 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+bindsym $mod+bracketleft move workspace to output left
 bindsym $mod+bracketright move workspace to output right
 
 # reload the configuration file
