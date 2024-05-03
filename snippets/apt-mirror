@@ -1,7 +1,14 @@
 cd /etc/apt
-cat <<EOF > apt.conf.d/02proxy
-Acquire::http { Proxy "http://172.16.5.1:8000" }
-Acquire::https { Proxy "http://172.16.5.1:8000" }
+. /etc/lsb-release
+cat <<EOF > /etc/apt/sources.list
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu ${DISTRIB_CODENAME} main restricted universe multiverse
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu ${DISTRIB_CODENAME} main restricted universe multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu ${DISTRIB_CODENAME}-backports main restricted universe multiverse
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu ${DISTRIB_CODENAME}-backports main restricted universe multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu ${DISTRIB_CODENAME}-updates main restricted universe multiverse
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu ${DISTRIB_CODENAME}-updates main restricted universe multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu ${DISTRIB_CODENAME}-security main restricted universe multiverse
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu ${DISTRIB_CODENAME}-security main restricted universe multiverse
 EOF
 apt update
 apt install -y vim gdb
