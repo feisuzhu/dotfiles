@@ -1,0 +1,6 @@
+sudo systemctl stop nvidia-persistenced
+sudo modprobe -rv nvidia_uvm
+sudo modprobe -rv nvidia_drm
+sudo modprobe -v nvidia
+sudo nvidia-smi
+sudo systemctl start nvidia-persistenced
