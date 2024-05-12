@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# Put this in /etc/initramfs-tools/scripts/init-top
+
+PREREQ=""
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+DEVICES=""
+
+# 1TB SAMSUNG NVMe SSD
+DEVICES="$DEVICES pci0000:00/0000:00:03.4/0000:03:00.0"
+
+# Fresco Logic FL1100 USB 3.0 Host Controller (rev 10)
+# DEVICES="$DEVICES pci0000:40/0000:40:03.1/0000:42:00.0"
+
+for i in $DEVICES; do
+    echo Set $i as vfio passthrough device
+    echo $(basename $i) > "/sys/devices/$i/driver/unbind"
+    echo "vfio-pci" > "/sys/devices/$i/driver_override"
+done
+
+# ----------------------------
+#
+
+VGAS=""
+
+# TITAN RTX
+# VGAS="$VGAS pci0000:c0/0000:c0:01.1/0000:c1:00"
+VGAS="$VGAS pci0000:00/0000:00:01.1/0000:01:00"
+
+# TITAN RTX #2
+VGAS="$VGAS pci0000:80/0000:80:01.1/0000:81:00"
+
+for i in $VGAS; do
+    if [ $(cat "/sys/devices/${i}.0/boot_vga") -eq 0 ]; then
+        echo Set VGA $i as vfio passthrough device
+        echo "vfio-pci" > "/sys/devices/${i}.0/driver_override"
+        echo "vfio-pci" > "/sys/devices/${i}.1/driver_override"
+        echo "vfio-pci" > "/sys/devices/${i}.2/driver_override"
+        echo "vfio-pci" > "/sys/devices/${i}.3/driver_override"
+    fi
+done
