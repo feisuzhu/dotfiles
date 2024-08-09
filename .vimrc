@@ -17,7 +17,8 @@ endif
 
 call plug#begin('~/.vim/plugged')
 " Color scheme
-Plug 'feisuzhu/ingretu'
+" Plug 'feisuzhu/ingretu'
+Plug 'sainnhe/sonokai'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -154,8 +155,6 @@ set backspace=2
 
 set fdm=manual
 
-colorscheme ingretu
-
 if !has('nvim')
     set ttyfast
     set ttyscroll=3
@@ -178,6 +177,18 @@ set undofile
 set undodir=~/.vim/undodir
 
 highlight Pmenu ctermbg=8
+" <<<<<
+" >>>>> Color Scheme
+if has('termguicolors')
+    set termguicolors
+endif
+
+" The configuration options should be placed before `colorscheme sonokai`.
+let g:sonokai_style = 'default'
+" let g:sonokai_style = 'andromeda'
+let g:sonokai_better_performance = 1
+
+colorscheme sonokai
 " <<<<<
 " >>>>> Language indentation rules
 let g:indentLine_setConceal = 0
@@ -518,6 +529,7 @@ require('nvim-treesitter.configs').setup {
   highlight = { enable = true },
   -- indent = { enable = true }
 }
+-- vim.treesitter.language.register("dockerfile", "Dockerfile")
 EOF
 " <<<<<
 " >>>>> Huggingface Code Complete
