@@ -1,6 +1,10 @@
-sudo systemctl stop nvidia-persistenced
-sudo modprobe -rv nvidia_uvm
-sudo modprobe -rv nvidia_drm
-sudo modprobe -v nvidia
-sudo nvidia-smi
-sudo systemctl start nvidia-persistenced
+cat <<EOF | sudo bash -x -
+systemctl stop nvidia-persistenced
+systemctl stop nvidia-fabricmanager
+modprobe -rv nvidia_uvm
+modprobe -rv nvidia_drm
+modprobe -rv nvidia
+nvidia-smi
+systemctl start nvidia-persistenced
+systemctl start nvidia-fabricmanager
+EOF
