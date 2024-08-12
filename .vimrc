@@ -525,6 +525,7 @@ autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go,yaml autocmd BufWrit
 " >>>>> Treesitter
 lua <<EOF
 require('nvim-treesitter.configs').setup {
+  prefer_git = true,
   ensure_installed = "all",
   highlight = { enable = true },
   -- indent = { enable = true }
