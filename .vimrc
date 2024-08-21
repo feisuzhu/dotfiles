@@ -518,6 +518,11 @@ else
   let g:airline_powerline_fonts = 1
 endif
 " <<<<<
+" >>>>> Helm quirks
+autocmd BufRead,BufNewFile */templates/*.yaml set ft=helm
+autocmd BufRead,BufNewFile */templates/_helpers.tpl set ft=helm
+autocmd BufRead,BufNewFile */templates/NOTES.txt set ft=gotmpl
+" <<<<<
 " >>>>> Misc stuff
 " Trim trailing spaces
 autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go,yaml autocmd BufWritePre <buffer> :%s/\s\+$//e
