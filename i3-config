@@ -158,6 +158,7 @@ bindsym $mod+a exec ~/hammers/bin/satori-rofi
 bindsym $mod+grave exec rofi -show snip -modi snip:~/hammers/box/snips/snips-modi
 bindsym $mod+d exec zsh -c "cd ~ && rofi -show run"
 bindsym $mod+p exec zsh -c "~/hammers/bin/print-post-it"
+bindsym $mod+i exec zsh -c "~/hammers/bin/ime-workaround"
 
 bindsym --release Control+Mod1+a exec zsh -c "cd /dev/shm && scrot -s -f"
 bindsym $mod+Mod1+l exec i3lock

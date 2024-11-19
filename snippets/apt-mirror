@@ -1,5 +1,5 @@
 cd /etc/apt
-sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' sources.list
-sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' sources.list
+sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' sources.list
+sed -i 's/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' sources.list
 apt update
 apt install -y vim gdb curl iproute2 dnsutils netcat

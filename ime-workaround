@@ -1,0 +1,3 @@
+#!/bin/bash
+zenity --entry | tee >(xsel -i) >(xsel -i -b)
+coproc (xdotool key Shift+Insert)

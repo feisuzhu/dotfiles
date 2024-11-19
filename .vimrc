@@ -155,6 +155,8 @@ set backspace=2
 
 set fdm=manual
 
+set jumpoptions=stack
+
 if !has('nvim')
     set ttyfast
     set ttyscroll=3
