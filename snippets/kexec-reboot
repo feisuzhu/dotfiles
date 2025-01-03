@@ -1,1 +1,1 @@
-sudo kexec -l /boot/vmlinuz --initrd /boot/initrd.img --reuse-cmdline && sudo systemctl kexec
+sudo kexec -l /boot/vmlinuz-$(uname -r) --initrd /boot/initrd.img-$(uname -r) --reuse-cmdline && sudo systemctl kexec
