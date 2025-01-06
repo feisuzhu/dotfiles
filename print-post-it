@@ -59,6 +59,7 @@ def decorate_content(content):
 
     tags = {
         '[small]': '<style>*{font-size: 12px;}</style>',
+        '[page]': '<div style="width: 100%; display: flex; page-break-before: always;"></div>',
     }
 
     for k, v in tags.items():
