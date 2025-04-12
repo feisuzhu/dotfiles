@@ -191,7 +191,7 @@ def where(name):
     spec = importlib.util.find_spec(name)
     if spec is None:
         return errord
-    elif spec.origin == 'built-in':
+    elif spec.origin in ('built-in', 'frozen'):
         return stdlibs
 
     path = spec.origin
