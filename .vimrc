@@ -538,6 +538,7 @@ autocmd BufRead,BufNewFile */templates/NOTES.txt set ft=gotmpl
 " >>>>> Misc stuff
 " Trim trailing spaces
 autocmd FileType c,cpp,java,php,python,perl,rust,clojure,go,yaml autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd BufNewFile,BufRead git-revise-todo set filetype=gitrebase
 " <<<<<
 " >>>>> Treesitter
 lua <<EOF
@@ -549,34 +550,6 @@ require('nvim-treesitter.configs').setup {
 }
 -- vim.treesitter.language.register("dockerfile", "Dockerfile")
 EOF
-" <<<<<
-" >>>>> Huggingface Code Complet e
-" if !empty($USE_HFCC_NVIM) && has('nvim')
-"     lua <<EOF
-"     require("hfcc").setup({
-"         api_token = "foo", -- cf Install paragraph
-"         -- model = "bigcode/starcoder", -- can be a model ID or an http(s) endpoint
-"         model = "http://localhost:8181/hfcc",
-"         -- parameters that are added to the request body
-"         query_params = {
-"             max_new_tokens = 60,
-"             temperature = 0.2,
-"             top_p = 0.95,
-"             stop_token = "<|endoftext|>",
-"         },
-"         -- set this if the model supports fill in the middle
-"         fim = {
-"             enabled = true,
-"             prefix = "<fim_prefix>",
-"             middle = "<fim_middle>",
-"             suffix = "<fim_suffix>",
-"         },
-"         debounce_ms = 5000,
-"         accept_keymap = "<Tab>",
-"         dismiss_keymap = "<S-Tab>",
-"     })
-" EOF
-" endif
 " <<<<<
 " >>>>> Avante.nvim
 if has("nvim")
@@ -600,4 +573,5 @@ if has("nvim")
 EOF
 endif
 " <<<<<
+
 " vim: set foldmethod=marker foldmarker=>>>>>,<<<<< foldlevel=0:
