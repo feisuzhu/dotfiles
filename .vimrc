@@ -104,7 +104,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
 " /Svelte
 
-
 if has('nvim')
   " Autocomplete framework
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -573,5 +572,5 @@ if has("nvim")
 EOF
 endif
 " <<<<<
-
+"
 " vim: set foldmethod=marker foldmarker=>>>>>,<<<<< foldlevel=0:

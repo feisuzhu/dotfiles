@@ -41,3 +41,5 @@
 	smudge = git-lfs smudge -- %f
 [safe]
 	directory = /home/proton/my_projects/thb-update/runtime/.git
+[url "git@github.com:"]
+    insteadOf = https://github.com/

@@ -237,6 +237,7 @@ bar {
         font pango:Iosevka Term 8
         # status_command i3status
         status_command i3blocks
+        tray_output DP-4
 }
 
 bar {
