@@ -1,0 +1,1 @@
+play -n -n --combine merge synth brownnoise band -n 750 750 tremolo 50 1
