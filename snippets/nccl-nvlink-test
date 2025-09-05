@@ -1,0 +1,1 @@
+build/all_reduce_perf -b 8 -e 8G -f 2 -g 8

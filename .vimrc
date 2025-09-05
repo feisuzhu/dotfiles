@@ -556,7 +556,7 @@ if has("nvim")
     if vim.env.DEEPSEEK_API_KEY then
         require('avante').setup({
           provider = "deepseek",
-          vendors = {
+          providers = {
             deepseek = {
               __inherited_from = "openai",
               api_key_name = "DEEPSEEK_API_KEY",
