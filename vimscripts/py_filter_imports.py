@@ -54,9 +54,34 @@ except SyntaxError:
     sys.exit()
 
 
-if not all(isinstance(s, (ast.Import, ast.ImportFrom, ast.If)) for s in module.body):
-    print(do_sort(src))
-    sys.exit()
+def is_import_stmt(stmt):
+    if isinstance(stmt, (ast.Import, ast.ImportFrom)):
+        return True
+    if isinstance(stmt, ast.If):
+        return isinstance(stmt.test, ast.Name) and stmt.test.id == 'TYPE_CHECKING'
+    return False
+
+
+def stmt_start_line(stmt):
+    if isinstance(stmt, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+        if stmt.decorator_list:
+            return min(d.lineno for d in stmt.decorator_list)
+    return stmt.lineno
+
+
+import_stmts = []
+first_code_line = None
+for stmt in module.body:
+    if first_code_line is None and is_import_stmt(stmt):
+        import_stmts.append(stmt)
+    else:
+        if first_code_line is None:
+            first_code_line = stmt_start_line(stmt)
+
+code_text = ''
+if first_code_line is not None:
+    src_lines = src.split('\n')
+    code_text = '\n'.join(src_lines[first_code_line - 1:])
 
 # ----------------------
 unused = []
@@ -79,7 +104,7 @@ if len(sys.argv) > 1:
 froms = defaultdict(list)
 imports = []
 
-for stmt in module.body:
+for stmt in import_stmts:
     if isinstance(stmt, ast.Import):
         imports.extend([fmtalias(i) for i in stmt.names if i.name not in unused])
     elif isinstance(stmt, ast.ImportFrom):
@@ -92,40 +117,10 @@ for stmt in module.body:
 
         for i in stmt.names:
             ful = lvl + mod
-            t = {
-                '..actions': 'thb.actions',
-                '..cards': 'thb.cards.classes',
-                '..inputlets': 'thb.inputlets',
-                '.baseclasses': 'thb.characters.base',
-            }
-            ful = t.get(ful, ful)
             if '%s.%s' % (ful, i.name) in unused:
                 continue
 
-            meh = [
-                'thb.meta.common.passive_clickable',
-                'thb.meta.common.passive_is_action_valid',
-                'thb.meta.common.card_desc',
-                'thb.meta.common.my_turn',
-                'thb.meta.common.build_handcard',
-                'thb.meta.common.limit1_skill_used',
-                'thb.meta.common.G',
-            ]
-
-            if '%s.%s' % (ful, i.name) in meh:
-                continue
-
-            if ful == 'game.autoenv' and fmtalias(i) not in ('Game', 'user_input'):
-                froms['game.base'].append(fmtalias(i))
-            elif ful == 'thb.cards.classes' and fmtalias(i) in ('Card', 'Skill', 'VirtualCard'):
-                froms['thb.cards.base'].append(fmtalias(i))
-            elif ful == 'game.autoenv':
-                if fmtalias(i) in ('user_input',):
-                    pass
-                else:
-                    froms['game.base'].append(fmtalias(i))
-            else:
-                froms[ful].append(fmtalias(i))
+            froms[ful].append(fmtalias(i))
 
     elif isinstance(stmt, ast.If):
         if isinstance(stmt.test, ast.Name):
@@ -284,3 +279,7 @@ if errord:
     print()
 
 print('\n# -- code --')
+if code_text:
+    sys.stdout.write(code_text)
+    if not code_text.endswith('\n'):
+        sys.stdout.write('\n')
