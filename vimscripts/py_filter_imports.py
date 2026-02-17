@@ -13,6 +13,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # -- stdlib --
 from collections import defaultdict
+import argparse
 import ast
 import importlib.util
 import os
@@ -351,15 +352,18 @@ def fallback_sort(src):
 
 # -- Entry point --
 
-def main():
-    raw_src = sys.stdin.read()
-    sys.path.insert(0, os.getcwd())
+def format_source(raw_src, filename=None):
+    """Format imports in raw_src. Returns the formatted output string.
 
+    If filename is provided, it is used to detect unused imports via pyflakes.
+    """
     try:
         ast.parse(raw_src)
     except SyntaxError:
-        print(fallback_sort(raw_src))
-        return
+        output = fallback_sort(raw_src)
+        if not output.endswith('\n'):
+            output += '\n'
+        return output
 
     preamble, rest = extract_preamble(raw_src)
     prioritized, src = extract_prioritized(rest)
@@ -367,15 +371,42 @@ def main():
 
     import_stmts, code_text = split_imports_and_code(module, src)
 
-    unused = detect_unused_imports(sys.argv[1]) if len(sys.argv) > 1 else []
+    unused = detect_unused_imports(filename) if filename else []
 
     plain_imports, from_imports = collect_imports(import_stmts, unused)
     categories = categorize_imports(plain_imports, from_imports)
 
     output = format_output(categories, prioritized, code_text, preamble)
-    sys.stdout.write(output)
     if not output.endswith('\n'):
-        sys.stdout.write('\n')
+        output += '\n'
+    return output
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description='Format and sort Python imports.',
+    )
+    parser.add_argument(
+        'filename', nargs='?', default=None,
+        help='Python file to format in place. If omitted, reads from stdin and writes to stdout.',
+    )
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    sys.path.insert(0, os.getcwd())
+
+    if args.filename:
+        with open(args.filename) as f:
+            raw_src = f.read()
+        output = format_source(raw_src, args.filename)
+        with open(args.filename, 'w') as f:
+            f.write(output)
+    else:
+        raw_src = sys.stdin.read()
+        output = format_source(raw_src)
+        sys.stdout.write(output)
 
 
 if __name__ == '__main__':
