@@ -182,12 +182,9 @@ def split_imports_and_code(module, src):
 
 # -- Unused import detection --
 
-def detect_unused_imports(filename):
-    """Detect unused imports in the given file using pyflakes."""
+def detect_unused_imports(source, filename='<stdin>'):
+    """Detect unused imports in the given source using pyflakes."""
     try:
-        with open(filename) as f:
-            source = f.read()
-
         tree = ast.parse(source, filename)
         result = PyflakesChecker(tree, filename)
 
@@ -371,7 +368,7 @@ def format_source(raw_src, filename=None):
 
     import_stmts, code_text = split_imports_and_code(module, src)
 
-    unused = detect_unused_imports(filename) if filename else []
+    unused = detect_unused_imports(raw_src, filename or '<stdin>')
 
     plain_imports, from_imports = collect_imports(import_stmts, unused)
     categories = categorize_imports(plain_imports, from_imports)
@@ -387,8 +384,8 @@ def parse_args():
         description='Format and sort Python imports.',
     )
     parser.add_argument(
-        'filename', nargs='?', default=None,
-        help='Python file to format in place. If omitted, reads from stdin and writes to stdout.',
+        '--files', nargs='+', default=None,
+        help='Python files to format in place. If omitted, reads from stdin and writes to stdout.',
     )
     return parser.parse_args()
 
@@ -397,12 +394,13 @@ def main():
     args = parse_args()
     sys.path.insert(0, os.getcwd())
 
-    if args.filename:
-        with open(args.filename) as f:
-            raw_src = f.read()
-        output = format_source(raw_src, args.filename)
-        with open(args.filename, 'w') as f:
-            f.write(output)
+    if args.files:
+        for filename in args.files:
+            with open(filename) as f:
+                raw_src = f.read()
+            output = format_source(raw_src, filename)
+            with open(filename, 'w') as f:
+                f.write(output)
     else:
         raw_src = sys.stdin.read()
         output = format_source(raw_src)
