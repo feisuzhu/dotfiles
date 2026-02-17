@@ -22,7 +22,7 @@ import sysconfig
 import warnings
 
 # -- third party --
-# -- own --
+# -- local --
 # -- errord --
 from pyflakes.checker import Checker as PyflakesChecker
 from pyflakes.messages import UnusedImport
@@ -34,7 +34,7 @@ MAX_LINE_WIDTH = 100
 MARKER_PRIORITIZED = '# -- prioritized --'
 MARKER_STDLIB = '# -- stdlib --'
 MARKER_THIRD_PARTY = '# -- third party --'
-MARKER_OWN = '# -- own --'
+MARKER_LOCAL = '# -- local --'
 MARKER_TYPING = '# -- typing --'
 MARKER_ERRORD = '# -- errord --'
 MARKER_CODE = '# -- code --'
@@ -42,7 +42,7 @@ MARKER_CODE = '# -- code --'
 CATEGORY_FUTURE = 'future'
 CATEGORY_STDLIB = 'stdlib'
 CATEGORY_THIRD_PARTY = 'third_party'
-CATEGORY_OWN = 'own'
+CATEGORY_LOCAL = 'local'
 CATEGORY_TYPING = 'typing'
 CATEGORY_ERROR = 'error'
 
@@ -52,12 +52,12 @@ _third_party_top_levels = set()
 SECTION_ORDER = [
     (MARKER_STDLIB, CATEGORY_STDLIB),
     (MARKER_THIRD_PARTY, CATEGORY_THIRD_PARTY),
-    (MARKER_OWN, CATEGORY_OWN),
+    (MARKER_LOCAL, CATEGORY_LOCAL),
 ]
 
 SECTION_MARKERS = frozenset({
     MARKER_PRIORITIZED, MARKER_STDLIB, MARKER_THIRD_PARTY,
-    MARKER_OWN, MARKER_TYPING, MARKER_ERRORD, MARKER_CODE,
+    MARKER_LOCAL, MARKER_TYPING, MARKER_ERRORD, MARKER_CODE,
 })
 
 
@@ -181,7 +181,7 @@ def classify_module(name):
     if top_level == '__future__':
         return CATEGORY_FUTURE
     if not top_level:
-        return CATEGORY_OWN
+        return CATEGORY_LOCAL
 
     if top_level in _third_party_top_levels:
         return CATEGORY_THIRD_PARTY
@@ -190,7 +190,7 @@ def classify_module(name):
 
     cwd = Path.cwd()
     if (cwd / top_level).is_dir() or (cwd / (top_level + '.py')).is_file():
-        return CATEGORY_OWN
+        return CATEGORY_LOCAL
 
     return CATEGORY_ERROR
 
