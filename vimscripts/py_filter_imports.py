@@ -1,5 +1,11 @@
-#!python3 -W ignore
+#!/usr/bin/env -S uv run --script
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "pyflakes",
+# ]
+# ///
 
 # -- prioritized --
 import warnings
@@ -10,13 +16,14 @@ from collections import defaultdict
 import ast
 import importlib.util
 import os
-import re
-import subprocess
 import sys
 import sysconfig
 import warnings
 
 # -- third party --
+from pyflakes.checker import Checker as PyflakesChecker
+from pyflakes.messages import UnusedImport
+
 # -- own --
 
 # -- code --
@@ -42,6 +49,11 @@ SECTION_ORDER = [
     (MARKER_THIRD_PARTY, CATEGORY_THIRD_PARTY),
     (MARKER_OWN, CATEGORY_OWN),
 ]
+
+SECTION_MARKERS = frozenset({
+    MARKER_PRIORITIZED, MARKER_STDLIB, MARKER_THIRD_PARTY,
+    MARKER_OWN, MARKER_TYPING, MARKER_ERRORD, MARKER_CODE,
+})
 
 
 # -- Helpers --
@@ -109,6 +121,32 @@ def classify_module(name):
 
 # -- Parsing --
 
+def extract_preamble(src):
+    """Extract preamble (shebang, encoding, comments) before imports.
+
+    Returns (preamble, remaining_src) where preamble contains all
+    leading comment lines before the first import or section marker.
+    """
+    lines = src.split('\n')
+    last_comment_idx = -1
+
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith('#') and stripped not in SECTION_MARKERS:
+            last_comment_idx = i
+        else:
+            break
+
+    if last_comment_idx < 0:
+        return '', src
+
+    preamble = '\n'.join(lines[:last_comment_idx + 1])
+    remaining = '\n'.join(lines[last_comment_idx + 1:])
+    return preamble, remaining
+
+
 def extract_prioritized(src):
     """Extract the prioritized section, returning (prioritized_text, remaining_src).
 
@@ -144,15 +182,19 @@ def split_imports_and_code(module, src):
 # -- Unused import detection --
 
 def detect_unused_imports(filename):
-    """Use flake8 to detect unused imports in the given file."""
+    """Detect unused imports in the given file using pyflakes."""
     try:
-        result = subprocess.run(
-            ['flake8', '--format', '%(text)s', filename],
-            capture_output=True, text=True, timeout=10,
-        )
-        if result.stderr:
-            return []
-        return re.findall(r"'([^']+)' imported but unused", result.stdout)
+        with open(filename) as f:
+            source = f.read()
+
+        tree = ast.parse(source, filename)
+        result = PyflakesChecker(tree, filename)
+
+        return [
+            msg.message_args[0]
+            for msg in result.messages
+            if isinstance(msg, UnusedImport)
+        ]
     except Exception:
         return []
 
@@ -252,18 +294,19 @@ def categorize_imports(plain_imports, from_imports):
 
 # -- Output --
 
-def format_output(categories, prioritized, code_text, has_shebang):
+def format_output(categories, prioritized, code_text, preamble):
     """Assemble the final formatted output string."""
     lines = []
 
-    if has_shebang:
-        lines.append('#!/usr/bin/env python')
+    if preamble:
+        lines.append(preamble)
 
-    lines.append('# -*- coding: utf-8 -*-')
     future = categories.get(CATEGORY_FUTURE, [])
     if future:
         lines.extend(future)
-    lines.append('')
+
+    if lines:
+        lines.append('')
 
     if prioritized:
         lines.append(MARKER_PRIORITIZED)
@@ -312,15 +355,14 @@ def main():
     raw_src = sys.stdin.read()
     sys.path.insert(0, os.getcwd())
 
-    has_shebang = raw_src.startswith('#!')
-
     try:
         ast.parse(raw_src)
     except SyntaxError:
         print(fallback_sort(raw_src))
         return
 
-    prioritized, src = extract_prioritized(raw_src)
+    preamble, rest = extract_preamble(raw_src)
+    prioritized, src = extract_prioritized(rest)
     module = ast.parse(src)
 
     import_stmts, code_text = split_imports_and_code(module, src)
@@ -330,7 +372,7 @@ def main():
     plain_imports, from_imports = collect_imports(import_stmts, unused)
     categories = categorize_imports(plain_imports, from_imports)
 
-    output = format_output(categories, prioritized, code_text, has_shebang)
+    output = format_output(categories, prioritized, code_text, preamble)
     sys.stdout.write(output)
     if not output.endswith('\n'):
         sys.stdout.write('\n')
