@@ -10,6 +10,7 @@ from collections import defaultdict
 import ast
 import importlib.util
 import os
+import re
 import subprocess
 import sys
 import sysconfig
@@ -19,42 +20,41 @@ import warnings
 # -- own --
 
 # -- code --
-src = sys.stdin.read()
-sys.path.insert(0, os.getcwd())
-
 MAX_LINE_WIDTH = 100
 
+MARKER_PRIORITIZED = '# -- prioritized --'
+MARKER_STDLIB = '# -- stdlib --'
+MARKER_THIRD_PARTY = '# -- third party --'
+MARKER_OWN = '# -- own --'
+MARKER_TYPING = '# -- typing --'
+MARKER_ERRORD = '# -- errord --'
+MARKER_CODE = '# -- code --'
 
-def do_sort(src):
-    return '\n'.join(filter(None, sorted(set(src.split('\n')))))
+CATEGORY_FUTURE = 'future'
+CATEGORY_STDLIB = 'stdlib'
+CATEGORY_THIRD_PARTY = 'third_party'
+CATEGORY_OWN = 'own'
+CATEGORY_TYPING = 'typing'
+CATEGORY_ERROR = 'error'
+
+SECTION_ORDER = [
+    (MARKER_STDLIB, CATEGORY_STDLIB),
+    (MARKER_THIRD_PARTY, CATEGORY_THIRD_PARTY),
+    (MARKER_OWN, CATEGORY_OWN),
+]
 
 
-def fmtalias(a):
-    if a.asname:
-        return '%s as %s' % (a.name, a.asname)
-    else:
-        return a.name
+# -- Helpers --
 
-prioritized = ''
-
-try:
-    module = ast.parse(src)
-    try:
-        tok = '# -- prioritized --\n'
-        l = src.index(tok) + len(tok)
-        tok = '# -- stdlib --\n'
-        r = src.index(tok)
-        prioritized = src[l:r].strip()
-        src = src[r:]
-        module = ast.parse(src)
-    except ValueError:
-        pass
-except SyntaxError:
-    print(do_sort(src))
-    sys.exit()
+def format_alias(node):
+    """Format an ast.alias node as 'name' or 'name as alias'."""
+    if node.asname:
+        return '%s as %s' % (node.name, node.asname)
+    return node.name
 
 
 def is_import_stmt(stmt):
+    """Check if an AST statement is an import or a TYPE_CHECKING guard."""
     if isinstance(stmt, (ast.Import, ast.ImportFrom)):
         return True
     if isinstance(stmt, ast.If):
@@ -63,223 +63,278 @@ def is_import_stmt(stmt):
 
 
 def stmt_start_line(stmt):
+    """Get the true start line of a statement, accounting for decorators."""
     if isinstance(stmt, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
         if stmt.decorator_list:
             return min(d.lineno for d in stmt.decorator_list)
     return stmt.lineno
 
 
-import_stmts = []
-first_code_line = None
-for stmt in module.body:
-    if first_code_line is None and is_import_stmt(stmt):
-        import_stmts.append(stmt)
-    else:
-        if first_code_line is None:
-            first_code_line = stmt_start_line(stmt)
-
-code_text = ''
-if first_code_line is not None:
-    src_lines = src.split('\n')
-    code_text = '\n'.join(src_lines[first_code_line - 1:])
-
-# ----------------------
-unused = []
-
-if len(sys.argv) > 1:
-    try:
-        fn = sys.argv[1]
-        cmd = '''flake8 --format '%(text)s' ''' + fn + ''' | grep -Po "(?<=')([^)]+)(?=' imported but unused)"'''
-        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        err = p.stderr.read()
-        if not err:
-            lst = p.stdout.read().decode('utf-8').split()
-            unused.extend(lst)
-    except Exception:
-        pass
-    finally:
-        p.kill()
-
-
-froms = defaultdict(list)
-imports = []
-
-for stmt in import_stmts:
-    if isinstance(stmt, ast.Import):
-        imports.extend([fmtalias(i) for i in stmt.names if i.name not in unused])
-    elif isinstance(stmt, ast.ImportFrom):
-
-        lvl = '.' * stmt.level
-        mod = stmt.module or ''
-
-        if mod.endswith('TT'):
-            froms['typing'].append('TYPE_CHECKING')
-
-        for i in stmt.names:
-            ful = lvl + mod
-            if '%s.%s' % (ful, i.name) in unused:
-                continue
-
-            froms[ful].append(fmtalias(i))
-
-    elif isinstance(stmt, ast.If):
-        if isinstance(stmt.test, ast.Name):
-            if stmt.test.id == 'TYPE_CHECKING':
-                froms['typing'].append('TYPE_CHECKING')
-                for stmt in stmt.body:
-                    if isinstance(stmt, ast.Import):
-                        imports.extend([fmtalias(i) + 'TT' for i in stmt.names])
-                    elif isinstance(stmt, ast.ImportFrom):
-                        lvl = '.' * stmt.level
-                        mod = stmt.module or ''
-                        froms[lvl + mod + 'TT'].extend([fmtalias(i) for i in stmt.names])
-            else:
-                raise Exception("COMPLEX CODE!")
-        else:
-            raise Exception("COMPLEX CODE!")
-    else:
-        raise Exception("COMPLEX CODE!")
-
-
-def _ensure_future(s):
-    if s not in froms['__future__']:
-        froms['__future__'].append(s)
-
-
-if sys.version_info.major == 2:
-    _ensure_future('absolute_import')
-    _ensure_future('division')
-    _ensure_future('print_function')
-    _ensure_future('unicode_literals')
-elif sys.version_info.major == 3:
-    pass
-    # _ensure_future('annotations')
-
-
-imports = list(sorted(set(imports)))
-froms = list(froms.items())
-froms.sort(key=lambda i: i[0])
-for k, v in froms:
-    v[:] = list(sorted(set(v)))
-
-# ----------------------
-
-future = []
-stdlibs = []
-third_parties = []
-own = []
-typing = []
-errord = []
-
-
-def where(name):
+def classify_module(name):
+    """Classify a module into a category based on its origin."""
     if name.endswith('TT'):
-        return typing
+        return CATEGORY_TYPING
 
-    name = name.split('.')[0]
-    name = name.split(' as ')[0]
-    if name == '__future__':
-        return future
-    elif not name:  # . and ..
-        return own
+    top_level = name.split('.')[0].split(' as ')[0]
 
-    spec = importlib.util.find_spec(name)
+    if top_level == '__future__':
+        return CATEGORY_FUTURE
+    if not top_level:
+        return CATEGORY_OWN
+
+    spec = importlib.util.find_spec(top_level)
     if spec is None:
-        return errord
-    elif spec.origin in ('built-in', 'frozen'):
-        return stdlibs
+        return CATEGORY_ERROR
+    if spec.origin in ('built-in', 'frozen'):
+        return CATEGORY_STDLIB
 
     path = spec.origin
     if path is None:
         if not spec.submodule_search_locations:
-            return errord
+            return CATEGORY_ERROR
         path = spec.submodule_search_locations[0]
 
     if not path:
-        return errord
+        return CATEGORY_ERROR
 
-    if '/site-packages/' in path or \
-       '/dist-packages/' in path:
-        return third_parties
-    elif path.startswith(os.path.realpath(sysconfig.get_path('stdlib'))):
-        return stdlibs
-    elif path.startswith(os.getcwd()):
-        return own
-    else:
-        return third_parties
+    if '/site-packages/' in path or '/dist-packages/' in path:
+        return CATEGORY_THIRD_PARTY
+    if path.startswith(os.path.realpath(sysconfig.get_path('stdlib'))):
+        return CATEGORY_STDLIB
+    if path.startswith(os.getcwd()):
+        return CATEGORY_OWN
+
+    return CATEGORY_THIRD_PARTY
 
 
-for name, aliases in froms:
-    dst = where(name)
-    header = 'from %s import ' % name
-    rest = list(aliases)
-    commit = []
+# -- Parsing --
 
-    def do_commit():
-        dst.append(header + ', '.join(commit))
-        commit[:] = []
+def extract_prioritized(src):
+    """Extract the prioritized section, returning (prioritized_text, remaining_src).
 
-    while rest:
-        s = ', '.join(commit + [rest[0]])
-        if len(header) + len(s) > MAX_LINE_WIDTH:
-            do_commit()
+    If no prioritized markers are found, returns ('', original_src).
+    """
+    try:
+        start = src.index(MARKER_PRIORITIZED + '\n') + len(MARKER_PRIORITIZED) + 1
+        end = src.index(MARKER_STDLIB + '\n')
+        return src[start:end].strip(), src[end:]
+    except ValueError:
+        return '', src
+
+
+def split_imports_and_code(module, src):
+    """Partition module body into import statements and verbatim code text."""
+    import_stmts = []
+    first_code_line = None
+
+    for stmt in module.body:
+        if first_code_line is None and is_import_stmt(stmt):
+            import_stmts.append(stmt)
+        elif first_code_line is None:
+            first_code_line = stmt_start_line(stmt)
+
+    code_text = ''
+    if first_code_line is not None:
+        src_lines = src.split('\n')
+        code_text = '\n'.join(src_lines[first_code_line - 1:])
+
+    return import_stmts, code_text
+
+
+# -- Unused import detection --
+
+def detect_unused_imports(filename):
+    """Use flake8 to detect unused imports in the given file."""
+    try:
+        result = subprocess.run(
+            ['flake8', '--format', '%(text)s', filename],
+            capture_output=True, text=True, timeout=10,
+        )
+        if result.stderr:
+            return []
+        return re.findall(r"'([^']+)' imported but unused", result.stdout)
+    except Exception:
+        return []
+
+
+# -- Import collection --
+
+def _collect_from_import(stmt, unused, froms):
+    """Process an ImportFrom statement into the froms dict."""
+    module_path = '.' * stmt.level + (stmt.module or '')
+
+    if (stmt.module or '').endswith('TT'):
+        froms['typing'].append('TYPE_CHECKING')
+
+    for a in stmt.names:
+        if '%s.%s' % (module_path, a.name) in unused:
+            continue
+        froms[module_path].append(format_alias(a))
+
+
+def _collect_type_checking_block(stmt, froms, plain):
+    """Process a TYPE_CHECKING if-block into froms/plain."""
+    froms['typing'].append('TYPE_CHECKING')
+    for inner in stmt.body:
+        if isinstance(inner, ast.Import):
+            plain.extend(format_alias(a) + 'TT' for a in inner.names)
+        elif isinstance(inner, ast.ImportFrom):
+            module_path = '.' * inner.level + (inner.module or '')
+            froms[module_path + 'TT'].extend(
+                format_alias(a) for a in inner.names
+            )
+
+
+def collect_imports(import_stmts, unused):
+    """Walk import AST nodes and collect them.
+
+    Returns (plain_imports, from_imports) where:
+      plain_imports: list of alias strings (e.g. 'os', 'sys as system')
+      from_imports:  defaultdict(list) mapping module -> [alias_strings]
+    """
+    froms = defaultdict(list)
+    plain = []
+
+    for stmt in import_stmts:
+        if isinstance(stmt, ast.Import):
+            plain.extend(
+                format_alias(a) for a in stmt.names
+                if a.name not in unused
+            )
+        elif isinstance(stmt, ast.ImportFrom):
+            _collect_from_import(stmt, unused, froms)
+        elif isinstance(stmt, ast.If):
+            _collect_type_checking_block(stmt, froms, plain)
+
+    return plain, froms
+
+
+# -- Formatting --
+
+def wrap_from_import(module_name, aliases):
+    """Format 'from X import a, b, c' lines, wrapping at MAX_LINE_WIDTH."""
+    header = 'from %s import ' % module_name
+    lines = []
+    current = []
+
+    for alias in aliases:
+        candidate = ', '.join(current + [alias])
+        if current and len(header) + len(candidate) > MAX_LINE_WIDTH:
+            lines.append(header + ', '.join(current))
+            current = [alias]
         else:
-            commit.append(rest.pop(0))
+            current.append(alias)
 
-    commit and do_commit()
+    if current:
+        lines.append(header + ', '.join(current))
 
-    assert not rest
-    assert not commit
+    return lines
 
-# --------------------------
 
-for a in imports:
-    dst = where(a)
-    # print dst
-    dst.append('import ' + a)
+def categorize_imports(plain_imports, from_imports):
+    """Classify all imports into category buckets of formatted lines."""
+    categories = defaultdict(list)
 
-if src.startswith('#!'):
-    print('#!/usr/bin/env python')
+    sorted_froms = sorted(from_imports.items())
+    for _, aliases in sorted_froms:
+        aliases[:] = sorted(set(aliases))
 
-print('# -*- coding: utf-8 -*-')
-if future:
-    print('\n'.join(future))
-print()
+    for module_name, aliases in sorted_froms:
+        category = classify_module(module_name)
+        categories[category].extend(wrap_from_import(module_name, aliases))
 
-if prioritized:
-    print('# -- prioritized --')
-    print(prioritized)
-    print()
+    for name in sorted(set(plain_imports)):
+        category = classify_module(name)
+        categories[category].append('import ' + name)
 
-print('# -- stdlib --')
-if stdlibs:
-    print('\n'.join(stdlibs))
-    print()
+    return categories
 
-print('# -- third party --')
-if third_parties:
-    print('\n'.join(third_parties))
-    print()
 
-print('# -- own --')
-if own:
-    print('\n'.join(own))
-    print()
+# -- Output --
 
-if typing:
-    print('# -- typing --')
-    typing = ['    {}  # noqa: F401'.format(i) for i in typing]
-    print('if TYPE_CHECKING:')
-    print('\n'.join(typing).replace('TT', ''))
-    print()
+def format_output(categories, prioritized, code_text, has_shebang):
+    """Assemble the final formatted output string."""
+    lines = []
 
-if errord:
-    print('# -- errord --')
-    print('\n'.join(errord))
-    print()
+    if has_shebang:
+        lines.append('#!/usr/bin/env python')
 
-print('\n# -- code --')
-if code_text:
-    sys.stdout.write(code_text)
-    if not code_text.endswith('\n'):
+    lines.append('# -*- coding: utf-8 -*-')
+    future = categories.get(CATEGORY_FUTURE, [])
+    if future:
+        lines.extend(future)
+    lines.append('')
+
+    if prioritized:
+        lines.append(MARKER_PRIORITIZED)
+        lines.append(prioritized)
+        lines.append('')
+
+    for marker, category in SECTION_ORDER:
+        lines.append(marker)
+        items = categories.get(category, [])
+        if items:
+            lines.extend(items)
+            lines.append('')
+
+    typing_imports = categories.get(CATEGORY_TYPING, [])
+    if typing_imports:
+        lines.append(MARKER_TYPING)
+        lines.append('if TYPE_CHECKING:')
+        for imp in typing_imports:
+            lines.append('    %s  # noqa: F401' % imp.replace('TT', ''))
+        lines.append('')
+
+    errors = categories.get(CATEGORY_ERROR, [])
+    if errors:
+        lines.append(MARKER_ERRORD)
+        lines.extend(errors)
+        lines.append('')
+
+    lines.append('')
+    lines.append(MARKER_CODE)
+
+    result = '\n'.join(lines)
+    if code_text:
+        result += '\n' + code_text
+
+    return result
+
+
+def fallback_sort(src):
+    """Last-resort handler for unparseable input: deduplicate and sort lines."""
+    return '\n'.join(filter(None, sorted(set(src.split('\n')))))
+
+
+# -- Entry point --
+
+def main():
+    raw_src = sys.stdin.read()
+    sys.path.insert(0, os.getcwd())
+
+    has_shebang = raw_src.startswith('#!')
+
+    try:
+        ast.parse(raw_src)
+    except SyntaxError:
+        print(fallback_sort(raw_src))
+        return
+
+    prioritized, src = extract_prioritized(raw_src)
+    module = ast.parse(src)
+
+    import_stmts, code_text = split_imports_and_code(module, src)
+
+    unused = detect_unused_imports(sys.argv[1]) if len(sys.argv) > 1 else []
+
+    plain_imports, from_imports = collect_imports(import_stmts, unused)
+    categories = categorize_imports(plain_imports, from_imports)
+
+    output = format_output(categories, prioritized, code_text, has_shebang)
+    sys.stdout.write(output)
+    if not output.endswith('\n'):
         sys.stdout.write('\n')
+
+
+if __name__ == '__main__':
+    main()
