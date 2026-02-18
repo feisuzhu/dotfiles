@@ -48,6 +48,7 @@ CATEGORY_ERROR = 'error'
 
 _STDLIB_NAMES = getattr(sys, 'stdlib_module_names', None)
 _third_party_top_levels = set()
+_pyproject_root = None
 
 SECTION_ORDER = [
     (MARKER_STDLIB, CATEGORY_STDLIB),
@@ -148,6 +149,18 @@ def _scan_third_party_top_levels(site_packages_dirs):
     return names
 
 
+def _find_pyproject_root(start_dir=None):
+    """Find the nearest directory containing pyproject.toml by walking upward."""
+    directory = Path(start_dir).resolve() if start_dir else Path.cwd()
+    while True:
+        if (directory / 'pyproject.toml').is_file():
+            return directory
+        parent = directory.parent
+        if parent == directory:
+            return None
+        directory = parent
+
+
 def _is_stdlib(name):
     """Check if a module belongs to the standard library."""
     if _STDLIB_NAMES is not None:
@@ -188,9 +201,12 @@ def classify_module(name):
     if _is_stdlib(top_level):
         return CATEGORY_STDLIB
 
-    cwd = Path.cwd()
-    if (cwd / top_level).is_dir() or (cwd / (top_level + '.py')).is_file():
-        return CATEGORY_LOCAL
+    local_roots = [Path.cwd()]
+    if _pyproject_root is not None and _pyproject_root not in local_roots:
+        local_roots.append(_pyproject_root)
+    for root in local_roots:
+        if (root / top_level).is_dir() or (root / (top_level + '.py')).is_file():
+            return CATEGORY_LOCAL
 
     return CATEGORY_ERROR
 
@@ -474,6 +490,8 @@ def parse_args():
 def main():
     args = parse_args()
 
+    global _pyproject_root
+
     if args.force_stdin and args.files:
         assert len(args.files) == 1, '--force-stdin requires at most one --files argument'
         filepath = args.files[0].resolve()
@@ -482,6 +500,7 @@ def main():
                 _find_project_site_packages(filepath.parent)
             )
         )
+        _pyproject_root = _find_pyproject_root(filepath.parent)
         raw_src = sys.stdin.read()
         output = format_source(raw_src, str(filepath))
         sys.stdout.write(output)
@@ -494,6 +513,7 @@ def main():
                     _find_project_site_packages(filepath.parent)
                 )
             )
+            _pyproject_root = _find_pyproject_root(filepath.parent)
             raw_src = filepath.read_text()
             output = format_source(raw_src, str(filepath))
             filepath.write_text(output)
@@ -501,6 +521,7 @@ def main():
         _third_party_top_levels.update(
             _scan_third_party_top_levels(_find_project_site_packages())
         )
+        _pyproject_root = _find_pyproject_root()
         raw_src = sys.stdin.read()
         output = format_source(raw_src)
         sys.stdout.write(output)
