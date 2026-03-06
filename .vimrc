@@ -1,18 +1,8 @@
-set nocompatible
-
 " >>>>> Plugins
-if has('nvim')
-  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall | source $MYVIMRC
-  endif
-else
-  if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall | source $MYVIMRC
-  endif
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -43,7 +33,7 @@ Plug 'guns/vim-clojure-static'
 
 " Plug 'luochen1990/rainbow'
 Plug 'uarun/vim-protobuf'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'  " Replacement for archived vim-multiple-cursors
 Plug 'kchmck/vim-coffee-script'
 Plug 'puppetlabs/puppet-syntax-vim'
 Plug 'Yggdroot/indentLine' " Vertical indent lines (visual marker)
@@ -128,15 +118,10 @@ call plug#end()
 
 " <<<<<
 " >>>>> General Settings
-filetype plugin on
 filetype indent off
 
 set exrc
 set secure
-
-set laststatus=2
-set encoding=utf-8
-set t_Co=256
 
 set foldlevel=99
 
@@ -144,14 +129,9 @@ set diffopt+=vertical
 set wildignore=*.py[co]
 
 set mouse=a
-set tags=tags;
-
-autocmd BufEnter * :syntax sync fromstart
 
 set ts=4
 set sw=4
-set ai
-set hlsearch
 set nu
 set expandtab
 set cursorline
@@ -159,35 +139,21 @@ set cursorcolumn
 set softtabstop=4
 set shiftround
 set showmatch
-set incsearch
-set backspace=2
 
 set fdm=manual
 
 set jumpoptions=stack
 
-if !has('nvim')
-    set ttyfast
-    set ttyscroll=3
-endif
-
 set lazyredraw
-syntax on
 
 set cmdheight=2
 set updatetime=300
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-endif
+set signcolumn=number
 
 set undofile
-set undodir=~/.vim/undodir
-
-highlight Pmenu ctermbg=8
 " <<<<<
 " >>>>> Color Scheme
 if has('termguicolors')
@@ -213,12 +179,7 @@ autocmd FileType rust       set sw=4 | set ts=4 | set sts=4
 autocmd FileType go         set sw=4 | set ts=4 | set sts=4 | set noexpandtab
 " <<<<<
 " >>>>> Clipboard
-let os=substitute(system('uname'), '\n', '', '')
-if os == 'Darwin' || os == 'Mac'
-    set clipboard=unnamed
-else
-    set clipboard=unnamedplus
-endif
+set clipboard=unnamedplus
 " <<<<<
 " >>>>> General Key Bindings
 nmap <Space>k :wincmd k<CR>
@@ -232,8 +193,6 @@ nnoremap + :cnext<CR>
 nmap \\ :nohl<CR>:set nopaste<CR>
 " vmap <Space><Space> :!LC_ALL=C sort -u<CR>
 nmap <Space>i ggVG:!~/.vim/vimscripts/py_filter_imports.py --force-stdin --files %<CR>
-
-nmap <Space>t :!ctags -R .<CR><CR>
 
 if has('nvim')
     " Escape from terminal
@@ -278,9 +237,6 @@ nmap tdc <Plug>(table-mode-delete-column)
 nmap <Space>T :TableModeToggle<CR><CR>
 nmap <Space>R :TableModeRealign<CR><CR>
 " <<<<<
-" >>>>> vim-go
-let g:go_version_warning = 0
-" <<<<<
 " >>>>> riv (reStructuredText)
 let g:riv_ignored_imaps = "<Tab>,<S-Tab>"
 let g:riv_ignored_nmaps = "<Tab>,<S-Tab>"
@@ -289,44 +245,6 @@ let g:riv_ignored_nmaps = "<Tab>,<S-Tab>"
 let NERDTreeIgnore = ['\.py[co]$', '\.o$', 'a\.out$', '^__pycache__$']
 nmap <Tab> :NERDTreeToggle<CR>
 nmap \l :NERDTreeFind<CR>
-" <<<<<
-" >>>>> Rainbow parentheses
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
-let g:rainbow_conf = {
-\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-\	'operators': '_,_',
-\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-\	'separately': {
-\		'*': {},
-\		'tex': {
-\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-\		},
-\		'lisp': {
-\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-\		},
-\		'vim': {
-\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-\		},
-\		'html': {
-\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-\		},
-\		'css': 0,
-\	}
-\}
-" <<<<<
-" >>>>> ack.vim
-let g:ackprg = 'ag --nogroup --nocolor --column'
-" <<<<<
-" >>>>> ale
-" let g:ale_linters = {'go': ['gometalinter'], 'python': ['flake8']}
-let g:ale_linters = {'go': ['gometalinter']}
-" let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=unused --enable=staticcheck --enable=structcheck --enable=golint --enable=errcheck --enable=goconst --enable=gocyclo --enable=gotype'
-let g:ale_go_gometalinter_options = '--disable-all --enable=deadcode --enable=golint --enable=errcheck --enable=gocyclo --enable=gotype'
-let g:ale_rust_cargo_use_clippy = 1
-
-highlight ALEError ctermbg=52
-
 " <<<<<
 " >>>>> coc.nvim
 " \   'coc-git',
@@ -502,12 +420,6 @@ nmap ' <Plug>(coc-codelens-action)
 nnoremap <Space><Enter> :<C-u>CocFzfList<CR>
 vnoremap <Space><Enter> :CocFzfList<CR>
 
-" <<<<<
-" >>>>> jedi
-let g:jedi#completions_enabled=0
-" <<<<<
-" >>>>> Golang rules
-" autocmd FileType go let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 " <<<<<
 " >>>>> Python rules
 " autocmd FileType python let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
