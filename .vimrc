@@ -1,95 +1,107 @@
 " >>>>> Plugins
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
+lua <<EOF
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({
+    "git", "clone", "--filter=blob:none",
+    "git@github.com:folke/lazy.nvim.git",
+    "--branch=stable", lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-call plug#begin('~/.vim/plugged')
-" Color scheme
-Plug 'sainnhe/sonokai'                                            " High-contrast color scheme with multiple styles
+require("lazy").setup({
+  -- Color scheme
+  { "sainnhe/sonokai" },
 
-Plug 'vim-airline/vim-airline'                                    " Lean status/tabline for Vim
-Plug 'vim-airline/vim-airline-themes'                             " Theme collection for vim-airline
+  { "vim-airline/vim-airline" },
+  { "vim-airline/vim-airline-themes" },
 
-Plug 'scrooloose/nerdtree'                                        " File system explorer sidebar
-Plug 'tmhedberg/SimpylFold'                                       " enhanced python folding
-Plug 'tpope/vim-fugitive'                                         " Git integration
-Plug 'tpope/vim-markdown'                                         " Markdown syntax highlighting and filetype support
-Plug 'mattn/emmet-vim'                                            " HTML Shortcuts
-Plug 'liuchengxu/vista.vim'                                       " LSP symbol/tag viewer sidebar
-Plug 'groenewege/vim-less'                                        " LESS CSS syntax highlighting
-Plug 'Lokaltog/vim-easymotion'                                    " Quick cursor jumping with motion hints
-Plug 'guns/vim-clojure-static'                                    " Clojure syntax highlighting and indentation
+  { "scrooloose/nerdtree" },
+  { "tmhedberg/SimpylFold" },
+  { "tpope/vim-fugitive" },
+  { "tpope/vim-markdown" },
+  { "mattn/emmet-vim" },
+  { "liuchengxu/vista.vim" },
+  { "groenewege/vim-less" },
+  { "Lokaltog/vim-easymotion" },
+  { "guns/vim-clojure-static" },
 
-Plug 'uarun/vim-protobuf'                                         " Protocol Buffers syntax highlighting
-Plug 'mg979/vim-visual-multi'                                     " Replacement for archived vim-multiple-cursors
-Plug 'puppetlabs/puppet-syntax-vim'                               " Puppet manifest syntax highlighting
-Plug 'Yggdroot/indentLine'                                        " Vertical indent lines (visual marker)
-Plug 'triglav/vim-visual-increment'                               " Batch Ctrl+A increment
-Plug 'stephpy/vim-yaml'                                           " Improved YAML syntax highlighting
-Plug 'chase/nginx.vim'                                            " Nginx config file syntax highlighting
-Plug 'ntpeters/vim-better-whitespace'                             " Highlight and strip trailing whitespace
-Plug 'digitaltoad/vim-jade'                                       " Jade/Pug template syntax highlighting
-Plug 'godlygeek/tabular'                                          " Align your code vertically
-Plug 'ekalinin/Dockerfile.vim'                                    " Dockerfile syntax highlighting and snippets
+  { "uarun/vim-protobuf" },
+  { "mg979/vim-visual-multi" },
+  { "puppetlabs/puppet-syntax-vim" },
+  { "Yggdroot/indentLine" },
+  { "triglav/vim-visual-increment" },
+  { "stephpy/vim-yaml" },
+  { "chase/nginx.vim" },
+  { "ntpeters/vim-better-whitespace" },
+  { "digitaltoad/vim-jade" },
+  { "godlygeek/tabular" },
+  { "ekalinin/Dockerfile.vim" },
 
-Plug 'jeroenbourgois/vim-actionscript'                            " ActionScript syntax highlighting
-Plug 'rust-lang/rust.vim'                                         " Rust language support with rustfmt integration
-Plug 'derekwyatt/vim-scala'                                       " Scala syntax highlighting and indentation
-Plug 'EvanDotPro/nerdtree-chmod'                                  " Change file permissions from NERDTree
-Plug 'robbles/logstash.vim'                                       " Logstash config syntax highlighting
-Plug 'tpope/vim-surround'                                         " Fancy parentheses manipulation
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Fuzzy finder binary (core)
-Plug 'junegunn/fzf.vim'                                           " Fuzzy finder Vim commands (Files, Buffers, Rg, etc.)
-Plug 'nickhutchinson/vim-systemtap'                               " SystemTap script syntax highlighting
-Plug 'maksimr/vim-jsbeautify'                                     " JavaScript/HTML/CSS code formatter
-Plug 'leafOfTree/vim-vue-plugin'                                  " Vue.js single-file component support
-Plug 'alderz/smali-vim'                                           " Smali (Android bytecode) syntax highlighting
-Plug 'dhruvasagar/vim-table-mode'                                 " Fantastic table editor
-Plug 'leafgarland/typescript-vim'                                 " TypeScript syntax highlighting
-Plug 'Shougo/vimproc.vim'                                         " Asynchronous execution library for Vim
-Plug 'Quramy/tsuquyomi'                                           " TypeScript things
-Plug 'Rykka/riv.vim'                                              " reStructuredText
-" Plug 'feisuzhu/vim-pysql'                                       " Syntax highlights embedded SQL strings
-Plug 'tpope/vim-commentary'                                       " Toggle comments with gcc/gc motions
+  { "jeroenbourgois/vim-actionscript" },
+  { "rust-lang/rust.vim" },
+  { "derekwyatt/vim-scala" },
+  { "EvanDotPro/nerdtree-chmod" },
+  { "robbles/logstash.vim" },
+  { "tpope/vim-surround" },
+  { "junegunn/fzf", dir = "~/.fzf", build = "./install --all" },
+  { "junegunn/fzf.vim" },
+  { "nickhutchinson/vim-systemtap" },
+  { "maksimr/vim-jsbeautify" },
+  { "leafOfTree/vim-vue-plugin" },
+  { "alderz/smali-vim" },
+  { "dhruvasagar/vim-table-mode" },
+  { "leafgarland/typescript-vim" },
+  { "Shougo/vimproc.vim" },
+  { "Quramy/tsuquyomi" },
+  { "Rykka/riv.vim" },
+  { "tpope/vim-commentary" },
 
-Plug 'pedrohdz/vim-yaml-folds'                                    " YAML file folding support
-Plug 'farmergreg/vim-lastplace'                                   " Jump to last edit location
-Plug 'zchee/vim-flatbuffers'                                      " FlatBuffers schema syntax highlighting
-Plug 'sgeb/vim-diff-fold'                                         " Fold diff/patch files by file section
-Plug 'powerman/vim-plugin-AnsiEsc'                                " Interpret ANSI escape sequences as colors
-Plug 'ojroques/vim-oscyank'                                       " Copy to system clipboard over SSH via OSC52
-Plug 'mmarchini/bpftrace.vim'                                     " bpftrace script syntax highlighting
-Plug 'pprovost/vim-ps1'                                           " PowerShell syntax highlighting
+  { "pedrohdz/vim-yaml-folds" },
+  { "farmergreg/vim-lastplace" },
+  { "zchee/vim-flatbuffers" },
+  { "sgeb/vim-diff-fold" },
+  { "powerman/vim-plugin-AnsiEsc" },
+  { "ojroques/vim-oscyank" },
+  { "mmarchini/bpftrace.vim" },
+  { "pprovost/vim-ps1" },
 
-Plug 'tikhomirov/vim-glsl'                                        " GLSL shader language syntax highlighting
-Plug 'rhysd/vim-llvm'                                             " LLVM IR and TableGen syntax highlighting
+  { "tikhomirov/vim-glsl" },
+  { "rhysd/vim-llvm" },
 
-" Svelte
-Plug 'othree/html5.vim'                                           " HTML5 omnicomplete and syntax highlighting
-Plug 'pangloss/vim-javascript'                                    " Enhanced JavaScript syntax and indentation
-Plug 'evanleck/vim-svelte', {'branch': 'main'}                    " Svelte component syntax highlighting
-" /Svelte
+  -- Svelte
+  { "othree/html5.vim" },
+  { "pangloss/vim-javascript" },
+  { "evanleck/vim-svelte", branch = "main" },
 
-" Autocomplete framework
-Plug 'neoclide/coc.nvim', {'branch': 'release'}                   " Intellisense engine with LSP support
-Plug 'antoinemadec/coc-fzf'                                       " FZF interface for CoC lists
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}       " Treesitter-based syntax highlighting and code parsing
+  -- Autocomplete framework
+  { "neoclide/coc.nvim", branch = "release" },
+  { "antoinemadec/coc-fzf" },
+  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
-" Avante deps
-Plug 'stevearc/dressing.nvim'                                     " Improved UI for vim.ui.select and vim.ui.input
-Plug 'nvim-lua/plenary.nvim'                                      " Lua utility library used by many Neovim plugins
-Plug 'MunifTanjim/nui.nvim'                                       " UI component library for Neovim
-Plug 'MeanderingProgrammer/render-markdown.nvim'                  " Render Markdown with concealed syntax in buffers
-Plug 'hrsh7th/nvim-cmp'                                           " Auto-completion engine for Neovim
-Plug 'nvim-tree/nvim-web-devicons'                                " File type icons for Neovim plugins
-Plug 'HakonHarnes/img-clip.nvim'                                  " Paste images from clipboard into documents
-Plug 'ibhagwan/fzf-lua'                                           " FZF picker implemented in Lua for Neovim
-" /Avante deps
-Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }     " AI-powered code assistant for Neovim
+  -- Avante deps
+  { "stevearc/dressing.nvim" },
+  { "nvim-lua/plenary.nvim" },
+  { "MunifTanjim/nui.nvim" },
+  { "MeanderingProgrammer/render-markdown.nvim" },
+  { "hrsh7th/nvim-cmp" },
+  { "nvim-tree/nvim-web-devicons" },
+  { "HakonHarnes/img-clip.nvim" },
+  { "ibhagwan/fzf-lua" },
 
-call plug#end()
+  { "yetone/avante.nvim", branch = "main", build = "make" },
+}, {
+  git = { url_format = "git@github.com:%s.git" },
+  ui = { icons = {
+    cmd = "⌘", config = "🔧", event = "📅", ft = "📂",
+    init = "⚙", keys = "🗝", plugin = "🔌", runtime = "💻",
+    require = "🌙", source = "📄", start = "🚀", task = "📌",
+    lazy = "💤 ",
+    list = { "●", "➜", "★", "‒" },
+  }},
+})
+EOF
 
 " <<<<<
 " >>>>> General Settings
@@ -428,13 +440,14 @@ autocmd BufNewFile,BufRead git-revise-todo set filetype=gitrebase
 " <<<<<
 " >>>>> Treesitter
 lua <<EOF
-require('nvim-treesitter.configs').setup {
-  prefer_git = true,
-  ensure_installed = "all",
-  highlight = { enable = true },
-  -- indent = { enable = true }
-}
--- vim.treesitter.language.register("dockerfile", "Dockerfile")
+require('nvim-treesitter.install').prefer_git = true
+require('nvim-treesitter.install').auto_install = true
+
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
 EOF
 " <<<<<
 " >>>>> Avante.nvim
