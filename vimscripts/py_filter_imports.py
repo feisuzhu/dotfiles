@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # -*- coding: utf-8 -*-
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=3.11"
 # dependencies = [
 #     "pyflakes",
 # ]
@@ -20,6 +20,8 @@ import importlib.util
 import sys
 import sysconfig
 import warnings
+
+import tomllib
 
 # -- third party --
 # -- local --
@@ -49,6 +51,7 @@ CATEGORY_ERROR = 'error'
 _STDLIB_NAMES = getattr(sys, 'stdlib_module_names', None)
 _third_party_top_levels = set()
 _pyproject_root = None
+_extra_source_roots = []
 
 SECTION_ORDER = [
     (MARKER_STDLIB, CATEGORY_STDLIB),
@@ -161,6 +164,62 @@ def _find_pyproject_root(start_dir=None):
         directory = parent
 
 
+def _parse_pyproject_source_roots(pyproject_root):
+    if pyproject_root is None:
+        return []
+    toml_path = pyproject_root / 'pyproject.toml'
+    if not toml_path.is_file():
+        return []
+    try:
+        with open(toml_path, 'rb') as f:
+            data = tomllib.load(f)
+    except Exception:
+        return []
+
+    dirs = []
+    tool = data.get('tool', {})
+
+    # setuptools: [tool.setuptools.packages.find] where = ["src"]
+    setuptools_cfg = tool.get('setuptools', {})
+    packages = setuptools_cfg.get('packages', {})
+    if isinstance(packages, dict):
+        for key in ('find', 'find-namespaces'):
+            where = packages.get(key, {}).get('where', [])
+            if isinstance(where, list):
+                dirs.extend(where)
+    pkg_dir = setuptools_cfg.get('package-dir', {})
+    if isinstance(pkg_dir, dict) and '' in pkg_dir:
+        dirs.append(pkg_dir[''])
+
+    # hatch: [tool.hatch.build.targets.wheel] packages = ["src/mypackage"]
+    hatch_pkgs = (tool.get('hatch', {}).get('build', {})
+                  .get('targets', {}).get('wheel', {}).get('packages', []))
+    if isinstance(hatch_pkgs, list):
+        for p in hatch_pkgs:
+            parent = str(Path(p).parent)
+            if parent != '.':
+                dirs.append(parent)
+
+    # maturin: [tool.maturin] python-source = "python"
+    maturin_src = tool.get('maturin', {}).get('python-source')
+    if maturin_src:
+        dirs.append(maturin_src)
+
+    # pdm: [tool.pdm.build] package-dir = "src"
+    pdm_pkg_dir = tool.get('pdm', {}).get('build', {}).get('package-dir')
+    if pdm_pkg_dir:
+        dirs.append(pdm_pkg_dir)
+
+    result = []
+    seen = set()
+    for d in dirs:
+        resolved = (pyproject_root / d).resolve()
+        if resolved not in seen and resolved.is_dir():
+            seen.add(resolved)
+            result.append(resolved)
+    return result
+
+
 def _is_stdlib(name):
     """Check if a module belongs to the standard library."""
     if _STDLIB_NAMES is not None:
@@ -205,6 +264,11 @@ def classify_module(name):
     if _pyproject_root is not None and _pyproject_root not in local_roots:
         local_roots.append(_pyproject_root)
     for root in local_roots:
+        if (root / top_level).is_dir() or (root / (top_level + '.py')).is_file():
+            return CATEGORY_LOCAL
+        if root.name == top_level:
+            return CATEGORY_LOCAL
+    for root in _extra_source_roots:
         if (root / top_level).is_dir() or (root / (top_level + '.py')).is_file():
             return CATEGORY_LOCAL
 
@@ -490,7 +554,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    global _pyproject_root
+    global _pyproject_root, _extra_source_roots
 
     if args.force_stdin and args.files:
         assert len(args.files) == 1, '--force-stdin requires at most one --files argument'
@@ -501,6 +565,7 @@ def main():
             )
         )
         _pyproject_root = _find_pyproject_root(filepath.parent)
+        _extra_source_roots = _parse_pyproject_source_roots(_pyproject_root)
         raw_src = sys.stdin.read()
         output = format_source(raw_src, str(filepath))
         sys.stdout.write(output)
@@ -514,6 +579,7 @@ def main():
                 )
             )
             _pyproject_root = _find_pyproject_root(filepath.parent)
+            _extra_source_roots = _parse_pyproject_source_roots(_pyproject_root)
             raw_src = filepath.read_text()
             output = format_source(raw_src, str(filepath))
             filepath.write_text(output)
@@ -522,6 +588,7 @@ def main():
             _scan_third_party_top_levels(_find_project_site_packages())
         )
         _pyproject_root = _find_pyproject_root()
+        _extra_source_roots = _parse_pyproject_source_roots(_pyproject_root)
         raw_src = sys.stdin.read()
         output = format_source(raw_src)
         sys.stdout.write(output)
