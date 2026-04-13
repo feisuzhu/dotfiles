@@ -1,0 +1,3 @@
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":1,"clientInfo":{"name":"opencode","version":"0.1.0"}}}
+{"jsonrpc":"2.0","id":2,"method":"session/new","params":{}}
+{"jsonrpc":"2.0","id":3,"method":"session/prompt","params":{"sessionId":"SESSION_ID","prompt":[{"type":"text","text":"Hi!"}]}}

@@ -1,0 +1,2 @@
+export ANTHROPIC_OAUTH=http://feisuzhu@localhost:2727/.internal/claude-access-token
+bwrap --bind / / --bind /root/.cache/sandrone-opencode/ /root --bind /app/src/sandrone/assets/opencode /root/.config/opencode --proc /proc --dev /dev opencode acp --print-logs --log-level=DEBUG
