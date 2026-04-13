@@ -1,0 +1,74 @@
+# Palette uses 4 stops (#000 #555 #aaa #fff) that quantize onto 16-level e-ink
+# panels without dithering. Changing these values risks halftones and ghosting.
+
+[colors.primary]
+background        = "#ffffff"
+foreground        = "#000000"
+dim_foreground    = "#555555"
+bright_foreground = "#000000"
+
+[colors.cursor]
+text   = "#ffffff"
+cursor = "#000000"
+
+[colors.vi_mode_cursor]
+text   = "#ffffff"
+cursor = "#000000"
+
+# Selection: opaque gray block instead of invert.
+[colors.selection]
+text       = "#000000"
+background = "#aaaaaa"
+
+[colors.search.matches]
+foreground = "#ffffff"
+background = "#000000"
+
+[colors.search.focused_match]
+foreground = "#ffffff"
+background = "#555555"
+
+[colors.hints.start]
+foreground = "#ffffff"
+background = "#000000"
+
+[colors.hints.end]
+foreground = "#000000"
+background = "#aaaaaa"
+
+[colors.footer_bar]
+foreground = "#000000"
+background = "#aaaaaa"
+
+# ANSI mapping — bias high-attention semantics toward pure black; secondary
+# semantics toward dark gray. bright_black is the single "light" slot since
+# most tools use it for comments / dimmed UI chrome.
+[colors.normal]
+black   = "#000000"
+red     = "#000000"
+green   = "#555555"
+yellow  = "#000000"
+blue    = "#000000"
+magenta = "#555555"
+cyan    = "#555555"
+white   = "#555555"
+
+[colors.bright]
+black   = "#aaaaaa"
+red     = "#000000"
+green   = "#555555"
+yellow  = "#000000"
+blue    = "#000000"
+magenta = "#555555"
+cyan    = "#555555"
+white   = "#000000"
+
+[colors.dim]
+black   = "#aaaaaa"
+red     = "#555555"
+green   = "#aaaaaa"
+yellow  = "#555555"
+blue    = "#555555"
+magenta = "#aaaaaa"
+cyan    = "#aaaaaa"
+white   = "#aaaaaa"

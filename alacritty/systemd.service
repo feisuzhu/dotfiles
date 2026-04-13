@@ -1,0 +1,13 @@
+[Unit]
+Description=Per-monitor alacritty theme daemon
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/alacritty-theme-daemon
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

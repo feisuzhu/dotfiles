@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
+
+if ! command -v uv >/dev/null; then
+    echo "uv not found on PATH. Install: https://docs.astral.sh/uv/getting-started/installation/" >&2
+    exit 1
+fi
+
+mkdir -p "$HOME/.local/bin" "$HOME/.config/systemd/user" "$HOME/.config/alacritty"
+ln -svf "$DIR/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+ln -svf "$DIR/daemon.py" "$HOME/.local/bin/alacritty-theme-daemon"
+ln -svf "$DIR/systemd.service" "$HOME/.config/systemd/user/alacritty-theme-daemon.service"
+
+# Pre-resolve the script's environment so the first systemd start doesn't
+# need network. PEP 723 metadata in daemon.py drives the deps. We invoke
+# through the same symlink path systemd uses so uv shares one env cache.
+uv sync --script "$HOME/.local/bin/alacritty-theme-daemon"
+
+systemctl --user daemon-reload
+systemctl --user enable alacritty-theme-daemon.service
+systemctl --user restart alacritty-theme-daemon.service
+
+cat <<'EOF'
+
+Done.
+
+If this is a fresh machine, also add these lines to ~/.config/i3/config so
+systemd --user picks up DISPLAY/XAUTHORITY and starts graphical-session.target:
+
+    exec --no-startup-id systemctl --user import-environment DISPLAY XAUTHORITY I3SOCK
+    exec --no-startup-id systemctl --user start graphical-session.target
+EOF
