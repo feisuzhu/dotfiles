@@ -27,19 +27,28 @@
   lgg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   diffstat = diff-tree --stat
   quickserve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/
+  wt = worktree
+  wtl = worktree list
 [push]
 	default = matching
-[http "https://github.com"]
-	proxy = http://192.168.233.56:7890
-    sslVerify = false
-[http "https://huggingface.co"]
-	proxy = http://192.168.233.56:7890
+[safe]
+	directory = /var/lib/git-cache
+	directory = /home/proton/actions-runner/_work/taichi/taichi
+	directory = /home/proton/actions-runner/feisuzhu/_work/Taichi-UnityExample/Taichi-UnityExample
+	directory = /home/proton/git-cache
+	directory = /home/proton/actions-runner/taichi/_work/taichi/taichi
+[rerere]
+	enabled = true
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+[cola]
+	spellcheck = false
 [safe]
 	directory = /home/proton/my_projects/thb-update/runtime/.git
-; [url "git@github.com:"]
-;     insteadOf = https://github.com/
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+[init]
+	defaultBranch = master
