@@ -126,6 +126,74 @@ let g:sonokai_style = 'default'
 let g:sonokai_better_performance = 1
 
 colorscheme sonokai
+
+if has('nvim')
+lua <<EOF
+  local function apply_eink()
+    vim.cmd('highlight clear')
+    vim.g.colors_name = 'eink'
+    -- 16-stop grayscale: g0=#000 .. gf=#fff
+    local g0, g1, g2, g3 = '#000000', '#111111', '#222222', '#333333'
+    local g4, g5, g6, g7 = '#444444', '#555555', '#666666', '#777777'
+    local g8, g9, ga, gb = '#888888', '#999999', '#aaaaaa', '#bbbbbb'
+    local gc, gd, ge, gf = '#cccccc', '#dddddd', '#eeeeee', '#ffffff'
+    local hi = vim.api.nvim_set_hl
+    local hl = {
+      Normal={fg=g0,bg=gf}, NormalFloat={fg=g0,bg=gf},
+      Comment={fg=g7,italic=true},
+      String={fg=g4}, Character={fg=g4},
+      Number={fg=g2}, Boolean={fg=g2,bold=true},
+      Identifier={fg=g1}, Function={fg=g0,bold=true},
+      Statement={fg=g0,bold=true}, Operator={fg=g5},
+      PreProc={fg=g3,bold=true}, Type={fg=g0,bold=true},
+      Special={fg=g5}, Delimiter={fg=g5},
+      Underlined={fg=g0,underline=true},
+      Error={fg=gf,bg=g0}, Todo={fg=g0,bg=gd,bold=true},
+      LineNr={fg=gb}, CursorLineNr={fg=g5,bold=true},
+      CursorLine={bg=ge}, CursorColumn={bg=ge},
+      Visual={bg=gd},
+      StatusLine={fg=gf,bg=g4}, StatusLineNC={fg=g7,bg=gc},
+      WinSeparator={fg=gc},
+      Folded={fg=g6,bg=gd}, FoldColumn={fg=g8,bg=gf},
+      SignColumn={bg=gf},
+      Pmenu={fg=g0,bg=gd}, PmenuSel={fg=gf,bg=g5},
+      PmenuSbar={bg=gc}, PmenuThumb={bg=g5},
+      Search={fg=gf,bg=g5}, IncSearch={fg=gf,bg=g0},
+      MatchParen={bg=gd,bold=true},
+      NonText={fg=gc}, EndOfBuffer={fg=gc},
+      Directory={fg=g0,bold=true}, Title={fg=g0,bold=true},
+      ErrorMsg={fg=gf,bg=g0,bold=true}, WarningMsg={fg=g2,bold=true},
+      DiffAdd={fg=g0,bg=gd}, DiffChange={bg=ge},
+      DiffDelete={fg=gb}, DiffText={fg=gf,bg=g5,bold=true},
+      TabLine={fg=g5,bg=gd}, TabLineSel={fg=gf,bg=g4,bold=true},
+      TabLineFill={bg=gd},
+    }
+    for g, opts in pairs(hl) do hi(0, g, opts) end
+  end
+
+  vim.api.nvim_create_autocmd('FocusGained', {
+    callback = function()
+      local tty = io.open('/dev/tty', 'w')
+      if tty then
+        tty:write('\027]11;?\027\\')
+        tty:flush()
+        tty:close()
+      end
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('OptionSet', {
+    pattern = 'background',
+    callback = function()
+      if vim.o.background == 'light' then
+        apply_eink()
+      else
+        vim.cmd('colorscheme sonokai')
+      end
+    end,
+  })
+EOF
+endif
 " <<<<<
 " >>>>> Language indentation rules
 let g:indentLine_setConceal = 0
